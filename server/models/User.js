@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema({
     },
     lastSeen:{
         type: Date,
+        default:Date.now(),
         // TODO:-update whenever user logs in and out of socket
     },
     chats:[
