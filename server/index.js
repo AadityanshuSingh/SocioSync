@@ -20,14 +20,18 @@ const io = new Server(httpServer, {
     origin:"http://localhost:3000",
     credentials:true,
 }});
-
 io.on("connection", (socket) => {
     // ...
-    // console.log("A user connected");
+    console.log("A user connected");
     console.log(`⚡: ${socket.id} user just connected!`);
     socket.on('disconnect', () => {
       console.log('🔥: A user disconnected');
     });
+
+    socket.on("send_message", (obj) => {
+        console.log(socket.id);
+        console.log(obj);
+      } )
   });
 
 // creating an instance of socketIO
@@ -46,7 +50,6 @@ app.use(
         credentials:true,
     })
 );
-
 app.get("/", (req, res) => {
     return res.json({
         success:true,

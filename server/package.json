@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "server",
   "version": "1.0.0",
   "description": "",
@@ -11,9 +10,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-=======
-  "scripts": {"dev": "nodemon index,js"},
->>>>>>> 9029f910be6502d7584d588996f89820835bce92
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cloudinary": "^1.41.1",
@@ -28,11 +24,6 @@
     "nodemailer": "^6.9.8",
     "nodemon": "^3.0.2",
     "otp-generator": "^4.0.1",
-<<<<<<< HEAD
     "socket.io": "^4.7.3"
-=======
-    "socket.io": "^4.7.3",
-    "socket.io-client": "^4.7.3"
->>>>>>> 9029f910be6502d7584d588996f89820835bce92
   }
 }
