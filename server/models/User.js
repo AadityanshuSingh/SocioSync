@@ -55,6 +55,7 @@ const userSchema = new mongoose.Schema({
         default:null,
     }],
     requests:[{
+        // jo requests gaya h
             type:mongoose.Schema.Types.ObjectId,
             ref:"User",
             default:null,
