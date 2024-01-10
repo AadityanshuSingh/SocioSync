@@ -8,6 +8,7 @@ const cors = require("cors");
 // const {cloudinaryConnect} = require("./config/cloudinary");
 // const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
+const { handleSocketConnections } = require('./controllers/socketController');
 
 // importing http 
 
@@ -20,20 +21,9 @@ const io = new Server(httpServer, {
     origin:"http://localhost:3000",
     credentials:true,
 }});
-io.on("connection", (socket) => {
-    // ...
-    console.log("A user connected");
-    console.log(`⚡: ${socket.id} user just connected!`);
-    socket.on('disconnect', () => {
-      console.log('🔥: A user disconnected');
-    });
 
-    socket.on("send_message", (obj) => {
-        console.log(socket.id);
-        console.log(obj);
-      } )
-  });
-
+// Initialize Socket IO controllers
+handleSocketConnections(io);
 // creating an instance of socketIO
 dotenv.config();
 const PORT = process.env.PORT || 4000;
@@ -58,5 +48,5 @@ app.get("/", (req, res) => {
 });
 
 httpServer.listen(PORT, () => {
-    console.log(`App is running successfully at ${PORT}`);
+    console.log(App is running successfully at ${PORT});
 })
