@@ -49,6 +49,11 @@ const userSchema = new mongoose.Schema({
     //     type:String,
     //     trim:true,
     // },
+    undeliveredMessages : [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"Chat",
+        default:null,
+    }],
     friends:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",

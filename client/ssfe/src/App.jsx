@@ -18,12 +18,23 @@ function App() {
   }
   useEffect( () => {
     if(message !== ""){
-      socket.emit("send_message", (message));
+      socket.on('private_message', (data) => {
+        const {message, sender} = data;
+        console.log("message is = ", message);
+        console.log("sender id is", sender);
+      });
       setValue("");
       setMessage("");
     }
-  }, [message]);
+  }, [socket,message]);
 
+  const sendMessage = () => {
+    setMessage(value);
+    if (recipient && message) {
+      socket.emit('private_message', { recipient, message });
+    }
+  }
+  
   return (
     <ChakraProvider>
       <>
@@ -32,7 +43,7 @@ function App() {
              placeholder='Write your message' 
              onChange={handleChange}/>
 
-      <Button colorScheme='green' onClick={() => {setMessage(value)}}>
+      <Button colorScheme='green' onClick={sendMessage}>
         Send Message
       </Button>
       </>
