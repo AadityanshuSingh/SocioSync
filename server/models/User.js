@@ -14,10 +14,6 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    socket_id:{
-        type:String,
-        default:null,
-    },
     activity:{
         type:String,
         enum: ["active", "inactive"],

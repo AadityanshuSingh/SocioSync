@@ -17,21 +17,18 @@ function App() {
     setValue(event.target.value);
   }
   useEffect( () => {
-    if(message !== ""){
-      socket.on('private_message', (data) => {
-        const {message, sender} = data;
-        console.log("message is = ", message);
-        console.log("sender id is", sender);
+      socket.on('serverMessage', (data) => {
+        const {message} = data;
       });
       setValue("");
       setMessage("");
-    }
   }, [socket,message]);
 
   const sendMessage = () => {
     setMessage(value);
+    recipient = value;
     if (recipient && message) {
-      socket.emit('private_message', { recipient, message });
+      socket.emit('private_message', { socket, recipient, message });
     }
   }
   

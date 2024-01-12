@@ -48,5 +48,5 @@ app.get("/", (req, res) => {
 });
 
 httpServer.listen(PORT, () => {
-    console.log(App is running successfully at ${PORT});
+    console.log(`App is running successfully at ${PORT}`);
 })
