@@ -14,10 +14,10 @@ const chatSchema = new mongoose.Schema({
         default:"personal",
         // TODO:-Depends on socket
     },
-    status:{
-        enum:["Pending", "Sent", "Seen"],
-        // Todo:-Depends on socket
-    },
+    // status:{
+    //     enum:["Pending", "Sent", "Seen"],
+    //     // Todo:-Depends on socket
+    // },
     groupId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Group",
@@ -34,5 +34,11 @@ const chatSchema = new mongoose.Schema({
         type:String,
         enum:["Text","Media","Links","Files"],
         default:"Text",
+    },
+    message:{
+        type:String,
+        required:true,
     }
-});
+})
+
+module.exports = mongoose.model("Chat", chatSchema);

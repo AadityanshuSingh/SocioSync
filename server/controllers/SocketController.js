@@ -1,7 +1,7 @@
 const { Socket } = require("socket.io");
 const mongoose = require("mongoose");
 const User = require("../models/User");
-const falana = require("socket.io");
+const io = require("socket.io");
 // server/controllers/socketController.js
 // const io = require('socket.io')(httpServer);
 const handleSocketConnections = (io) => {
@@ -38,7 +38,6 @@ const handleSocketConnections = (io) => {
       // updateChat(sender, receiver, message);
 
       // Now send the message to recepient (if online)
-      
     });
     console.log("test2");
     socket.on('disconnect', () => {
@@ -47,5 +46,4 @@ const handleSocketConnections = (io) => {
     console.log("test3");
   });
   };
-  
-  module.exports = { handleSocketConnections };
+module.exports = { handleSocketConnections };
