@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const User = require("../models/User");
-
+const Group = require("../models/Group");
 //auth
 // during signup
 exports.auth = async (req, res, next) => {
@@ -44,13 +44,17 @@ exports.auth = async (req, res, next) => {
 // This middleware is for group chat
 exports.isAdmin = async (req, res, next) => {
     try{
-           console.log("Printing AccountType ", req.user.accountType);
-           if(req.user.accountType !== "Admin") {
-               return res.status(401).json({
-                   success:false,
-                   message:'This is a protected route for Admin only',
-               });
+           const {groupName,user} = req.body;
+           const userID = user.id;
+           const groupObject = await Group.findOne({name:groupName});
+           const isUserAdmin = groupObject.admin.includes(userID);
+           if(!isUserAdmin){
+                return res.status(401).json({
+                    success:false,
+                    message:'Only Admins can do this',
+                });
            }
+           console.log("user is admin and has id",userID);
            next();
     }
     catch(error) {
