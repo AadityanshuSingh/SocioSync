@@ -30,7 +30,7 @@ const chatSchema = new mongoose.Schema({
         type:Date,
         default:Date.now(),
     },
-    chatType:{
+    MediaType:{
         type:String,
         enum:["Text","Media","Links","Files"],
         default:"Text",
