@@ -38,13 +38,33 @@ const handleSocketConnections = (io) => {
       // updateChat(sender, receiver, message);
 
       // Now send the message to recepient (if online)
-      
     });
-    // console.log("test2");
+
+
+
+    socket.on('group message', (data) => {
+      const { sender, groupName, message } = data;
+      var roomName = groupName;
+      const room = io.sockets.adapter.rooms.get(roomName);
+
+      if(room && room.has(roomName))
+      {
+        io.sockets.in(roomName).emit('private_message', {sender, message});
+      }
+      else{
+        socket.join(roomName);
+        io.sockets.in(roomName).emit('serverMessage',{sender, message});
+        console.log("message is ",message);
+        console.log("sender is ", sender);
+      }
+    })
+
+
+
+    // TODO:-DB CALL ON USER DICONNECTION
     socket.on('disconnect', () => {
       console.log(`User disconnected: ${socket.id}`);
     });
-    // console.log("test3");
   });
   };
   
