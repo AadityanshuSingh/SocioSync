@@ -1,7 +1,7 @@
 const { Socket } = require("socket.io");
 const mongoose = require("mongoose");
 const User = require("../models/User");
-const io = require("socket.io");
+const falana = require("socket.io");
 // server/controllers/socketController.js
 // const io = require('socket.io')(httpServer);
 const handleSocketConnections = (io) => {
@@ -14,7 +14,7 @@ const handleSocketConnections = (io) => {
       const { sender, recipient, message } = data;
 
       // writing the logic for peronal chat
-      console.log("first");
+      // console.log("first");
       var roomName = (sender < recipient) ? (sender + recipient) : (recipient + sender);
       // if the user is already in the room then no need to join him again
       const room = io.sockets.adapter.rooms.get(roomName);
@@ -38,12 +38,14 @@ const handleSocketConnections = (io) => {
       // updateChat(sender, receiver, message);
 
       // Now send the message to recepient (if online)
+      
     });
-    console.log("test2");
+    // console.log("test2");
     socket.on('disconnect', () => {
       console.log(`User disconnected: ${socket.id}`);
     });
-    console.log("test3");
+    // console.log("test3");
   });
   };
-module.exports = { handleSocketConnections };
+  
+  module.exports = { handleSocketConnections };
