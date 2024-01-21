@@ -1,14 +1,17 @@
 const express = require("express");
 const app = express();
 
+const userRoutes = require("./routes/User");
+
 const database = require("./config/database");
 const cookieParser = require("cookie-parser");
 // since we require that our backend entertain the rquests from frontend, therefore we require cors
 const cors = require("cors");
-// const {cloudinaryConnect} = require("./config/cloudinary");
-// const fileUpload = require("express-fileupload");
+const {cloudinaryConnect} = require("./utils/fileUploader");
+const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
-const { handleSocketConnections } = require('./controllers/socketController');
+const { handleSocketConnections } = require('./controllers/SocketController');
+
 
 // importing http 
 
@@ -40,6 +43,11 @@ app.use(
         credentials:true,
     })
 );
+
+
+// Mounting Of Routes
+app.use("/api/v1/auth", userRoutes);
+
 app.get("/", (req, res) => {
     return res.json({
         success:true,

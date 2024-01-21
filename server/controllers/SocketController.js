@@ -1,7 +1,7 @@
 const { Socket } = require("socket.io");
 const mongoose = require("mongoose");
 const User = require("../models/User");
-const falana = require("socket.io");
+// const falana = require("socket.io");
 // server/controllers/socketController.js
 // const io = require('socket.io')(httpServer);
 const handleSocketConnections = (io) => {
@@ -67,5 +67,4 @@ const handleSocketConnections = (io) => {
     });
   });
   };
-  
   module.exports = { handleSocketConnections };

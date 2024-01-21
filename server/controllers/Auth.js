@@ -4,7 +4,7 @@ const otpGenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mailSender = require("../utils/mailSender");
-const { passwordUpdate, passwordUpdated } = require("../mail/passwordUpdate");
+// const { passwordUpdate, passwordUpdated } = require("../mail/passwordUpdate");
 const Profile = require("../models/Profile");
 require("dotenv").config();
 
@@ -44,6 +44,7 @@ exports.sendotp = async (req, res) => {
         res.status(200).json({
             success:true,
             message:'OTP generated Successfully',
+            otp,
         })
     }
     catch(error){
@@ -68,7 +69,7 @@ exports.signup = async (req, res) => {
             otp
         } = req.body;
         // validate
-        if(name || !email || !password || !confirmPassword || !otp || userName){
+        if(!name || !email || !password || !confirmPassword || !otp || !userName){
             return res.status(403).json({
                 success:false,
                 message:"All fields are required",
@@ -140,7 +141,7 @@ exports.signup = async (req, res) => {
             dob: null,
             about:null,
             ph_no:null,
-            profile_img:`https://api.dicebear.com/7.x/initials/svg?seed=${firstName} ${lastName}`,
+            profile_img:`https://api.dicebear.com/7.x/initials/svg?seed=${name}`,
         });
 
         const user = await User.create({
@@ -183,9 +184,7 @@ exports.login = async (req, res) =>{
             });
         };
         // check user exists or not
-        const user = await User.findOne({
-            $or:[{email:email , password:password},
-                {userName:userName, password:password}]});
+        const user = await User.findOne({email:email}) || await User.findOne({userName:userName});
         if(!user) {
             return res.status(401).json({
                 success:false,
