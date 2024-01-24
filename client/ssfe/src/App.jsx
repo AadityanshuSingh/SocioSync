@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react';
-import { Button, ChakraProvider, Input } from '@chakra-ui/react' 
+import { Button, ChakraProvider, Input, extendTheme } from '@chakra-ui/react' 
 
 import socketIO from 'socket.io-client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -34,9 +34,16 @@ function App() {
   //   }
   // }
   
+const config = {
+  initialColorMode: 'dark',
+  useSystemColorMode: false,
+}
+
+const theme = extendTheme({config})
+
   return (
     <BrowserRouter>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
       <Routes>
         <Route index element={<Login/>}/>
         <Route path='/login' element={<Login/>}/>
