@@ -1,7 +1,16 @@
 {
   "dependencies": {
     "cors": "^2.8.5",
-    "socket.io": "^4.7.3",
+    "socket.io": "^4.7.4",
     "socket.io-client": "^4.7.3"
-  }
+  },
+  "name": "sociosync",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
 }
