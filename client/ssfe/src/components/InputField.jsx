@@ -4,7 +4,7 @@ import {Box, Text, Input, InputGroup, InputRightElement, Icon, InputRightAddon} 
 
 const InputField = (props) => {
     const {label, field, password} = props;
-    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(true);
     const [typ, setType] = useState("text")
 
     const handleClick = () => {
@@ -41,6 +41,7 @@ const InputField = (props) => {
                           borderBottomLeftRadius={0}
                           borderBottomRightRadius={"lg"}
                           borderTopRightRadius={"lg"}
+                          _hover={{cursor:"pointer"}}
                           >
              <Icon as={ showPassword ? AiOutlineEyeInvisible : AiOutlineEye}/>
             </InputRightAddon>}

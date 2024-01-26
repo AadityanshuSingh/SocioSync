@@ -7,14 +7,14 @@ import InputField from '../components/InputField.jsx'
 export const Login = () => {
   const [signUp, setSignUp] = useState(false);
   const LoginData = [
-    {l : 'Email Address', f : 'Enter your Email Address', p : false},
+    {l : 'Email', f : 'Enter your Email Address', p : false},
     {l : 'Password', f : 'Enter your Password', p : true},
   ];
   const SignUpData = [
     {l : 'Email Address', f : 'Enter your Email Address', p : false},
     {l : 'Name', f : 'Enter Your Name', p : false},
     {l : 'UserName (This should be unique)', f : 'Enter your UserName', p : false},
-    {l : 'Password', f : 'Enter your Password', p : true},
+    {l : 'Create Password', f : 'Enter your Password', p : true},
     {l : 'Confirm Password', f : 'Confirm your Password', p : true},
   ];
 
@@ -31,12 +31,25 @@ export const Login = () => {
   }
 
   return (
-    <Card width={"100%"} height={"100vh"} bg={"#1a202f"} borderRadius={"0"} overflow={"auto"} pt={"20px"} pb={"20px"}>
+    <Card 
+    width={"100%"} 
+    height={"100vh"} 
+    bg={"#1a202f"} 
+    borderRadius={"0"} 
+    overflow={"auto"} 
+    pt={"20px"} 
+    pb={"20px"}
+    css={{
+      '&::-webkit-scrollbar': {
+        width: "10px",
+      },
+    }}
+    >
       <Card direction={"row"} mt={"auto"} mb={"auto"} align={"center"} width={"60%"} mx={"auto"} variant={"filled"} borderRadius={"lg"} bg={"black"} shadow={"md"} p={4} >
         <CardBody shadow={"xl"} bg={"#2d3250"} borderRadius={"lg"} >
           <Box>
           <Logo ht={130} wt={470}/>
-          <Text fontSize={"20px"} color={"gray.200"}>{btnData}</Text>
+                    <Text fontSize={"20px"} color={"gray.200"}>{btnData}</Text>
           <Text color={"gray.500"}>{topData} <Link color={"yellow.500"} onClick={handleClick}>{LinkData}?</Link></Text>
           </Box>
           {renderData}
