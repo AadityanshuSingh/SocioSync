@@ -7,7 +7,7 @@ export const Login = () => {
   return (
     <Card width={"100%"} height={"100vh"} bg={"#1a202f"} borderRadius={"0"}>
       <Card direction={"row"} top={100} align={"center"} width={"50%"} mx={"auto"} variant={"outline"}>
-        <CardBody>
+        <CardBody className = "bg-red">
           <Image src={logo}/>
           Left
         </CardBody>

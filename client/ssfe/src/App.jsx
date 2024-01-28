@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react';
-import { Button, ChakraProvider, Input } from '@chakra-ui/react' 
+import { Button, ChakraProvider, Input } from '@chakra-ui/react'
 
 import socketIO from 'socket.io-client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Provider } from "react-redux";
 import { Login } from './pages/Login';
 // const socket = socketIO.connect('http://localhost:4000');
 
@@ -33,14 +34,15 @@ function App() {
   //     socket.emit('private_message', { socket, recipient, message });
   //   }
   // }
-  
   return (
     <BrowserRouter>
       <ChakraProvider>
+      <Provider store={store}>
       <Routes>
         <Route index element={<Login/>}/>
         <Route path='/login' element={<Login/>}/>
       </Routes>
+      </Provider>
     </ChakraProvider>
     </BrowserRouter>
   )
