@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const chatSlice = createSlice({
+export const chatSlice = createSlice({
   name: 'chat',
   initialState: {
     sentMessages: [],

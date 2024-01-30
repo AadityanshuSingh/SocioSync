@@ -1,11 +1,7 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react';
-<<<<<<< HEAD
-import { Button, ChakraProvider, Input } from '@chakra-ui/react'
-=======
+import { store } from './redux/store';
 import { Button, ChakraProvider, Input, extendTheme } from '@chakra-ui/react' 
->>>>>>> 36ab48590cc22068f0deec222eba4f28f1d81429
-
 import socketIO from 'socket.io-client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from "react-redux";

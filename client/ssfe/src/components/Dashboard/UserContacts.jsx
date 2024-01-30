@@ -1,5 +1,5 @@
 import { Avatar, AvatarBadge, Box, Card, HStack,Image,Text } from '@chakra-ui/react'
-import dummy from '../assets/People1.png'
+import dummy from '../../assets/People1.png'
 import React from 'react'
 
 export const UserContacts = () => {
