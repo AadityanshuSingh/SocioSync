@@ -1,11 +1,11 @@
 import { Card, Divider, HStack, VStack, Box } from '@chakra-ui/react'
 import React from 'react'
 import chatbg from '../assets/chatbg.jpg'
-import { Nav } from '../components/Nav'
+import { Nav } from '../components/Dashboard/Nav'
 import { Message } from '../components/Message'
 import { ChatWindow } from '../components/ChatWindow'
-import { Search } from '../components/Search'
-import { UserContacts } from '../components/UserContacts'
+import { Search } from '../components/Dashboard/Search'
+import { UserContacts } from '../components/Dashboard/UserContacts'
 
 export const Dashborad = () => {
   return (
