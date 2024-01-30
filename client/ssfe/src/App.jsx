@@ -9,6 +9,7 @@ import {OTP} from './pages/OTP'
 import { ResetPassword } from './pages/ResetPassword';
 import { ChooseNewPassword } from './pages/ChooseNewPassword';
 import { ResetComplete } from './pages/ResetComplete';
+import { Dashborad } from './pages/Dashborad';
 // const socket = socketIO.connect('http://localhost:4000');
 
 // import io from "socket.io-client"
@@ -49,12 +50,13 @@ const theme = extendTheme({config})
     <BrowserRouter>
       <ChakraProvider theme={theme}>
       <Routes>
-        <Route index element={<ResetComplete/>}/>
+        <Route index element={<Dashborad/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/otp' element={<OTP/>}/>
         <Route path='/resetpassword' element={<ResetPassword/>}/>
         <Route path='/choosenewpassword' element={<ChooseNewPassword/>}/>
         <Route path='/resetcomplete' element={<ResetComplete/>}/>
+        <Route path='/dashboard' element={<Dashborad/>}/>
       </Routes>
     </ChakraProvider>
     </BrowserRouter>
