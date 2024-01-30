@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const User = require("../models/User");
 
+// TODO:-Update this when you are sending an id from frontend
+
 exports.sendRequest = async (req, res) => {
     try{
         const senderID = req.user.id;
@@ -34,7 +36,7 @@ exports.acceptRequest = async (req, res) => {
         const UpdatedAcceptor = await User.findByIdAndUpdate(acceptorID,
                                 {"$push": {"friends" : newFriend}},
                                 {new: true});
-        const UpdatedFriend = await User.findByIdAndUpdate(newFriend, 
+        const UpdatedFriend = await User.findByIdAndUpdate(newFriend,
                                 {"$push": {"friends" : acceptorID} },
                                 {new: true});
 

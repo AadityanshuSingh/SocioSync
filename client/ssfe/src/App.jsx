@@ -1,9 +1,14 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react';
+<<<<<<< HEAD
+import { Button, ChakraProvider, Input } from '@chakra-ui/react'
+=======
 import { Button, ChakraProvider, Input, extendTheme } from '@chakra-ui/react' 
+>>>>>>> 36ab48590cc22068f0deec222eba4f28f1d81429
 
 import socketIO from 'socket.io-client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Provider } from "react-redux";
 import { Login } from './pages/Login';
 import {OTP} from './pages/OTP'
 import { ResetPassword } from './pages/ResetPassword';
@@ -38,17 +43,10 @@ function App() {
   //     socket.emit('private_message', { socket, recipient, message });
   //   }
   // }
-  
-const config = {
-  initialColorMode: 'dark',
-  useSystemColorMode: false,
-}
-
-const theme = extendTheme({config})
-
   return (
     <BrowserRouter>
-      <ChakraProvider theme={theme}>
+      <ChakraProvider>
+      <Provider store={store}>
       <Routes>
         <Route index element={<Dashborad/>}/>
         <Route path='/login' element={<Login/>}/>
@@ -58,6 +56,7 @@ const theme = extendTheme({config})
         <Route path='/resetcomplete' element={<ResetComplete/>}/>
         <Route path='/dashboard' element={<Dashborad/>}/>
       </Routes>
+      </Provider>
     </ChakraProvider>
     </BrowserRouter>
   )

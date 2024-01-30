@@ -1,7 +1,9 @@
 {
   "dependencies": {
+    "@reduxjs/toolkit": "^2.1.0",
     "cors": "^2.8.5",
-    "socket.io": "^4.7.4",
+    "redux": "^5.0.1",
+    "socket.io": "^4.7.3",
     "socket.io-client": "^4.7.3"
   },
   "name": "sociosync",
