@@ -18,8 +18,12 @@ export const chatSlice = createSlice({
       const {user, message, timestamp } = action.payload;
       state.receivedMessages.push({user, message, timestamp});
     },
+
+    setLoading(state, value) {
+      state.loading = value.payload;
+    },
   },
 });
 
-export const { addSentMessage, addReceivedMessage } = chatSlice.actions;
+export const { addSentMessage, addReceivedMessage,setLoading } = chatSlice.actions;
 export default chatSlice.reducer;
