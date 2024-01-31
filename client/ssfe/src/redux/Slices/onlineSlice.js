@@ -15,8 +15,11 @@ export const onlineSlice = createSlice({
       state.user = null;
       return state.filter((item) => item.userName !== action.payload);
     },
+    setLoading(state, value) {
+      state.loading = value.payload;
+    },
   },
 });
 
-export const { addUser, removeUser } = onlineSlice.actions;
+export const { addUser, removeUser,setLoading } = onlineSlice.actions;
 export default onlineSlice.reducer;
