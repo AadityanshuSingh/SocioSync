@@ -1,7 +1,6 @@
 import { Avatar, AvatarBadge, Box, Card, HStack,Image,Text } from '@chakra-ui/react'
 import dummy from '../../assets/People1.png'
 import React from 'react'
-
 export const UserContacts = () => {
     const num = 1
   return (
@@ -14,7 +13,7 @@ export const UserContacts = () => {
     borderRadius={"lg"}
     _hover={{bg: "gray.600", cursor:"pointer"}}
     >
-        <HStack w={"100%"} pt={2} pb={2}>
+        <HStack w={"100%"} pt={2} pb={2} gap={5}>
             <Avatar src={dummy} size={"sm"}>
                 {num > 0 && 
                 <AvatarBadge 

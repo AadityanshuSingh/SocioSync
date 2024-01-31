@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Card, HStack,Text } from '@chakra-ui/react'
 import {HamburgerIcon, PhoneIcon, Search2Icon} from '@chakra-ui/icons'
+import { MediaDrawer } from './MediaDrawer'
 export const Nav = () => {
   return (
         <Card 
@@ -18,10 +19,11 @@ export const Nav = () => {
                 <Text>45 members, 24 online </Text>
             </Card>
             <Card bg={"inherit"} borderRadius ={0} shadow={0}>
-                <HStack gap={6} mt={"25%"} mb={"25%"} >
+                <HStack gap={6} >
                     <Search2Icon color={"#b7b8bc"}/>
                     <PhoneIcon color={"#b7b8bc"}/>
-                    <HamburgerIcon color={"#b7b8bc"}/>
+                    {/* <HamburgerIcon color={"#b7b8bc"}/> */}
+                    <MediaDrawer/>
                 </HStack>
             </Card>
     </Card>

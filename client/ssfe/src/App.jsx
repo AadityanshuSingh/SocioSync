@@ -44,7 +44,7 @@ function App() {
       <ChakraProvider>
       <Provider store={store}>
       <Routes>
-        <Route index element={<Dashborad/>}/>
+        <Route index element={<Login/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/otp' element={<OTP/>}/>
         <Route path='/resetpassword' element={<ResetPassword/>}/>
