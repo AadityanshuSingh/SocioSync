@@ -1,10 +1,6 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react';
-<<<<<<< HEAD
-import { Button, ChakraProvider, Input } from '@chakra-ui/react'
-=======
 import { Button, ChakraProvider, Input, extendTheme } from '@chakra-ui/react' 
->>>>>>> 36ab48590cc22068f0deec222eba4f28f1d81429
 
 import socketIO from 'socket.io-client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -14,6 +10,7 @@ import {OTP} from './pages/OTP'
 import { ResetPassword } from './pages/ResetPassword';
 import { ChooseNewPassword } from './pages/ChooseNewPassword';
 import { ResetComplete } from './pages/ResetComplete';
+import { store } from "./redux/Store";
 // const socket = socketIO.connect('http://localhost:4000');
 
 // import io from "socket.io-client"

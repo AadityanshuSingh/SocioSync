@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const onlineSlice = createSlice({
-  name: 'online',
+export const onlineSlice = createSlice({
+  name: "online",
   initialState: {
     onlineList: [],
   },

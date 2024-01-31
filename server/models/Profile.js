@@ -3,20 +3,20 @@ const mongoose = require('mongoose');
 const profileSchema = new mongoose.Schema({
     gender:{
         type:String,
-        enum:["Male", "Female", "Others"],
+        enum:["Male", "Female"],
     },
-    dob:{
+    dateOfBirth:{
         type:Date,
     },
     about:{
         type:String,
     },
-    ph_no:{
+    contactNumber:{
         type:String,
     },
-    profile_img:{
+    profileImage:{
         type:String,
-        trime:true,
+        trim:true,
     },
 })
 
