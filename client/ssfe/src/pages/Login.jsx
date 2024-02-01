@@ -59,7 +59,19 @@ export const Login = () => {
       },
     }}
     >
-      <Card direction={"row"} mt={"auto"} mb={"auto"} align={"center"} width={"60%"} mx={"auto"} variant={"filled"} borderRadius={"lg"} bg={"black"} shadow={"md"} p={4} >
+      <Card 
+      direction={"row"} 
+      mt={"auto"} 
+      mb={"auto"} 
+      align={"center"} 
+      width={"60%"} 
+      mx={"auto"} 
+      variant={"filled"} 
+      borderRadius={"lg"} 
+      bg={"black"} 
+      shadow={"md"} 
+      p={4} 
+      >
         <CardBody shadow={"xl"} bg={"#2d3250"} borderRadius={"lg"} >
           <Box>
           <Logo ht={130} wt={470}/>

@@ -52,7 +52,7 @@ const InputField = (props) => {
                           borderTopRightRadius={"lg"}
                           _hover={{cursor:"pointer"}}
                           >
-             <Icon as={ showPassword ? AiOutlineEyeInvisible : AiOutlineEye}/>
+             <Icon as={ showPassword ? AiOutlineEye : AiOutlineEyeInvisible}/>
             </InputRightAddon>}
         </InputGroup>
     </Box>

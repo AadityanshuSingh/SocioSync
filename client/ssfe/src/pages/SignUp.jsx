@@ -4,8 +4,13 @@ import Logo from "../components/Logo.jsx"
 import React, { useState } from 'react'
 import InputField from '../components/InputField.jsx'
 import { NavLink } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { setSignupData } from '../redux/Slices/authSlice.js'
 
 export const SignUp = () => {
+
+  const dispatch = useDispatch();
+  const {signupData} = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
     email:"",
@@ -46,11 +51,8 @@ export const SignUp = () => {
   const topData = "Don't Have an account";
 
   const handleSubmit = () => {
-    console.log("name is ", formData.name);
-    console.log("userName is ", formData.userName);
-    console.log("email is ", formData.email);
-    console.log("password is ", formData.password);
-    console.log("confirmPassword is ", formData.confirmPassword);
+    dispatch(setSignupData(formData));
+    console.log(signupData.email);
   }
 
   return (
