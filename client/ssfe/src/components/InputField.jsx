@@ -1,22 +1,28 @@
 import React, { useState } from 'react'
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import {Box, Text, Input, InputGroup, InputRightElement, Icon, InputRightAddon} from '@chakra-ui/react'
+import {Box, Text, Input, InputGroup, Icon, InputRightAddon} from '@chakra-ui/react'
 
 const InputField = (props) => {
-    const {label, field, password} = props;
+    const {label, field, password, value, onChange} = props;
     const [showPassword, setShowPassword] = useState(true);
-    const [typ, setType] = useState("text")
-
+    const temp = password === true ? "password" : "text";
+    const [typ, setType] = useState(temp)
+    
     const handleClick = () => {
         if(showPassword)
         {
-            setType("password");
+            setType("text");
         }
         else{
-            setType("text");
+            setType("password");
         }
         setShowPassword(!showPassword);
     }
+
+    const handleChange = (e) => {
+        onChange(e.target.value);
+    };
+
   return (
     <Box mt={"15px"} mb={"10px"}>
         <Text fontSize={"10px"} padding={1} color={"gray.400"}>{label}</Text>
@@ -29,7 +35,10 @@ const InputField = (props) => {
                borderRightWidth={0} 
                bg={"gray.800"}
                type={typ}
-               color={"gray.300"}/>
+               color={"gray.300"}
+               value={value}
+               onChange={handleChange}
+               />
             {password && <InputRightAddon 
                           bg={"inherit"} 
                           onClick={handleClick} 

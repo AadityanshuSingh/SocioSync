@@ -5,28 +5,23 @@ import React, { useState } from 'react'
 import InputField from '../components/InputField.jsx'
 import { NavLink } from 'react-router-dom'
 
-export const Login = () => {
+export const SignUp = () => {
 
   const [formData, setFormData] = useState({
     email:"",
+    name:"",
+    userName: "",
     password: "",
+    confirmPassword: "",
   });
 
-  const LoginData = [
-    {id: "email", l : 'Email', f : 'Enter your Email Address', p : false, v: formData.email},
-    {id:"password", l : 'Password', f : 'Enter your Password', p : true, v: formData.password},
+  const SignUpData = [
+    {id: "email", l : 'Email Address', f : 'Enter your Email Address', p : false, v: formData.email},
+    {id: "name", l : 'Name', f : 'Enter Your Name', p : false, v: formData.name},
+    {id: "userName", l : 'UserName (This should be unique)', f : 'Enter your UserName', p : false, v : formData.userName},
+    {id: "password", l : 'Create Password', f : 'Enter your Password', p : true, v: formData.password},
+    {id: "confirmPassword", l : 'Confirm Password', f : 'Confirm your Password', p : true, v: formData.confirmPassword},
   ];
-
-  const renderData = LoginData.map(item => (
-    <InputField 
-    key={item.id} 
-    label={item.l} 
-    field={item.f} 
-    password={item.p}
-    value={item.v}
-    onChange={(value) => handleFieldChange(item.id, value)}
-    />
-  ));
 
   const handleFieldChange = (fieldName, fieldValue) => {
     setFormData({
@@ -35,13 +30,27 @@ export const Login = () => {
     });
   };
 
-  const LinkData ='SignUp'
-  const btnData = 'Login'
+  const renderData = SignUpData.map(item => (
+    <InputField 
+    key={item.id} 
+    label={item.l} 
+    field={item.f} 
+    password={item.p}
+    value={item.v}
+    onChange={(value) => handleFieldChange(item.id, value)}
+    />
+  ))
+
+  const LinkData = 'Login';
+  const btnData = 'SignUp';
   const topData = "Don't Have an account";
 
   const handleSubmit = () => {
+    console.log("name is ", formData.name);
+    console.log("userName is ", formData.userName);
     console.log("email is ", formData.email);
     console.log("password is ", formData.password);
+    console.log("confirmPassword is ", formData.confirmPassword);
   }
 
   return (
@@ -65,10 +74,14 @@ export const Login = () => {
           <Logo ht={130} wt={470}/>
                     <Text fontSize={"20px"} color={"gray.200"}>{btnData}</Text>
           <HStack>
-          <Text color={"gray.500"}>{topData}</Text>
-          <NavLink to={'/signup'}>
-            <Text color={"yellow.500"}>{LinkData}?</Text>
-          </NavLink>
+          <Text color={"gray.500"}>
+            {topData} 
+          </Text>
+            <NavLink to={'/login'}>
+                <Text color={"yellow.500"}>
+                    {LinkData}?
+                </Text>
+            </NavLink>
           </HStack>
           </Box>
           {renderData}

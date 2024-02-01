@@ -12,7 +12,7 @@ const handleSocketConnections = (io) => {
   // Private Messsge controller
     socket.on('private_message', (data) => {
       const { sender, recipient, message } = data;
-
+      
       // writing the logic for peronal chat
       // console.log("first");
       var roomName = (sender < recipient) ? (sender + recipient) : (recipient + sender);
