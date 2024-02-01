@@ -1,16 +1,16 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react';
+import { store } from './redux/store';
 import { Button, ChakraProvider, Input, extendTheme } from '@chakra-ui/react' 
-
 import socketIO from 'socket.io-client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from "react-redux";
 import { Login } from './pages/Login';
 import {OTP} from './pages/OTP'
-import { ResetPassword } from './pages/ResetPassword';
-import { ChooseNewPassword } from './pages/ChooseNewPassword';
+import { ResetPassword } from './pages/forgotPassword';
+import { ChooseNewPassword } from './pages/changePassword';
 import { ResetComplete } from './pages/ResetComplete';
-import { store } from "./redux/Store";
+import { Dashborad } from './pages/Dashborad';
 // const socket = socketIO.connect('http://localhost:4000');
 
 // import io from "socket.io-client"
@@ -44,12 +44,13 @@ function App() {
       <ChakraProvider>
       <Provider store={store}>
       <Routes>
-        <Route index element={<ResetComplete/>}/>
+        <Route index element={<Login/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/otp' element={<OTP/>}/>
-        <Route path='/resetpassword' element={<ResetPassword/>}/>
-        <Route path='/choosenewpassword' element={<ChooseNewPassword/>}/>
+        <Route path='/forgotpassword' element={<forgotPassword/>}/>
+        <Route path='/changepassword' element={<changePassword/>}/>
         <Route path='/resetcomplete' element={<ResetComplete/>}/>
+        <Route path='/dashboard' element={<Dashborad/>}/>
       </Routes>
       </Provider>
     </ChakraProvider>

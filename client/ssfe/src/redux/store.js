@@ -1,14 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { authSlice } from "./Slices/authSlice";
-import { chatSlice } from "./Slices/chatSlice";
-import { onlineSlice } from "./Slices/onlineSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from './reducers';
 
-// TODO :- combineReducer
-export const store = configureStore({
-    reducer:{
-        auth: authSlice.reducer,
-        chat: chatSlice.reducer,
-        online: onlineSlice.reducer,
-    }
+const store = configureStore({
+  reducer: rootReducer,
 });
+
+export default store;
 
