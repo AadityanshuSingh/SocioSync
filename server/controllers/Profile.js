@@ -34,6 +34,33 @@ exports.updateProfile = async (req, res) => {
 	}
 };
 
+exports.getAllUserDetails = async (req, res) => {
+	try {
+    User.find({}, "userName", (err, users) => {
+        if (err) {
+        console.error(err);
+        return;
+		  }
+		  const allUsers = users.map(user => user.username);
+		  console.log(allUsers);
+		});
+
+    return res.json({
+			  success: true,
+			  message: "all Users are",
+			  allUsers: allUsers,
+		});
+	}
+
+  catch (error) {
+		return res.status(500).json({
+			success: false,
+			message: error.message,
+		});
+	}
+};
+
+
 exports.updateDisplayPicture = async (req, res) => {
     try {
       const displayPicture = req.files.displayPicture

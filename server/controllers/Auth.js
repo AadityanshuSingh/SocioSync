@@ -302,9 +302,9 @@ exports.changePassword = async (req, res) => {
         }
         // return response
         return res.status(200).json({
-            success:true,
-            message:"Password changed succefully!!",
-        });
+                success:true,
+                message:"Password changed successfully !!",
+            });
         }
         catch(error){
             console.error("Error occurred while updating the password: ", error);
@@ -312,7 +312,7 @@ exports.changePassword = async (req, res) => {
                 success:false,
                 message: "Error occurred while updating the password",
                 error: error.message,
-            })  
+            })
         }
     }
 
@@ -326,7 +326,7 @@ exports.forgotPassword = async (req, res) => {
             otp
         } = req.body;
         // validate
-        if(!email || !newPassword || !confirmNewPassword || !otp){
+        if(!newPassword || !confirmNewPassword || !otp){
             return res.status(403).json({
                 success:false,
                 message:"All fields are required",
@@ -372,7 +372,6 @@ exports.forgotPassword = async (req, res) => {
                 message:'Otp not matched',
             })
         }
-
         
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
