@@ -1,16 +1,19 @@
-import { Button, Card, CardBody, Image, Box, Input, Text, Hide, Link, HStack } from '@chakra-ui/react'
+import { Button, Card, CardBody, Image, Box, Input, Text, Hide, Link, HStack, useToast } from '@chakra-ui/react'
 import pic from "../assets/People1.png"
 import Logo from "../components/Logo.jsx"
 import React, { useState } from 'react'
 import InputField from '../components/InputField.jsx'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSignupData } from '../redux/Slices/authSlice.js'
+import { sendOtp } from '../services/operations/authAPI.js'
 
 export const SignUp = () => {
 
   const dispatch = useDispatch();
-  const {signupData} = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const selector = useSelector(state => state.signupData)
+  const toast = useToast();
 
   const [formData, setFormData] = useState({
     email:"",
@@ -50,9 +53,37 @@ export const SignUp = () => {
   const btnData = 'SignUp';
   const topData = "Don't Have an account";
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if(formData.password !== formData.confirmPassword){
+      toast({
+        title: 'Password not Matched',
+        description: "Please make sure that password and confirm password are same.",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
+      return
+    }
+    
     dispatch(setSignupData(formData));
-    console.log(signupData.email);
+    // dispatch(sendOtp(formData.email, navigate));
+    // console.log("test 1", formData.email)
+
+    // const res = fetch("http://localhost:4000/api/v1/auth/sendotp",
+    // {
+    //   method: 'POST',
+    //   body: JSON.stringify(formData.email),
+    // })
+
+    setFormData({
+      email:"",
+      name:"",
+      userName: "",
+      password: "",
+      confirmPassword: "",
+    })
   }
 
   return (

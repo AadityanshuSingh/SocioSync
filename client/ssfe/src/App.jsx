@@ -5,8 +5,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from "react-redux";
 import { Login } from './pages/Login';
 import { OTP } from './pages/OTP'
-import { ResetPassword } from './pages/ResetPassword';
-import { ChooseNewPassword } from './pages/ChooseNewPassword';
 import { ResetComplete } from './pages/ResetComplete';
 import { Dashborad } from './pages/Dashborad';
 import { SignUp } from './pages/SignUp';
@@ -21,7 +19,7 @@ function App() {
         <Route index element={<Login/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/signup' element={<SignUp/>}/>
-        <Route path='/otp' element={<OTP/>}/>
+        <Route path='/verify-email' element={<OTP/>}/>
         <Route path='/forgotpassword' element={<forgotPassword/>}/>
         <Route path='/changepassword' element={<changePassword/>}/>
         <Route path='/resetcomplete' element={<ResetComplete/>}/>

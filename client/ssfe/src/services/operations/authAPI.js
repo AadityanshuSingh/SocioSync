@@ -1,8 +1,5 @@
-import { toast } from "react-hot-toast"
-
-import { setLoading, setToken } from "../../slices/authSlice"
-import { resetCart } from "../../slices/cartSlice"
-import { setUser } from "../../slices/profileSlice"
+import { useToast } from "@chakra-ui/react"
+import { setLoading, setToken } from "../../redux/Slices/authSlice"
 import { apiConnector } from "../apiconnector"
 import { endpoints } from "../apis"
 
@@ -15,16 +12,16 @@ const {
 } = endpoints
 
 export function sendOtp(email, navigate) {
+
     // this function is sending emailid to the sendOTP function
     // in the backend so that it can send email to the desired email id
-  return async (dispatch) => {
-    const toastId = toast.loading("Loading...")
-    dispatch(setLoading(true))
+  return async () => {
+    // dispatch(setLoading(true))
     try {
       const response = await apiConnector("POST", SENDOTP_API, {
         email,
-        checkUserPresent: true,
       })
+
       console.log("SENDOTP API RESPONSE............", response)
 
       console.log(response.data.success)
@@ -34,14 +31,24 @@ export function sendOtp(email, navigate) {
         throw new Error(response.data.message)
       }
 
-      toast.success("OTP Sent Successfully")
+      // toast({
+      //   title:"OTP Sent Successfully",
+      //   duration: 3000,
+      //   status:'success',
+      //   isClosable: true, 
+      // })
       navigate("/verify-email")
     } catch (error) {
       console.log("SENDOTP API ERROR............", error)
-      toast.error("Could Not Send OTP")
+      // toast({
+      //   title: 'Error in Sending OTP',
+      //   description:"Please try again",
+      //   status: 'error',
+      //   duration: 3000,
+      //   isClosable: true,
+      // })
     }
-    dispatch(setLoading(false))
-    toast.dismiss(toastId)
+    // dispatch(setLoading(false))
   }
 }
 
