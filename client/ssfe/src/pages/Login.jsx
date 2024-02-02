@@ -3,10 +3,14 @@ import pic from "../assets/People1.png"
 import Logo from "../components/Logo.jsx"
 import React, { useState } from 'react'
 import InputField from '../components/InputField.jsx'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { login } from '../services/operations/authAPI.js'
 
 export const Login = () => {
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email:"",
     password: "",
@@ -40,8 +44,7 @@ export const Login = () => {
   const topData = "Don't Have an account";
 
   const handleSubmit = () => {
-    console.log("email is ", formData.email);
-    console.log("password is ", formData.password);
+    dispatch(login(formData, navigate));
   }
 
   return (

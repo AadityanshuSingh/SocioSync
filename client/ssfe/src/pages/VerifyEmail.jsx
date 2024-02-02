@@ -19,27 +19,22 @@ export const VerifyEmail = () => {
   }
   const handleClick = (e) => {
     const otp = otpValue.join('');
-    // setOtp(temp);
     console.log(signupData)
     const {
       email,
-      password,
-      confirmPassword,
       name,
       userName,
+      password,
+      confirmPassword,
     } = signupData;
+    const ultraNewSignUpData = {
+      ...signupData,
+      otp: otp
+    }
     console.log("email 1", email)
     console.log("the otp is", otp)
-    dispatch(
-      signUp(
-        email,
-        password,
-        confirmPassword,
-        name,
-        userName,
-        otp,
-        navigate
-      )
+    console.log("verify email mein", ultraNewSignUpData);
+    dispatch(signUp(ultraNewSignUpData, navigate)
     );
   }
 

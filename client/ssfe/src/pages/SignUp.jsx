@@ -54,7 +54,6 @@ export const SignUp = () => {
   const topData = "Don't Have an account";
 
   const handleSubmit = (e) => {
-    e.preventDefault();
 
     if(formData.password !== formData.confirmPassword){
       toast({
@@ -68,14 +67,7 @@ export const SignUp = () => {
     }
     
     dispatch(setSignupData(formData));
-    // dispatch(sendOtp(formData.email, navigate));
-    // console.log("test 1", formData.email)
-
-    // const res = fetch("http://localhost:4000/api/v1/auth/sendotp",
-    // {
-    //   method: 'POST',
-    //   body: JSON.stringify(formData.email),
-    // })
+    dispatch(sendOtp(formData.email, navigate));
 
     setFormData({
       email:"",

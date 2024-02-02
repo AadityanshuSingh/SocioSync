@@ -52,25 +52,13 @@ export function sendOtp(email, navigate) {
   }
 }
 
-export function signUp(
-    email,
-    name,
-    userName,
-    password,
-    confirmPassword,
-    otp,
-    navigate
-  ) {
+export function signUp(ultraNewSignupData, navigate) {
     return async () => {
-      console.log("the otp in signUp is", otp)
+      console.log("the otp in signUp is", ultraNewSignupData.otp);
+      console.log("name in signup is ", ultraNewSignupData.name);
       try {
         const response = await apiConnector("POST", SIGNUP_API, {
-          "email": email,
-          "name": name,
-          "userName": userName,
-          "password": password,
-          "confirmPassword": confirmPassword,
-          "otp": otp
+          ultraNewSignupData
         })
 
         console.log("SIGNUP API RESPONSE............", response)
@@ -87,15 +75,12 @@ export function signUp(
   }
 
 
-export function login(email, password, userName, navigate) {
+
+export function login(formData, navigate) {
     return async (dispatch) => {
-        const toastId = toast.loading("Loading...")
-        dispatch(setLoading(true))
         try {
         const response = await apiConnector("POST", LOGIN_API, {
-            email,
-            userName,
-            password,
+            formData
         })
 
         console.log("LOGIN API RESPONSE............", response)
@@ -104,20 +89,16 @@ export function login(email, password, userName, navigate) {
             throw new Error(response.data.message)
         }
 
-        toast.success("Login Successful")
         dispatch(setToken(response.data.token))
         // updating the slice token to store the token details
-        const userImage = response.data.user.image
-            ? response.data.user.image
-            : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
-        dispatch(setUser({ ...response.data.user, image: userImage }))
-        navigate("/dashboard/my-profile")
+        // const userImage = response.data.user.image
+        //     ? response.data.user.image
+        //     : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
+        // dispatch(setUser({ ...response.data.user, image: userImage }))
+        navigate("/dashboard")
         } catch (error) {
         console.log("LOGIN API ERROR............", error)
-        toast.error("Login Failed")
         }
-        dispatch(setLoading(false))
-        toast.dismiss(toastId)
     }
 }
 

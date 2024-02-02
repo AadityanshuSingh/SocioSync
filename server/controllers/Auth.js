@@ -62,13 +62,13 @@ exports.signup = async (req, res) => {
         // data fetch
         const {
             email,
-            name,
-            userName,
             password,
             confirmPassword,
+            name,
+            userName,
             otp
-        } = req.body;
-        console.log("backend data", req.body);
+        } = req.body.ultraNewSignupData;
+        console.log("backend data", req.body.ultraNewSignupData);
         // validate
         if(!name || !email || !password || !confirmPassword || !otp || !userName){
             return res.status(403).json({
@@ -115,8 +115,9 @@ exports.signup = async (req, res) => {
 
         // find most recent OTP stored for the user
         const recentOtp =  await OTP.findOne({email: email}).sort({createdAt:-1});
-        console.log(recentOtp);
+        console.log(recentOtp)
         // validate otp
+        console.log("before otp verification")
         if(recentOtp === null){
             // Otp not found
             return res.status(400).json({
@@ -124,7 +125,7 @@ exports.signup = async (req, res) => {
                 message:'OTP not found',
             })
         }
-        else if(otp !== recentOtp[0].otp) {
+        else if(otp !== recentOtp.otp) {
             // Invalid Otp
             return res.status(400).json({
                 success:false,
@@ -136,7 +137,6 @@ exports.signup = async (req, res) => {
 
         // Create the User
         // entry create in DB
-
         const profileDetails = await Profile.create({
             gender:null,
             dob: null,
@@ -144,7 +144,6 @@ exports.signup = async (req, res) => {
             ph_no:null,
             profile_img:`https://api.dicebear.com/7.x/initials/svg?seed=${name}`,
         });
-
         const user = await User.create({
             name: name,
             email: email,
@@ -153,7 +152,6 @@ exports.signup = async (req, res) => {
             activity:"active",
             userName: userName,
         });
-
         // return res
         return res.status(200).json({
             success:true,
@@ -175,7 +173,7 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) =>{
     try{
         //  get data from req body
-        const {email, password, userName} = req.body;
+        const {email, password, userName} = req.body.formData;
         // validate data
         if((!email && !userName) || !password)
         {
