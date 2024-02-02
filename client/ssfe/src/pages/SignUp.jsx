@@ -12,7 +12,7 @@ export const SignUp = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const selector = useSelector(state => state.signupData)
+  const {signupData} = useSelector(state => state.auth)
   const toast = useToast();
 
   const [formData, setFormData] = useState({
@@ -53,9 +53,8 @@ export const SignUp = () => {
   const btnData = 'SignUp';
   const topData = "Don't Have an account";
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
+    
     if(formData.password !== formData.confirmPassword){
       toast({
         title: 'Password not Matched',
@@ -66,17 +65,12 @@ export const SignUp = () => {
       })
       return
     }
-    
+    // console.log(formData.email);
     dispatch(setSignupData(formData));
-    // dispatch(sendOtp(formData.email, navigate));
-    // console.log("test 1", formData.email)
-
-    // const res = fetch("http://localhost:4000/api/v1/auth/sendotp",
-    // {
-    //   method: 'POST',
-    //   body: JSON.stringify(formData.email),
-    // })
-
+    // console.log(signupData);
+    console.log("signup data is", signupData)
+    
+    dispatch(sendOtp(formData.email, navigate));
     setFormData({
       email:"",
       name:"",

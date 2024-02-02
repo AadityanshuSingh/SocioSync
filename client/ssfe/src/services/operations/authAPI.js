@@ -12,14 +12,13 @@ const {
 } = endpoints
 
 export function sendOtp(email, navigate) {
-
     // this function is sending emailid to the sendOTP function
     // in the backend so that it can send email to the desired email id
   return async () => {
-    // dispatch(setLoading(true))
+    
     try {
       const response = await apiConnector("POST", SENDOTP_API, {
-        email,
+        email
       })
 
       console.log("SENDOTP API RESPONSE............", response)
@@ -37,7 +36,7 @@ export function sendOtp(email, navigate) {
       //   status:'success',
       //   isClosable: true, 
       // })
-      navigate("/verify-email")
+      navigate("/verifyemail")
     } catch (error) {
       console.log("SENDOTP API ERROR............", error)
       // toast({
@@ -48,30 +47,28 @@ export function sendOtp(email, navigate) {
       //   isClosable: true,
       // })
     }
-    // dispatch(setLoading(false))
   }
 }
 
 export function signUp(
+    email,
     name,
     userName,
-    email,
     password,
     confirmPassword,
     otp,
     navigate
   ) {
-    return async (dispatch) => {
-      const toastId = toast.loading("Loading...")
-      dispatch(setLoading(true))
+    return async () => {
+      console.log("the otp in signUp is", otp)
       try {
         const response = await apiConnector("POST", SIGNUP_API, {
-          name,
-          userName,
-          email,
-          password,
-          confirmPassword,
-          otp,
+          "email": email,
+          "name": name,
+          "userName": userName,
+          "password": password,
+          "confirmPassword": confirmPassword,
+          "otp": otp
         })
 
         console.log("SIGNUP API RESPONSE............", response)
@@ -79,15 +76,11 @@ export function signUp(
         if (!response.data.success) {
           throw new Error(response.data.message)
         }
-        toast.success("Signup Successful")
         navigate("/login")
       } catch (error) {
         console.log("SIGNUP API ERROR............", error)
-        toast.error("Signup Failed")
         navigate("/signup")
       }
-      dispatch(setLoading(false))
-      toast.dismiss(toastId)
     }
   }
 

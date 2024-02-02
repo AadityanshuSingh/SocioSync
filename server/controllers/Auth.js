@@ -61,13 +61,14 @@ exports.signup = async (req, res) => {
     try{
         // data fetch
         const {
-            name,
             email,
+            name,
+            userName,
             password,
             confirmPassword,
-            userName,
             otp
         } = req.body;
+        console.log("backend data", req.body);
         // validate
         if(!name || !email || !password || !confirmPassword || !otp || !userName){
             return res.status(403).json({
@@ -113,10 +114,10 @@ exports.signup = async (req, res) => {
         }
 
         // find most recent OTP stored for the user
-        const recentOtp =  await OTP.find({email: email}).sort({createdAt:-1}).limit(1);
-        console.log(recentOtp[0].otp);
+        const recentOtp =  await OTP.findOne({email: email}).sort({createdAt:-1});
+        console.log(recentOtp);
         // validate otp
-        if(recentOtp.length === 0){
+        if(recentOtp === null){
             // Otp not found
             return res.status(400).json({
                 success:false,
