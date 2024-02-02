@@ -12,13 +12,14 @@ const {
 } = endpoints
 
 export function sendOtp(email, navigate) {
+
     // this function is sending emailid to the sendOTP function
     // in the backend so that it can send email to the desired email id
   return async () => {
-    
+    // dispatch(setLoading(true))
     try {
       const response = await apiConnector("POST", SENDOTP_API, {
-        email
+        email,
       })
 
       console.log("SENDOTP API RESPONSE............", response)
@@ -36,7 +37,7 @@ export function sendOtp(email, navigate) {
       //   status:'success',
       //   isClosable: true, 
       // })
-      navigate("/verifyemail")
+      navigate("/verify-email")
     } catch (error) {
       console.log("SENDOTP API ERROR............", error)
       // toast({
@@ -47,6 +48,7 @@ export function sendOtp(email, navigate) {
       //   isClosable: true,
       // })
     }
+    // dispatch(setLoading(false))
   }
 }
 

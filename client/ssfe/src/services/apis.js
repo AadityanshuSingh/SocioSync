@@ -1,8 +1,8 @@
-const BASE_URL = "http://localhost:4000/api/v1"
-console.log(BASE_URL)
+const BASE_URL = import.meta.env.REACT_APP_BASE_URL
+
 // AUTH ENDPOINTS
 export const endpoints = {
-  SENDOTP_API:BASE_URL + "/auth/sendotp",
+  SENDOTP_API: BASE_URL + "/auth/sendotp",
   SIGNUP_API: BASE_URL + "/auth/signup",
   LOGIN_API: BASE_URL +  "/auth/login",
   CHANGEPASSWORD_API: BASE_URL + "/auth/changePassword",
