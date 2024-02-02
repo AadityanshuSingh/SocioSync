@@ -3,7 +3,7 @@ import { Drawer, DrawerBody, DrawerCloseButton, DrawerContent, Box, DrawerHeader
 
 import { BsFiletypePdf } from "react-icons/bs";
 import pic1 from '../../assets/People1.png'
-import pic2 from '../../assets/emojis.jpg'
+import pic2 from '../../assets/People1.png'
 import pic3 from '../../assets/Logo.png'
 import pic4 from '../../assets/chatbg.jpg'
 
@@ -21,7 +21,7 @@ export const MediaDrawer = () => {
 
   var limitedPicsSize = 3;
   if(imgs.length <= 3){
-    limitedPics = imgs.length;
+    limitedPicsSize = imgs.length;
   }
 
   const limitedPics = imgs.slice(0, limitedPicsSize);
