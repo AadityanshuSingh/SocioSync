@@ -15,8 +15,8 @@ export const Nav = () => {
         mt={2}
         >
             <Card bg={"inherit"} color={"#b7b8bc"} shadow={0} h={"100%"}>
-                <Text>Office Chat</Text>
-                <Text>45 members, 24 online </Text>
+                {/* <Text>Office Chat</Text>
+                <Text>45 members, 24 online </Text> */}
             </Card>
             <Card bg={"inherit"} borderRadius ={0} shadow={0}>
                 <HStack gap={6} >
