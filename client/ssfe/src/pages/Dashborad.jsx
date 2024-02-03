@@ -1,10 +1,11 @@
 import { Card, Divider, HStack, VStack, Box } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { Nav } from '../components/Dashboard/Nav'
 import { Message } from '../components/Dashboard/Message'
 import { ChatWindow } from '../components/Dashboard/ChatWindow'
 import { Search } from '../components/Dashboard/Search'
 import { UserContacts } from '../components/Dashboard/UserContacts'
+import { Explore } from '../components/Explore'
 
 // const socket = socketIO.connect('http://localhost:4000');
 
@@ -12,6 +13,9 @@ import { UserContacts } from '../components/Dashboard/UserContacts'
 // const socket = io("http://localhost:4000");
 
 export const Dashborad = () => {
+
+  const [currentPerson, setCurrentPerson] = useState(null);
+
   // const [value, setValue] = useState('');
   // const [message, setMessage] = useState("");
   // const handleChange = (event) => {
@@ -61,6 +65,7 @@ export const Dashborad = () => {
             h={"100%"}
             p={0}
             >
+
               <Search/>
               <VStack 
               p={1}
@@ -74,38 +79,7 @@ export const Dashborad = () => {
                     },
                   }}
               >
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
-                  <UserContacts/>
+                  
               </VStack>
             </Card>
 
@@ -116,9 +90,14 @@ export const Dashborad = () => {
                 <VStack 
                 h={"100%"}
                 >
-                <Nav/>
-                <ChatWindow/>
-                <Message/>
+                {currentPerson &&
+                <>
+                  <Nav/>
+                  <ChatWindow/>
+                  <Message/>
+                </> 
+                }
+                {!currentPerson && <Explore/>}
                 </VStack>
             </Card>
         </HStack>
