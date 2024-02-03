@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
 const User = require("../models/User");
 
-// TODO:-Update this when you are sending an id from frontend
-
 exports.sendRequest = async (req, res) => {
     try{
-        const senderID = req.user.id;
-        const {receiverID} = req.body;
+        const {senderName,receiverName} = req.body;
+        const senderID = await User.findOne({ userName: senderName});
+        const receiverID = await User.findOne({ userName: receiverName});
 
         const UpdatedSender = await User.findByIdAndUpdate(senderID, {"$push": {"requests" : receiverID},}, {new: true});
         const UpdatedReceiver = await User.findByIdAndUpdate(receiverID, {"$push": {"invites" : senderID} }, {new: true});
@@ -30,8 +29,9 @@ exports.sendRequest = async (req, res) => {
 
 exports.acceptRequest = async (req, res) => {
     try{
-        const acceptorID = req.user.id;
-        const {newFriend} = req.body;
+        const {acceptorName,newFriendName} = req.body;
+        const acceptorID = await User.findOne({ userName: acceptorName});
+        const newFriend = await User.findOne({ userName: newFriendName});
 
         const UpdatedAcceptor = await User.findByIdAndUpdate(acceptorID,
                                 {"$push": {"friends" : newFriend}},
@@ -67,8 +67,10 @@ exports.acceptRequest = async (req, res) => {
 
 exports.rejectRequest = async (req, res) => {
     try{
-        const rejectorID = req.user.id;
-        const {rejectedFriend} = req.body;
+        const {rejectorName,rejectedFriendName} = req.body;
+
+        const rejectorID = await User.findOne({ userName: rejectorName});
+        const rejectedFriend = await User.findOne({ userName: rejectedFriendName});
 
         UpdatedAcceptor = await User.findByIdAndUpdate(rejectorID,
                         {"$pull": {"invites" : rejectedFriend}},
@@ -97,8 +99,10 @@ exports.rejectRequest = async (req, res) => {
 
 exports.deleteRequest = async (req, res) => {
     try{
-        const senderID = req.user.id;
-        const {receiverID} = req.body;
+        const {senderName,receiverName} = req.body;
+
+        const senderID = await User.findOne({ userName: senderName});
+        const receiverID = await User.findOne({ userName: receiverName});
 
         const UpdatedSender = await User.findByIdAndUpdate(senderID, {"$pull": {"requests" : receiverID},}, {new: true});
         const UpdatedReceiver = await User.findByIdAndUpdate(receiverID, {"$pull": {"invites" : senderID} }, {new: true});

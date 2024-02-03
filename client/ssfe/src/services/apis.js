@@ -12,6 +12,9 @@ export const endpoints = {
 // PROFILE ENDPOINTS
 export const profileEndpoints = {
   GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails",
+  UPDATE_DISPLAY_PICTURE_API: BASE_URL + "/profile/updateDisplayPicture",
+  UPDATE_PROFILE_API: BASE_URL + "/profile/updateProfile",
+  GET_ALL_USERS_API: BASE_URL + "/getAllUsers",
 }
 
 // CONTACT-US API
@@ -20,7 +23,13 @@ export const contactusEndpoint = {
 }
 
 // SETTINGS PAGE API
-export const settingsEndpoints = {
-  UPDATE_DISPLAY_PICTURE_API: BASE_URL + "/profile/updateDisplayPicture",
-  UPDATE_PROFILE_API: BASE_URL + "/profile/updateProfile",
+export const friendsEndpoints = {
+  SEND_REQUEST_API: BASE_URL + "/friends/sendrequest",
+  ACCEPT_REQUEST_API: BASE_URL + "/friends/acceptrequest",
+  DELETE_REQUEST_API: BASE_URL + "/friends/deleterequest",
+  REJECT_REQUEST_API: BASE_URL + "/friends/rejectrequest",
+}
+
+export const chatEndpoints = {
+  SEARCH_API: BASE_URL + "/search",
 }
