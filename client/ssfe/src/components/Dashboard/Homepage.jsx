@@ -1,18 +1,20 @@
 import { Card, Divider, HStack, VStack, Box } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { Nav } from '../components/Dashboard/Nav'
-import { Message } from '../components/Dashboard/Message'
-import { ChatWindow } from '../components/Dashboard/ChatWindow'
-import { Search } from '../components/Dashboard/Search'
-import { UserContacts } from '../components/Dashboard/UserContacts'
-import { Explore } from '../components/Explore'
+import { Nav } from './Nav'
+import { Message } from './Message'
+import { ChatWindow } from './ChatWindow'
+import { Search } from './Search'
+import { UserContacts } from './UserContacts'
+import { Explore } from '../Explore'
+
+
 
 // const socket = socketIO.connect('http://localhost:4000');
 
 // import io from "socket.io-client"
 // const socket = io("http://localhost:4000");
 
-export const Dashborad = () => {
+export const Homepage = () => {
 
   const [currentPerson, setCurrentPerson] = useState(null);
 
@@ -44,8 +46,7 @@ export const Dashborad = () => {
     bg={"#131313"} 
     borderRadius={"0"} 
     overflow={"auto"} 
-    pt={"20px"} 
-    pb={"20px"}
+    pb={"10px"}
     css={{
       '&::-webkit-scrollbar': {
         width: "10px",
@@ -53,9 +54,8 @@ export const Dashborad = () => {
     }}
     color={"gray.200"}
     >
-    <Card h={"100%"} bg={"inherit"}>
-        <HStack bg={"#202329"} h={"100%"} borderRadius={"2xl"}>
-
+    <Card h={"100vh"} bg={"inherit"} w = "100%">
+        <HStack bg={"#202329"} h={"100%"} borderRadius="lg">
           {/* Contacts */}
             <Card 
             bg={"inherit"} 
@@ -79,7 +79,6 @@ export const Dashborad = () => {
                     },
                   }}
               >
-                  
               </VStack>
             </Card>
 
@@ -102,6 +101,6 @@ export const Dashborad = () => {
             </Card>
         </HStack>
     </Card>
-    </Card>
+  </Card>
   )
 }

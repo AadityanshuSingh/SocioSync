@@ -105,9 +105,8 @@ export function login(formData, navigate) {
 export function logout(navigate) {
     return (dispatch) => {
       dispatch(setToken(null))
-      dispatch(setUser(null))
-      dispatch(resetCart())
-      toast.success("Logged Out")
+      // dispatch(setUser(null))
+      // toast.success("Logged Out")
       navigate("/")
     }
 }

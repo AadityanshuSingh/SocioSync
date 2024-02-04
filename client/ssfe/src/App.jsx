@@ -6,9 +6,10 @@ import { Provider } from "react-redux";
 import { Login } from './pages/Login';
 import { VerifyEmail } from './pages/VerifyEmail'
 import { ResetComplete } from './pages/ResetComplete';
-import { Dashborad } from './pages/Dashborad';
+import { Dashboard } from './pages/Dashboard';
 import { SignUp } from './pages/SignUp';
-
+import PrivateRoute from './components/Auth/PrivateRoute';
+import { Homepage } from './components/Dashboard/Homepage';
 function App() {
 
   return (
@@ -23,7 +24,23 @@ function App() {
         <Route path='/forgotpassword' element={<forgotPassword/>}/>
         <Route path='/changepassword' element={<changePassword/>}/>
         <Route path='/resetcomplete' element={<ResetComplete/>}/>
-        <Route path='/dashboard' element={<Dashborad/>}/>
+
+        <Route
+            path="/dashboard/*" 
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }>
+            <Route index element={<Homepage/>} />
+
+            {/* <Route path="myprofile" element={<MyProfile/>} />
+            <Route path="saved" element={<Saved/>} />
+            <Route path="friends" element={<Friends/>} />
+            <Route path="settings" element={<Settings/>} />
+            <Route path="community" element={<Community/>} /> */}
+        </Route>
+
       </Routes>
       </Provider>
     </ChakraProvider>
