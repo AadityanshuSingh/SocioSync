@@ -2,7 +2,7 @@ export const sidebarLinks = [
   {
     id: 1,
     name: "All Chats",
-    path: "/dashboard/allchats",
+    path: "/dashboard",
     icon: "VscAccount",
   },
   {
@@ -19,20 +19,20 @@ export const sidebarLinks = [
   },
   {
     id: 4,
-    name: "Settings",
-    path: "/dashboard/settings",
-    icon: "VscAdd",
-  },
-  {
-    id: 5,
     name: "Saved",
     path: "/dashboard/saved",
     icon: "VscMortarBoard",
   },
   {
-    id: 6,
+    id: 5,
     name: "Community",
     path: "/dashboard/community",
     icon: "VscHistory",
+  },
+  {
+    id: 6,
+    name: "Settings",
+    path: "/dashboard/settings",
+    icon: "VscAdd",
   },
 ];
