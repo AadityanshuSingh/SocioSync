@@ -1,7 +1,8 @@
 import { useToast } from "@chakra-ui/react"
-import { setLoading, setToken } from "../../redux/Slices/authSlice"
+import { setLoading, setLoginData, setToken } from "../../redux/Slices/authSlice"
 import { apiConnector } from "../apiconnector"
 import { endpoints } from "../apis"
+import { useSelector } from "react-redux"
 
 const {
   SENDOTP_API,
@@ -75,8 +76,7 @@ export function signUp(ultraNewSignupData, navigate) {
   }
 
 
-
-export function login(formData, navigate) {
+  export function login(formData, navigate) {
     return async (dispatch) => {
         try {
         const response = await apiConnector("POST", LOGIN_API, {
@@ -84,12 +84,13 @@ export function login(formData, navigate) {
         })
 
         console.log("LOGIN API RESPONSE............", response)
-
+        console.log("user login hua h", response.data.user.userName)
+        dispatch(setToken(response.data.token))
+        dispatch(setLoginData(response.data.user))
+        localStorage.setItem("authToken", response.data.token);
         if (!response.data.success) {
             throw new Error(response.data.message)
         }
-
-        dispatch(setToken(response.data.token))
         // updating the slice token to store the token details
         // const userImage = response.data.user.image
         //     ? response.data.user.image
@@ -102,12 +103,10 @@ export function login(formData, navigate) {
     }
 }
 
+
 export function logout(navigate) {
     return (dispatch) => {
       dispatch(setToken(null))
-      dispatch(setUser(null))
-      dispatch(resetCart())
-      toast.success("Logged Out")
       navigate("/")
     }
 }

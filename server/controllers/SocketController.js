@@ -13,7 +13,7 @@ const handleSocketConnections = (io) => {
     socket.on('private_message', (data) => {
       const { sender, recipient, message } = data;
       
-      // writing the logic for peronal chat
+      // writing the logic for personal chat
       // console.log("first");
       var roomName = (sender < recipient) ? (sender + recipient) : (recipient + sender);
       // if the user is already in the room then no need to join him again

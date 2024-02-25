@@ -14,7 +14,7 @@ export const profileEndpoints = {
   GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails",
   UPDATE_DISPLAY_PICTURE_API: BASE_URL + "/profile/updateDisplayPicture",
   UPDATE_PROFILE_API: BASE_URL + "/profile/updateProfile",
-  GET_ALL_USERS_API: BASE_URL + "/getAllUsers",
+  GET_ALL_USERS_API: BASE_URL + "/profile/getallusers",
 }
 
 // CONTACT-US API

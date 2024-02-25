@@ -6,6 +6,7 @@ import InputField from '../components/InputField.jsx'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { login } from '../services/operations/authAPI.js'
+import { getAllUsers } from '../services/operations/profileAPI.js'
 
 export const Login = () => {
 
@@ -43,8 +44,9 @@ export const Login = () => {
   const btnData = 'Login'
   const topData = "Don't Have an account";
 
-  const handleSubmit = () => {
-    dispatch(login(formData, navigate));
+  const handleSubmit = async () => {
+     dispatch(login(formData, navigate));
+     dispatch(getAllUsers());
   }
 
   return (

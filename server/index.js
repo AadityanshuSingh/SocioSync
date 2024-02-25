@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 
 const userRoutes = require("./routes/User");
-
+const profileRoutes = require("./routes/Profile")
+const friendsRoutes = require("./routes/Friend")
+ 
 const database = require("./config/database");
 const cookieParser = require("cookie-parser");
 // since we require that our backend entertain the rquests from frontend, therefore we require cors
@@ -47,6 +49,8 @@ app.use(
 
 // Mounting Of Routes
 app.use("/api/v1/auth", userRoutes);
+app.use("/api/v1/profile", profileRoutes);
+app.use('/api/v1/friends', friendsRoutes);
 
 app.get("/", (req, res) => {
     return res.json({

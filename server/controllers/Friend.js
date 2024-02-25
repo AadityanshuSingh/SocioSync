@@ -3,12 +3,15 @@ const User = require("../models/User");
 
 exports.sendRequest = async (req, res) => {
     try{
-        const {senderName,receiverName} = req.body;
+        const senderName = req.user.userName;
+        const receiverName = req.body.userName;
+
         const senderID = await User.findOne({ userName: senderName});
         const receiverID = await User.findOne({ userName: receiverName});
-
-        const UpdatedSender = await User.findByIdAndUpdate(senderID, {"$push": {"requests" : receiverID},}, {new: true});
-        const UpdatedReceiver = await User.findByIdAndUpdate(receiverID, {"$push": {"invites" : senderID} }, {new: true});
+        console.log("backend mein sender is ", senderID , senderName);
+        console.log("backend mein receiver is ", receiverID, receiverName);
+        const UpdatedSender = await User.findByIdAndUpdate( senderID, {"$push": {"requests" : receiverID},}, {new: true}).populate("requests").exec();
+        const UpdatedReceiver = await User.findByIdAndUpdate( receiverID, {"$push": {"invites" : senderID} }, {new: true}).populate("invites").exec();
 
         return res.status(200).json({
             success: true,
@@ -29,23 +32,26 @@ exports.sendRequest = async (req, res) => {
 
 exports.acceptRequest = async (req, res) => {
     try{
-        const {acceptorName,newFriendName} = req.body;
+        const acceptorName = req.user.userName;
+        const newFriendName = req.body.userName;
+
+
         const acceptorID = await User.findOne({ userName: acceptorName});
         const newFriend = await User.findOne({ userName: newFriendName});
 
-        const UpdatedAcceptor = await User.findByIdAndUpdate(acceptorID,
+        let UpdatedAcceptor = await User.findByIdAndUpdate(acceptorID._id,
                                 {"$push": {"friends" : newFriend}},
                                 {new: true});
-        const UpdatedFriend = await User.findByIdAndUpdate(newFriend,
+        let UpdatedFriend = await User.findByIdAndUpdate(newFriend._id,
                                 {"$push": {"friends" : acceptorID} },
                                 {new: true});
 
-        UpdatedAcceptor = await User.findByIdAndUpdate(acceptorID,
-                        {"$pull": {"invites" : newFriend}},
+        UpdatedAcceptor = await User.findByIdAndUpdate(acceptorID._id,
+                        {"$pull": {"invites" : newFriend._id}},
                         {new: true});
 
-        UpdatedFriend = await User.findByIdAndUpdate(newFriend,
-                        {"$pull": {"requests" : acceptorID}},
+        UpdatedFriend = await User.findByIdAndUpdate(newFriend._id,
+                        {"$pull": {"requests" : acceptorID._id}},
                         {new: true});
 
         return res.status(200).json({
@@ -67,17 +73,21 @@ exports.acceptRequest = async (req, res) => {
 
 exports.rejectRequest = async (req, res) => {
     try{
-        const {rejectorName,rejectedFriendName} = req.body;
+        const rejectorName = req.user.userName;
+        const rejectedFriendName = req.body.userName;
+        console.log("req ki body in friends controller...", req.body);
 
+        console.log("rejector Name is", rejectorName);
+        console.log("rejected friend is ", rejectedFriendName)
         const rejectorID = await User.findOne({ userName: rejectorName});
         const rejectedFriend = await User.findOne({ userName: rejectedFriendName});
 
-        UpdatedAcceptor = await User.findByIdAndUpdate(rejectorID,
-                        {"$pull": {"invites" : rejectedFriend}},
+        UpdatedAcceptor = await User.findByIdAndUpdate(rejectorID._id,
+                        {"$pull": {"invites" : rejectedFriend._id}},
                         {new: true});
 
-        UpdatedFriend = await User.findByIdAndUpdate(rejectedFriend,
-                        {"$pull": {"requests" : rejectorID}},
+        UpdatedFriend = await User.findByIdAndUpdate(rejectedFriend._id,
+                        {"$pull": {"requests" : rejectorID._id}},
                         {new: true});
 
         return res.status(200).json({
@@ -99,13 +109,19 @@ exports.rejectRequest = async (req, res) => {
 
 exports.deleteRequest = async (req, res) => {
     try{
-        const {senderName,receiverName} = req.body;
+        const senderName = req.user.userName;
+        const receiverName = req.body.userName;
+
+        console.log("request ki body in controller is ...", req.body);
+
+        console.log("sender is ", senderName);
+        console.log("receiver is ", receiverName);
 
         const senderID = await User.findOne({ userName: senderName});
         const receiverID = await User.findOne({ userName: receiverName});
 
-        const UpdatedSender = await User.findByIdAndUpdate(senderID, {"$pull": {"requests" : receiverID},}, {new: true});
-        const UpdatedReceiver = await User.findByIdAndUpdate(receiverID, {"$pull": {"invites" : senderID} }, {new: true});
+        const UpdatedSender = await User.findByIdAndUpdate(senderID._id, {"$pull": {"requests" : receiverID._id},}, {new: true});
+        const UpdatedReceiver = await User.findByIdAndUpdate(receiverID._id, {"$pull": {"invites" : senderID._id} }, {new: true});
 
         return res.status(200).json({
             success: true,

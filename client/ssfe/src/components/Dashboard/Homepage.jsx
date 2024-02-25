@@ -1,13 +1,13 @@
 import { Card, Divider, HStack, VStack, Box, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { Nav } from '../components/Dashboard/Nav'
-import { Message } from '../components/Dashboard/Message'
-import { ChatWindow } from '../components/Dashboard/ChatWindow'
-import { Search } from '../components/Dashboard/Search'
-import { UserContacts } from '../components/Dashboard/UserContacts'
-import { Explore } from '../components/Explore'
+import { Nav } from '../Dashboard/Nav'
+import { Message } from '../Dashboard/Message'
+import { ChatWindow } from '../Dashboard/ChatWindow'
+import { Search } from '../Dashboard/Search'
+import { UserContacts } from '../Dashboard/UserContacts'
+import { Explore } from '../Explore'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllUsers } from '../services/operations/profileAPI'
+// import { getAllUsers } from '../services/operations/profileAPI'
 
 // const socket = socketIO.connect('http://localhost:4000');
 

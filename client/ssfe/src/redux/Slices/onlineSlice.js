@@ -4,6 +4,7 @@ export const onlineSlice = createSlice({
   name: 'online',
   initialState: {
     onlineList: [],
+    currentRoom: null,
   },
   reducers: {
     addUser :(state, action) => {
@@ -18,8 +19,11 @@ export const onlineSlice = createSlice({
     setLoading(state, value) {
       state.loading = value.payload;
     },
+    setRoom: (state, value) => {
+      state.currentRoom = value.payload;
+    }
   },
 });
 
-export const { addUser, removeUser,setLoading } = onlineSlice.actions;
+export const { addUser, removeUser,setLoading, setRoom } = onlineSlice.actions;
 export default onlineSlice.reducer;

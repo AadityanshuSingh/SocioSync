@@ -7,8 +7,8 @@ const Group = require("../models/Group");
 exports.auth = async (req, res, next) => {
     try{
         //extract token
-        const token =req.body.token;
-
+        // console.log(req)
+        const token = req.header("Authorization").replace("Bearer ", "");
         //if token missing, then return response
         if(!token) {
             return res.status(401).json({
