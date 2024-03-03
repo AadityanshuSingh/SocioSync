@@ -25,7 +25,7 @@ router.post("/sendotp", sendotp)
 router.post("/changepassword", auth, changePassword)
 
 // Route for forgot password
-router.post("/forgot-password", forgotPassword)
+router.post("/forgotpassword", forgotPassword)
 
 // Export the router for use in the main application
 module.exports = router

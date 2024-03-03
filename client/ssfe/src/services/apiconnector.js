@@ -4,6 +4,7 @@ export const axiosInstance = axios.create({});
 
 export const apiConnector = (method, url, bodyData, headers, params) => {
     // console.log("connect waala data", bodyData);
+    console.log("api me",bodyData)
     return axiosInstance({
         method:method,
         url:url,

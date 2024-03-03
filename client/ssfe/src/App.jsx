@@ -10,6 +10,9 @@ import { Dashboard } from './pages/Dashboard';
 import { SignUp } from './pages/SignUp';
 import PrivateRoute from './components/Auth/PrivateRoute';
 import { Homepage } from './components/Dashboard/Homepage';
+import ProfileSettings from './components/Dashboard/ProfileSettings';
+import MyProfile from './components/Dashboard/MyProfile';
+// import Friends from './components/Dashboard/Friends';
 function App() {
 
   return (
@@ -34,11 +37,12 @@ function App() {
             }>
             <Route index element={<Homepage/>} />
 
-            {/* <Route path="myprofile" element={<MyProfile/>} />
-            <Route path="saved" element={<Saved/>} />
-            <Route path="friends" element={<Friends/>} />
-            <Route path="settings" element={<Settings/>} />
-            <Route path="community" element={<Community/>} /> */}
+            <Route path="myprofile" element={<MyProfile/>} />
+            <Route path="profilesettings" element={<ProfileSettings/>} />
+            {/* <Route path="saved" element={<Saved/>} /> */}
+            {/* <Route path="friends" element={<Friends/>} /> */}
+            {/* <Route path="settings" element={<Settings/>} /> */}
+            {/* <Route path="community" element={<Community/>} /> */}
         </Route>
 
       </Routes>

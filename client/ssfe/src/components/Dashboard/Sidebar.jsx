@@ -33,18 +33,21 @@ export const Sidebar = () => {
   return (
     <>
     <Box
+    position={"sticky"}
+    top={"0"}
     borderRadius="md"
     d="flex"
     flexDirection="column"
-    height="100vh"
+    height="100%"
     minWidth="50px"
     borderRight="1px"
     borderRightColor="richblack.700"
     backgroundColor="#131313"
     py="60px"
+    zIndex="1"
     // onClick={}
     >
-    <VStack spacing={6}>
+    <VStack spacing={6} height={"100%"}>
         {sidebarLinks.map((link) => (
         // console.log("the outgoing object is",link)
             <SidebarLink key={link.id} link={link} iconName={link.icon} />

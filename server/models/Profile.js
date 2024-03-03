@@ -1,9 +1,14 @@
 const mongoose = require('mongoose');
 
 const profileSchema = new mongoose.Schema({
+    name:{
+        type:String,
+        required:true,
+        trim:true,
+    },
     gender:{
         type:String,
-        enum:["Male", "Female"],
+        enum:["Male", "Female", "Other"],
     },
     dateOfBirth:{
         type:Date,
@@ -16,7 +21,7 @@ const profileSchema = new mongoose.Schema({
     },
     profileImage:{
         type:String,
-        trim:true,
+        default:null,
     },
 })
 

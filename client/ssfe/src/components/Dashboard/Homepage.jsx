@@ -14,19 +14,19 @@ import { useDispatch, useSelector } from 'react-redux'
 // import io from "socket.io-client"
 // const socket = io("http://localhost:4000");
 
-export const Dashborad = () => {
+export const Homepage = () => {
   const dispatch = useDispatch();
   // window.onload = dispatch(getAllUsers());
   const {allUsers} = useSelector(state => state.profile)
   const {loginData} = useSelector(state => state.auth)
   const {currentRoom} = useSelector(state => state.online);
   
-  console.log("allUsers are", allUsers)
+  // console.log("allUsers are", allUsers)
 
-  console.log('dashboard mein all users are, ' , allUsers)
+  // console.log('dashboard mein all users are, ' , allUsers)
 
   const User = allUsers.find(item => item.userName === loginData.userName)
-  console.log("User is " , User);
+  // console.log("User is " , User);
 
   const displayFriends = User ? User.friends.length > 0 ? User.friends.map(item => (
     item && <UserContacts key={item.email} name={item.name} cardType={"friends"} userName={item.userName}/>
@@ -116,7 +116,7 @@ export const Dashborad = () => {
 
             {/* Chatting Area */}
             <Card bg={"inherit"} color={"#b7b8bc"} w={"100%"} h={"100%"} shadow={0} borderRadius={"2xl"}>
-                <VStack 
+                <VStack
                 h={"100%"}
                 >
                 {currentRoom &&
@@ -124,7 +124,7 @@ export const Dashborad = () => {
                   <Nav/>
                   <ChatWindow/>
                   <Message/>
-                </> 
+                </>
                 }
                 {!currentRoom && <Explore/>}
                 </VStack>

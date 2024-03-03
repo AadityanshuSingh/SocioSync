@@ -43,18 +43,18 @@ export const UserContacts = (props) => {
             Accept Request
         </Button>
         <Button 
-        bg={"purple.300"} 
-        size={"sm"} 
-        fontSize={"small"} 
-        p={0} 
-        pr={1} 
+        bg={"purple.300"}
+        size={"sm"}
+        fontSize={"small"}
+        p={0}
+        pr={1}
         pl={1}
         onClick={handleRejectRequest}
         >
             Decline
         </Button>
         </HStack> : cardType === "requests" ? 
-        <Button 
+        <Button
         bg={"purple.300"} 
         size={"sm"} 
         fontSize={"small"} 

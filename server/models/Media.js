@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const fileSchema = new mongoose.Schema({
+    mediaType:{
+        type: String,
+        enum:["Photo", "Video", "Docs", "Audio"],
+    },
     sender: {
         type: mongoose.Schema.Types.ObjectId,
         ref:"User",
@@ -19,8 +23,8 @@ const fileSchema = new mongoose.Schema({
     created_at:{
         type: Date,
         default: Date.now(),
-    }, 
+    },
 });
 
-const File = mongoose.model("File", fileSchema);
-module.exports = File;
+const Media = mongoose.model("Media", fileSchema);
+module.exports = Media;

@@ -10,8 +10,8 @@ const {
 
 const { auth } = require("../middlewares/auth")
 
-router.post("/updateprofile", auth, updateProfile)
+router.put("/updateprofile",auth, updateProfile)
 router.get("/getallusers", getAllUsers)
-router.post("/updateDisplayPicture", updateDisplayPicture)
+router.put("/updatedisplaypicture",auth, updateDisplayPicture)
 
 module.exports = router
