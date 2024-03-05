@@ -8,27 +8,31 @@ const handleSocketConnections = (io) => {
   io.on('connection', (socket) => {
     console.log(`⚡: ${socket.id} user just connected!`);
 
+    // joining the user to a particular room
+    socket.on('join_room', (roomName) => {
+      socket.join(roomName);
+      console.log("user joined the room", roomName);
+    });
 
   // Private Messsge controller
-    socket.on('private_message', (data) => {
-      const { sender, recipient, message } = data;
+    socket.on('private_message', ({roomName, messageObj}) => {
+
+      const { sender, recipient, message } = messageObj;
       
       // writing the logic for personal chat
-      // console.log("first");
-      var roomName = (sender < recipient) ? (sender + recipient) : (recipient + sender);
-      // if the user is already in the room then no need to join him again
-      const room = io.sockets.adapter.rooms.get(roomName);
-      if(room && room.has(roomName))
-      {
-        io.sockets.in(roomName).emit('private_message', message);
-        console.log("firstcndn");
-      }
-      else
-      {
-        socket.join(roomName);
-        io.sockets.in(roomName).emit('serverMessage', message);
-        console.log("secondcndn");
-      }
+      
+      // const room = io.sockets.adapter.rooms.get(roomName);
+      // if(room && room.has(roomName))
+      // {
+      socket.to(roomName).emit('receive_private_message', messageObj);
+      //   console.log("firstcndn");
+      // }
+      // else
+      // {
+      //   socket.join(roomName);
+      //   io.sockets.in(roomName).emit('serverMessage', message);
+      //   console.log("secondcndn");
+      // }
       console.log(message);
 
       // else join him

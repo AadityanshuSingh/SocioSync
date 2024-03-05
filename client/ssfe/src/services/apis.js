@@ -30,6 +30,10 @@ export const friendsEndpoints = {
   REJECT_REQUEST_API: BASE_URL + "/friends/rejectrequest",
 }
 
+// CHAT API
+
 export const chatEndpoints = {
   SEARCH_API: BASE_URL + "/search",
+  SEND_CHAT_REQUEST_API : BASE_URL + "/chats/updatechat",
+  GET_CHAT_HISTORY_API: BASE_URL + "/chats/getChats"
 }

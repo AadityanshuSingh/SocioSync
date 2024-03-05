@@ -83,11 +83,6 @@ export function signUp(ultraNewSignupData, navigate) {
             formData
         })
 
-        console.log("LOGIN API RESPONSE............", response)
-        console.log("user login hua h", response.data.user.userName)
-        dispatch(setToken(response.data.token))
-        dispatch(setLoginData(response.data.user))
-        localStorage.setItem("authToken", response.data.token);
         if (!response.data.success) {
             throw new Error(response.data.message)
         }
@@ -96,6 +91,11 @@ export function signUp(ultraNewSignupData, navigate) {
         //     ? response.data.user.image
         //     : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
         // dispatch(setUser({ ...response.data.user, image: userImage }))
+        console.log("LOGIN API RESPONSE............", response)
+        console.log("user login hua h", response.data.user.userName)
+        dispatch(setToken(response.data.token))
+        dispatch(setLoginData(response.data.user))
+        localStorage.setItem("authToken", response.data.token);
         navigate("/dashboard")
         } catch (error) {
         console.log("LOGIN API ERROR............", error)

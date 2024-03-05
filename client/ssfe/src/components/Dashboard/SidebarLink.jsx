@@ -22,6 +22,7 @@ export default function SidebarLink( {link, iconName} ) {
             w="3px"
             bg="inherit"
             size={"sm"}
+            color={"gray.300"}
             >
             <Flex align="center" gap={2}>
                 {/* Icon Goes Here */}

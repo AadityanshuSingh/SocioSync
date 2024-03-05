@@ -7,26 +7,15 @@ import { Search } from '../Dashboard/Search'
 import { UserContacts } from '../Dashboard/UserContacts'
 import { Explore } from '../Explore'
 import { useDispatch, useSelector } from 'react-redux'
-// import { getAllUsers } from '../services/operations/profileAPI'
 
-// const socket = socketIO.connect('http://localhost:4000');
-
-// import io from "socket.io-client"
-// const socket = io("http://localhost:4000");
-
-export const Dashborad = () => {
+export const Homepage = () => {
   const dispatch = useDispatch();
-  // window.onload = dispatch(getAllUsers());
+
   const {allUsers} = useSelector(state => state.profile)
   const {loginData} = useSelector(state => state.auth)
   const {currentRoom} = useSelector(state => state.online);
-  
-  console.log("allUsers are", allUsers)
-
-  console.log('dashboard mein all users are, ' , allUsers)
 
   const User = allUsers.find(item => item.userName === loginData.userName)
-  console.log("User is " , User);
 
   const displayFriends = User ? User.friends.length > 0 ? User.friends.map(item => (
     item && <UserContacts key={item.email} name={item.name} cardType={"friends"} userName={item.userName}/>
@@ -39,28 +28,8 @@ export const Dashborad = () => {
   const displayRequests = User ? User.requests.length > 0 ? User.requests.map(item => (
     item && <UserContacts key={item.email} name={item.name} cardType={"requests"} userName={item.userName}/>
   )): <></>:<></>
+  
 
-  // const [value, setValue] = useState('');
-  // const [message, setMessage] = useState("");
-  // const handleChange = (event) => {
-  //   event.preventDefault();
-  //   setValue(event.target.value);
-  // }
-  // useEffect( () => {
-  //     socket.on('serverMessage', (data) => {
-  //       const {message} = data;
-  //     });
-  //     setValue("");
-  //     setMessage("");
-  // }, [socket,message]);
-
-  // const sendMessage = () => {
-  //   setMessage(value);
-  //   recipient = value;
-  //   if (recipient && message) {
-  //     socket.emit('private_message', { socket, recipient, message });
-  //   }
-  // }
   return (
     <Card
     width={"100%"} 
@@ -77,7 +46,7 @@ export const Dashborad = () => {
     }}
     color={"gray.200"}
     >
-    <Card h={"100%"} bg={"inherit"}>
+    <Card h={"100%"} bg={"inherit"} ml={0}>
         <HStack bg={"#202329"} h={"100%"} borderRadius={"2xl"}>
 
           {/* Friends */}

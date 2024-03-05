@@ -10,7 +10,11 @@ import { Dashboard } from './pages/Dashboard';
 import { SignUp } from './pages/SignUp';
 import PrivateRoute from './components/Auth/PrivateRoute';
 import { Homepage } from './components/Dashboard/Homepage';
-function App() {
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:4000');
+
+function App() { 
 
   return (
     <BrowserRouter>
@@ -48,4 +52,5 @@ function App() {
   )
 }
 
+export {socket};
 export default App

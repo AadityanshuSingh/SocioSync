@@ -3,8 +3,10 @@ import { createSlice } from '@reduxjs/toolkit';
 export const chatSlice = createSlice({
   name: "chat",
   initialState: {
-    sentMessages: [],
-    receivedMessages: [],
+    // sentMessages: [],
+    // receivedMessages: [],
+    allMessages: [],
+    history: [],
   },
   reducers: {
     // Reducer for handling sent messages
@@ -22,8 +24,18 @@ export const chatSlice = createSlice({
     setLoading(state, value) {
       state.loading = value.payload;
     },
+
+    addMessage: (state, action) => {
+      // const {sender, receiver, message, owner, chatType, groupId, time} = action.payload;
+      // const timestamp = Date.now();
+      state.allMessages.push(action.payload);
+    },
+
+    populateHistory: (state, action) => {
+      state.history = action.payload? action.payload : [];
+    }
   },
 });
 
-export const { addSentMessage, addReceivedMessage,setLoading } = chatSlice.actions;
+export const { addSentMessage, addReceivedMessage,setLoading, addMessage, populateHistory} = chatSlice.actions;
 export default chatSlice.reducer;

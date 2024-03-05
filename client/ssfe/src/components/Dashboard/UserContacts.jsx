@@ -1,9 +1,10 @@
 import { Avatar, AvatarBadge, Box, Button, Card, HStack,Image,Text } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {setRoom} from '../../redux/Slices/onlineSlice'
 import { acceptrequest, deleterequest, rejectrequest } from '../../services/operations/friendsAPI'
 import { useNavigate } from 'react-router-dom'
+import { socket } from '../../App'
 export const UserContacts = (props) => {
     const num = 0
     const {name, cardType, userName, key} = props
@@ -13,6 +14,7 @@ export const UserContacts = (props) => {
     const navigate = useNavigate();
     const {token} = useSelector(state => state.auth) || localStorage.authToken;
     const {currentRoom} = useSelector(state => state.online);
+    const {loginData} = useSelector(state => state.auth);
 
     const handleCardClick = () => {
         if(currentRoom === null || currentRoom.userName !== userName){
@@ -31,6 +33,23 @@ export const UserContacts = (props) => {
     const handleDeleteRequest = () => {
         dispatch(deleterequest(token, userName, navigate));
     }
+
+    const handleJoinRoom = () => {
+        const sender = loginData.userName;
+        const receiver = userName;
+
+        var roomName = (sender < receiver) ? (sender + receiver) : (receiver + sender);
+
+        if(cardType === "friends")
+        {
+            socket.emit('join_room', roomName);
+            console.log(userName, "joined the room ", roomName);
+        }
+    }
+
+    useEffect(() => {
+        handleJoinRoom();
+    } , []);
 
     const btns = cardType === "invites" ? <HStack w={"100%"} mr={4} ml={1}>
         <Button 

@@ -5,12 +5,23 @@ import { useNavigate } from 'react-router-dom'
 import { sendrequest } from '../../services/operations/friendsAPI'
 import { useEffect } from 'react'
 
+function truncateString(str, maxLength) {
+    if (str !== null && str.length > maxLength) {
+      return str.slice(0, maxLength) + "...";
+    } else {
+      return str;
+    }
+  }
+
 export const UserCard = (props) => {
     const {name, userName, friends, description} = props
     const photo = `https://api.dicebear.com/5.x/initials/svg?seed=${name}`
     const {token} = useSelector(state => state.auth) || localStorage.authToken;
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const truncateName = truncateString(name, 10);
+    const truncateUserName = truncateString(userName, 15);
+    const truncateDescription = truncateString(description, 75);
 
     const handleClick = () => {
         dispatch(sendrequest(token, userName, navigate));
@@ -38,14 +49,14 @@ export const UserCard = (props) => {
             <HStack>
                 <Avatar src={photo}/>
                 <VStack align={"left"}>
-                    <Text>{name}</Text>
-                    <Text fontSize={"sm"} color={"gray.400"}>{userName}</Text>
+                    <Text>{truncateName}</Text>
+                    <Text fontSize={"sm"} color={"gray.400"}>{truncateUserName}</Text>
                 </VStack>
             </HStack>
         </CardHeader>
         <CardBody>
             <Text color={"gray.400"} fontSize={"sm"}>
-               {description || <Text> Hey There!! I am using SocioSync and Motka is not allowed here.</Text>}
+               {truncateDescription || <Text> Hey There!! I am using SocioSync and Motka is not allowed here.</Text>}
             </Text>
         </CardBody>
         <CardFooter>

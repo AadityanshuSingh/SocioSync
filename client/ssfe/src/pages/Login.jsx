@@ -1,17 +1,21 @@
-import { Button, Card, CardBody, Image, Box, Input, Text, Hide, Link, HStack } from '@chakra-ui/react'
+import { Button, Card, CardBody, Image, Box, Input, Text, Hide, Link, HStack, useToast } from '@chakra-ui/react'
 import pic from "../assets/People1.png"
 import Logo from "../components/Logo.jsx"
 import React, { useState } from 'react'
 import InputField from '../components/InputField.jsx'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../services/operations/authAPI.js'
 import { getAllUsers } from '../services/operations/profileAPI.js'
+import { setLoading } from '../redux/Slices/authSlice.js'
 
 export const Login = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {loginData} = useSelector(state => state.auth);
+  const {token} = useSelector(state => state.auth);
+  const toast = useToast();
   const [formData, setFormData] = useState({
     email:"",
     password: "",
@@ -45,9 +49,58 @@ export const Login = () => {
   const topData = "Don't Have an account";
 
   const handleSubmit = async () => {
-     dispatch(login(formData, navigate));
-     dispatch(getAllUsers());
-  }
+    dispatch(setLoading(true));
+  
+    try {
+      // Dispatch login action
+      await dispatch(login(formData, navigate));
+      
+      // Check if loginData is null (indicating login failure)
+      // if (loginData === null || token === null ) {
+      //   toast({
+      //     title: 'Login Failed.',
+      //     description: 'An error occurred during login.',
+      //     status: 'error',
+      //     duration: 3000,
+      //     isClosable: true,
+      //   });
+      // }
+
+      // If login is successful, show success toast
+      if (token !== null){
+        toast({
+          title: 'Logged in Successfully.',
+          description: '',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+      dispatch(getAllUsers());
+
+    } catch (error) {
+      // If an error occurs during login, show failure toast
+      toast({
+        title: 'Login Failed.',
+        description: error.message || 'An error occurred during login.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    } finally {
+      dispatch(setLoading(false));
+      // if(token === null)
+      // {
+      //   toast({
+      //     title: 'Login Failed.',
+      //     description: error.message || 'An error occurred during login.',
+      //     status: 'error',
+      //     duration: 3000,
+      //     isClosable: true,
+      //   });
+      // }
+    }
+  };
 
   return (
     <Card 

@@ -38,7 +38,7 @@ exports.getAllUsers = async (req, res) => {
 	console.log("getting all users");
 	try {
 	const allUsers = await User.find().populate("requests").populate("invites").populate("friends").exec();
-	console.log(allUsers);
+	// console.log(allUsers);
     return res.json({
 			  success: true,
 			  message: "all Users are",

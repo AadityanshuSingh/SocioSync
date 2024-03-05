@@ -4,6 +4,7 @@ const app = express();
 const userRoutes = require("./routes/User");
 const profileRoutes = require("./routes/Profile")
 const friendsRoutes = require("./routes/Friend")
+const chatRoutes = require("./routes/Chat")
  
 const database = require("./config/database");
 const cookieParser = require("cookie-parser");
@@ -51,6 +52,7 @@ app.use(
 app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
 app.use('/api/v1/friends', friendsRoutes);
+app.use('/api/v1/chats', chatRoutes);
 
 app.get("/", (req, res) => {
     return res.json({

@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
 const chatSchema = new mongoose.Schema({
     sender:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User",
+        type:String,
+        // ref:"User",
     },
     receiver:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User",
+        type:String,
+        // ref:"User",
+    },
+    owner:{
+        type: String,
     },
     chatType:{
         type:String,
@@ -21,14 +24,14 @@ const chatSchema = new mongoose.Schema({
     groupId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Group",
+        default: null,
     },
     reactions:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Reaction",
     }],
-    createdAt:{
+    time:{
         type:Date,
-        default:Date.now(),
     },
     MediaType:{
         type:String,
@@ -37,7 +40,7 @@ const chatSchema = new mongoose.Schema({
     },
     message:{
         type:String,
-        required:true,
+        // required:true,
     }
 })
 
