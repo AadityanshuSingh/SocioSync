@@ -14,8 +14,6 @@ exports.sendotp = async (req, res) => {
         // fetch email from req body
         const {email} = req.body;
         console.log(email);
-
-        // generate OTP
         var otp = otpGenerator.generate(6, {
             upperCaseAlphabets:false,
             lowerCaseAlphabets:false,
@@ -138,12 +136,14 @@ exports.signup = async (req, res) => {
         // Create the User
         // entry create in DB
         const profileDetails = await Profile.create({
+            name:name,
             gender:null,
             dob: null,
             about:null,
             ph_no:null,
-            profile_img:`https://api.dicebear.com/7.x/initials/svg?seed=${name}`,
+            profileImage:`https://api.dicebear.com/7.x/initials/svg?seed=${name}`,
         });
+
         const user = await User.create({
             name: name,
             email: email,
@@ -235,7 +235,7 @@ exports.login = async (req, res) =>{
 
 // changepassword
 exports.changePassword = async (req, res) => {
-
+    console.log(req.body)
     try{
         // get user data from req body
         const userDetails = await User.findById(req.user.id);
@@ -247,26 +247,18 @@ exports.changePassword = async (req, res) => {
 
 
         // get oldPassword, newPassword, confirmNewPassword
-        const {oldPassword, newPassword, confirmPassword} = req.body;
+        const {oldPassword, newPassword} = req.body;
 
         // validation
-        if(!oldPassword || !newPassword || !confirmPassword)
+        if(!oldPassword || !newPassword)
         {
             return res.status(404).json({
                 success:false,
                 message:"Please fill all the fields required for password change",
             });
         }
-
-        if(newPassword !== confirmPassword)
-        {
-            return res.status(401).json({
-                success:false,
-                message:"new password and confirm password does not match",
-            })
-        }
-
         const doesPasswordMatch = await bcrypt.compare(oldPassword, userDetails.password);
+        console.log(doesPasswordMatch);
         if(!doesPasswordMatch)
         {
             return res.status(401).json({
@@ -285,9 +277,12 @@ exports.changePassword = async (req, res) => {
 
         // send mail - Password update
         try{
+            // console.log("email jaane waala h");
             const emailResponse = await mailSender(
                 updatedUserDetails.email,
-                passwordUpdated(updatedUserDetails.email, `Password was updated successfully for ${updatedUserDetails.name}`)
+                // passwordUpdated(updatedUserDetails.email, `Password was updated successfully for ${updatedUserDetails.name}`),
+                "HO gya change, ab gand marao",
+                `<h1>AB kya muh me loge ??</h1>`,
             );
             console.log("Email sent successfully: ", emailResponse.response);
         }

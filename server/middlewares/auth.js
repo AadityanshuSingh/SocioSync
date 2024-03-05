@@ -5,6 +5,7 @@ const Group = require("../models/Group");
 //auth
 // during signup
 exports.auth = async (req, res, next) => {
+    // console.log("auth middleware mein ", req.files);
     try{
         //extract token
         // console.log(req)

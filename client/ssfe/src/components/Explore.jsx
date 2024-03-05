@@ -1,13 +1,15 @@
+/* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../services/operations/profileAPI'
 import { UserCard } from './ExploreFriends/UserCard'
 import { Grid, GridItem } from '@chakra-ui/react';
 
+
 export const Explore = () => {
   const num = 0;
   const {allUsers} = useSelector(state => state.profile);
   const {loginData} = useSelector(state => state.auth)
-  const display = allUsers.map(item => (item.userName !== loginData.userName && 
+  const display = allUsers.map(item => (item.userName !== loginData.userName &&
     <GridItem key={item._id} w={"80%"}>
       <UserCard name={item.name} userName={item.userName} friends={item.friends.length} description={null}/>
     </GridItem>
@@ -16,7 +18,7 @@ export const Explore = () => {
   return (
     <>
     <Grid
-    w={"100%"} 
+    w={"100%"}
     m={4}
     pl={4}
     pr={2}

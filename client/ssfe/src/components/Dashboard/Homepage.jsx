@@ -85,7 +85,7 @@ export const Homepage = () => {
 
             {/* Chatting Area */}
             <Card bg={"inherit"} color={"#b7b8bc"} w={"100%"} h={"100%"} shadow={0} borderRadius={"2xl"}>
-                <VStack 
+                <VStack
                 h={"100%"}
                 >
                 {currentRoom &&
@@ -93,7 +93,7 @@ export const Homepage = () => {
                   <Nav/>
                   <ChatWindow/>
                   <Message/>
-                </> 
+                </>
                 }
                 {!currentRoom && <Explore/>}
                 </VStack>

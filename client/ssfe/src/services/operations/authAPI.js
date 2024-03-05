@@ -9,7 +9,6 @@ const {
   SIGNUP_API,
   LOGIN_API,
   FORGOTPASSWORD_API,
-  CHANGEPASSWORD_API,
 } = endpoints
 
 export function sendOtp(email, navigate) {
@@ -111,38 +110,38 @@ export function logout(navigate) {
     }
 }
 
-export function changePassword(oldPassword, newPassword, confirmPassword, navigate) {
-  return async (dispatch) => {
-      const toastId = toast.loading("Loading...")
-      dispatch(setLoading(true))
-      try {
-      const response = await apiConnector("POST", CHANGEPASSWORD_API, {
-          oldPassword,
-          newPassword,
-          confirmPassword,
-          navigate,
-      })
+// export function changePassword(oldPassword, newPassword, confirmPassword, navigate) {
+//   return async (dispatch) => {
+//       const toastId = toast.loading("Loading...")
+//       dispatch(setLoading(true))
+//       try {
+//       const response = await apiConnector("POST", CHANGEPASSWORD_API, {
+//           oldPassword,
+//           newPassword,
+//           confirmPassword,
+//           navigate,
+//       })
 
-      console.log("Change password API RESPONSE............", response)
+//       console.log("Change password API RESPONSE............", response)
 
-      if (!response.data.success) {
-          throw new Error(response.data.message)
-      }
+//       if (!response.data.success) {
+//           throw new Error(response.data.message)
+//       }
 
-      toast.success("Password changed Successfully")
-      }
+//       toast.success("Password changed Successfully")
+//       }
 
-      catch (error) {
-      console.log("LOGIN API ERROR............", error)
-      toast.error("Password could not be changed")
-      // TODO:-navigate to my profile
-      // navigate("/dashboard/my-profile")
-      }
-      // TODO:-navigate to my profile
-      dispatch(setLoading(false))
-      toast.dismiss(toastId)
-  }
-}
+//       catch (error) {
+//       console.log("LOGIN API ERROR............", error)
+//       toast.error("Password could not be changed")
+//       // TODO:-navigate to my profile
+//       // navigate("/dashboard/my-profile")
+//       }
+//       // TODO:-navigate to my profile
+//       dispatch(setLoading(false))
+//       toast.dismiss(toastId)
+//   }
+// }
 
 
 export function forgotPassword(email, otp, newPassword, confirmPassword, navigate) {

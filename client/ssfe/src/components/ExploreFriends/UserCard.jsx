@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Avatar, Button, Card, CardBody, CardFooter, CardHeader, Center, Divider, HStack, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, StackDivider, Text, VStack, useDisclosure } from '@chakra-ui/react'
 import {ViewIcon} from "@chakra-ui/icons"
 import { useDispatch, useSelector } from 'react-redux'

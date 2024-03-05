@@ -39,6 +39,16 @@ database.connect();
 console.log("db connect");
 // middlewares
 app.use(express.json());
+app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : '/tmp/'
+    // by writing these 2 --> we can store the media in temp files rather 
+    // than the permanent storage
+}));
+
+const cloudinary = require("./config/cloudinary");
+cloudinary.cloudinaryConnect();
+
 app.use(cookieParser());
 app.use(
     cors({
