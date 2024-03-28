@@ -7,6 +7,7 @@ export const chatSlice = createSlice({
     // receivedMessages: [],
     allMessages: [],
     history: [],
+    messagesToBeUpdated : [],
   },
   reducers: {
     // Reducer for handling sent messages
@@ -33,9 +34,13 @@ export const chatSlice = createSlice({
 
     populateHistory: (state, action) => {
       state.history = action.payload? action.payload : [];
+    },
+
+    addMessagesToBeUpdated : (state, action) => {
+      state.messagesToBeUpdated.push(action.payload);
     }
   },
 });
 
-export const { addSentMessage, addReceivedMessage,setLoading, addMessage, populateHistory} = chatSlice.actions;
+export const { addSentMessage, addReceivedMessage,setLoading, addMessage, populateHistory, addMessagesToBeUpdated} = chatSlice.actions;
 export default chatSlice.reducer;

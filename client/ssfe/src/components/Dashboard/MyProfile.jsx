@@ -5,8 +5,9 @@ import { Box, Flex, Image, Text, VStack, HStack } from "@chakra-ui/react";
 import IconBtn from "../common/IconBtn";
 import { formattedDate } from "../../utils/dateFormatter";
 export default function MyProfile() {
-  const { user } = useSelector((state) => state.profile);
+  const { loginData } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const user = loginData;
 
   return (
     <>
@@ -36,8 +37,8 @@ export default function MyProfile() {
       >
         <HStack spacing={4}>
           <Image
-            src={user?.image}
-            alt={`profile-${user?.firstName}`}
+            src={loginData.image ? loginData.image : `https://api.dicebear.com/5.x/initials/svg?seed=${loginData.name}`}
+            alt={`profile-${loginData?.name}`}
             boxSize="78px"
             rounded="full"
             objectFit="cover"

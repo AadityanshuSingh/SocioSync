@@ -1,5 +1,5 @@
 import { Card, Divider, HStack, VStack, Box, Text } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Nav } from '../Dashboard/Nav'
 import { Message } from '../Dashboard/Message'
 import { ChatWindow } from '../Dashboard/ChatWindow'
@@ -14,8 +14,8 @@ export const Homepage = () => {
   const {allUsers} = useSelector(state => state.profile)
   const {loginData} = useSelector(state => state.auth)
   const {currentRoom} = useSelector(state => state.online);
-
-  const User = allUsers.find(item => item.userName === loginData.userName)
+  
+  const User = allUsers.find(item => item.userName === loginData.userName);
 
   const displayFriends = User ? User.friends.length > 0 ? User.friends.map(item => (
     item && <UserContacts key={item.email} name={item.name} cardType={"friends"} userName={item.userName}/>

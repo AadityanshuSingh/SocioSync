@@ -1,13 +1,13 @@
 import { Button, Card, CardBody, Image, Box, Input, Text, Hide, Link, HStack, useToast } from '@chakra-ui/react'
 import pic from "../assets/People1.png"
 import Logo from "../components/Logo.jsx"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InputField from '../components/InputField.jsx'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../services/operations/authAPI.js'
 import { getAllUsers } from '../services/operations/profileAPI.js'
-import { setLoading } from '../redux/Slices/authSlice.js'
+import { setLoading, setLoginData, setToken } from '../redux/Slices/authSlice.js'
 
 export const Login = () => {
 

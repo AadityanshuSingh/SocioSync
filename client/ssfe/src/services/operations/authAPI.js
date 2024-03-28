@@ -95,6 +95,7 @@ export function signUp(ultraNewSignupData, navigate) {
         dispatch(setToken(response.data.token))
         dispatch(setLoginData(response.data.user))
         localStorage.setItem("authToken", response.data.token);
+        localStorage.setItem("logindata", JSON.stringify(response.data.user));
         navigate("/dashboard")
         } catch (error) {
         console.log("LOGIN API ERROR............", error)

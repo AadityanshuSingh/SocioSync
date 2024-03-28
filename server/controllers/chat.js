@@ -56,12 +56,26 @@ exports.updateChat = async (req, res) => {
     }
 }
 
+exports.updateChatDirectly = async (query) => {
+    try {
+        const result = await Chat.insertMany(query);
+        console.log("Chat updated directly in backend", result);
+        return result;
+    } catch (error) {
+        console.error("Error updating Chat directly in backend:", error);
+        throw error;
+    }
+}
+
 exports.getChats = async (req, res) => {
     try{
         const sender = req.query.query;
         // console.log("user sent in  the backend to get the history ", sender);
 
-        const result = await Chat.find({owner: sender});
+        const result = await Chat.find({$or: [
+            { sender: sender },
+            { receiver: sender }
+        ]});
         // console.log("result is",result);
 
         return res.status(200).json({

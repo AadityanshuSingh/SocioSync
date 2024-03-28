@@ -33,7 +33,7 @@ export const Sidebar = () => {
   return (
     <>
     <Box
-    position={"sticky"}
+    // position={"sticky"}
     top={"0"}
     borderRadius="md"
     d="flex"
