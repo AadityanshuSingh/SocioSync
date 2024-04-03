@@ -4,66 +4,60 @@ const User = require("../models/User");
 const { updateChat, updateChatDirectly } = require("../controllers/Chat");
 
 const handleSocketConnections = (io) => {
-  
-  io.on('connection', (socket) => {
+  io.on("connection", (socket) => {
     console.log(`⚡: ${socket.id} user just connected!`);
 
     // joining the user to a particular room
-    socket.on('join_room', (roomName) => {
+    socket.on("join_room", (roomName) => {
       socket.join(roomName);
-      const numSocketsInRoom = io.sockets.adapter.rooms.get(roomName)?.size || 0;
+      const numSocketsInRoom =
+        io.sockets.adapter.rooms.get(roomName)?.size || 0;
       console.log(`Number of sockets in room ${roomName}: ${numSocketsInRoom}`);
     });
 
-  // Private Messsge controller
-    socket.on('private_message', ({roomName, messageObj}) => {
-      // writing the logic for personal chat 
+    // Private Messsage controller
+    socket.on("private_message", ({ roomName, messageObj }) => {
+      // writing the logic for personal chat
 
       // Now send the message to recepient (if online), i.e., the numberOfSocketsInRoom is 2
       console.log(messageObj);
-      const numSocketsInRoom = io.sockets.adapter.rooms.get(roomName)?.size || 0;
-      if(numSocketsInRoom == 1){
+      const numSocketsInRoom =
+        io.sockets.adapter.rooms.get(roomName)?.size || 0;
+      if (numSocketsInRoom == 1) {
         messageObj.owner = roomName;
-        io.in(roomName).emit('user_is_alone', messageObj);
+        io.in(roomName).emit("user_is_alone", messageObj);
         console.log("only one user is online ", messageObj);
-      }
-      else{
-        io.in(roomName).emit('receive_private_message', messageObj);
-        console.log("both users are online and message obj is",messageObj);
+      } else {
+        io.in(roomName).emit("receive_private_message", messageObj);
+        console.log("both users are online and message obj is", messageObj);
       }
     });
 
-
-
-    socket.on('group message', (data) => {
+    socket.on("group message", (data) => {
       const { sender, groupName, message } = data;
       var roomName = groupName;
       const room = io.sockets.adapter.rooms.get(roomName);
 
-      if(room && room.has(roomName))
-      {
-        io.sockets.in(roomName).emit('private_message', {sender, message});
-      }
-      else{
+      if (room && room.has(roomName)) {
+        io.sockets.in(roomName).emit("private_message", { sender, message });
+      } else {
         socket.join(roomName);
-        io.sockets.in(roomName).emit('serverMessage',{sender, message});
-        console.log("message is ",message);
+        io.sockets.in(roomName).emit("serverMessage", { sender, message });
+        console.log("message is ", message);
         console.log("sender is ", sender);
       }
-    })
-
-
+    });
 
     // TODO:-DB CALL ON USER DICONNECTION
 
-    socket.on('handle_disconnect', ({roomNames}) => {
-      for(i in roomNames){
+    socket.on("handle_disconnect", ({ roomNames }) => {
+      for (i in roomNames) {
         socket.leave(i);
       }
-    })
-    socket.on('disconnect', () => {
+    });
+    socket.on("disconnect", () => {
       console.log(`User disconnected: ${socket.id}`);
     });
   });
-  };
-  module.exports = { handleSocketConnections };
+};
+module.exports = { handleSocketConnections };

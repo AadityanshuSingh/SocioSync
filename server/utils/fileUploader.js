@@ -1,21 +1,19 @@
-const Group = require('../models/Group');
-const Media = require('../models/Media');
-const User = require('../models/User');
+const Group = require("../models/Group");
+const Media = require("../models/Media");
+const User = require("../models/User");
 const cloudinary = require("cloudinary").v2;
 
-exports.isFileTypeSupported = async(type, supportedTypes) => {
-    return supportedTypes.includes(type);
-}
+exports.isFileTypeSupported = async (type, supportedTypes) => {
+  return supportedTypes.includes(type);
+};
 
-exports.uploadFileToCloudinary = async(file, folder, quality) => {
-    const options = {folder};
-    if(quality)
-    {
-        options.quality = quality;
-    }
-    options.resource_type = "auto";
-    return await cloudinary.uploader.upload(file.tempFilePath, options);
-}
+exports.uploadFileToCloudinary = async (file, folder) => {
+  const options = {};
+  options.folder = folder;
+  options.resource_type = "auto";
+  options.quality = "auto";
+  return await cloudinary.uploader.upload(file.tempFilePath, options);
+};
 
 // exports.profileImageUpload = async (req, res) => {
 //     try{

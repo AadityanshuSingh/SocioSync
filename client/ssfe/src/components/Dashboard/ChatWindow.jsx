@@ -36,7 +36,7 @@ export const ChatWindow = () => {
   );
 
   useEffect(() => {
-    setFilteredHistory(
+    const filtered =
       history && history.length !== 0
         ? history.filter(
             (msg) =>
@@ -49,9 +49,11 @@ export const ChatWindow = () => {
                 msg.owner === sender) ||
               msg.owner === roomName
           )
-        : null
-    );
-    filteredHistory.sort((a, b) => a.time - b.time);
+        : null;
+
+    filtered && filtered.sort((a, b) => a.time - b.time);
+    console.log("filtered history is ", filtered);
+    setFilteredHistory(filtered);
   }, [sender, receiver, currentRoom]);
 
   // setting current messages
@@ -78,8 +80,10 @@ export const ChatWindow = () => {
             <ChatBubble
               key={item.time}
               sender={item.sender}
-              message={item.message}
+              message={item.message ? item.message : null}
               time={item.time}
+              mediaType={item.MediaType}
+              file={item.media ? item.media : null}
             />
           ) : null
         )
@@ -92,8 +96,10 @@ export const ChatWindow = () => {
             <ChatBubble
               key={item.time}
               sender={item.sender}
-              message={item.message}
+              message={item.message ? item.message : null}
               time={item.time}
+              mediaType={item.MediaType}
+              file={item.media ? item.media : null}
             />
           ) : null
         )

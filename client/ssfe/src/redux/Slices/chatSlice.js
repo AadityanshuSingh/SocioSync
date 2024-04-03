@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export const chatSlice = createSlice({
   name: "chat",
@@ -7,19 +7,20 @@ export const chatSlice = createSlice({
     // receivedMessages: [],
     allMessages: [],
     history: [],
-    messagesToBeUpdated : [],
+    messagesToBeUpdated: [],
+    allMedia: [],
   },
   reducers: {
     // Reducer for handling sent messages
     addSentMessage: (state, action) => {
-      const {user, message, timestamp } = action.payload;
-      state.sentMessages.push({user, message, timestamp });
+      const { user, message, timestamp } = action.payload;
+      state.sentMessages.push({ user, message, timestamp });
     },
 
     // Reducer for handling received messages
     addReceivedMessage: (state, action) => {
-      const {user, message, timestamp } = action.payload;
-      state.receivedMessages.push({user, message, timestamp});
+      const { user, message, timestamp } = action.payload;
+      state.receivedMessages.push({ user, message, timestamp });
     },
 
     setLoading(state, value) {
@@ -33,14 +34,25 @@ export const chatSlice = createSlice({
     },
 
     populateHistory: (state, action) => {
-      state.history = action.payload? action.payload : [];
+      state.history = action.payload ? action.payload : [];
     },
 
-    addMessagesToBeUpdated : (state, action) => {
+    addMessagesToBeUpdated: (state, action) => {
       state.messagesToBeUpdated.push(action.payload);
-    }
+    },
+    populateMedia: (state, action) => {
+      state.allMedia.push(action.payload);
+    },
   },
 });
 
-export const { addSentMessage, addReceivedMessage,setLoading, addMessage, populateHistory, addMessagesToBeUpdated} = chatSlice.actions;
+export const {
+  addSentMessage,
+  addReceivedMessage,
+  setLoading,
+  addMessage,
+  populateHistory,
+  addMessagesToBeUpdated,
+  populateMedia,
+} = chatSlice.actions;
 export default chatSlice.reducer;

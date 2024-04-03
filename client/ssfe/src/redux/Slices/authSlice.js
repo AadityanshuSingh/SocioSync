@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export const authSlice = createSlice({
   name: "auth",
@@ -24,6 +24,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setSignupData, setLoading, setToken, setLoginData } = authSlice.actions;
+export const { setSignupData, setLoading, setToken, setLoginData } =
+  authSlice.actions;
 
 export default authSlice.reducer;
