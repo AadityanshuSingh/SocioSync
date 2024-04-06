@@ -109,10 +109,7 @@ export const ChatWindow = () => {
   const scrollableDivRef = useRef(null);
 
   useEffect(() => {
-    if (scrollableDivRef.current) {
-      scrollableDivRef.current.scrollTop =
-        scrollableDivRef.current.scrollHeight;
-    }
+    scrollableDivRef.current.scrollTop = scrollableDivRef.current.scrollHeight;
   }, []);
 
   return (
@@ -127,7 +124,6 @@ export const ChatWindow = () => {
           width: "10px",
         },
       }}
-      bgImg={bg}
     >
       {renderHistory}
       {renderMessages}

@@ -17,7 +17,7 @@ export default function SidebarLink({ link, iconName }) {
   const location = useLocation();
 
   const isActive = location.pathname === link;
-  console.log(iconName);
+  // console.log(iconName);
   //   const borderColor = useColorModeValue('gray.200', 'gray.700');
   const bgColor = isActive ? "purple.500" : "transparent";
   const textColor = isActive ? "gray.200" : "gray.300";

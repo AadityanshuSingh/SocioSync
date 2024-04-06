@@ -6,6 +6,7 @@ const profileRoutes = require("./routes/Profile");
 const friendsRoutes = require("./routes/Friend");
 const chatRoutes = require("./routes/Chat");
 const mediaRoutes = require("./routes/Media");
+const searchRoute = require("./routes/Search");
 
 const database = require("./config/database");
 const cookieParser = require("cookie-parser");
@@ -66,6 +67,7 @@ app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/friends", friendsRoutes);
 app.use("/api/v1/chats", chatRoutes);
 app.use("/api/v1/media", mediaRoutes);
+app.use("/api/v1/search", searchRoute);
 
 app.get("/", (req, res) => {
   return res.json({

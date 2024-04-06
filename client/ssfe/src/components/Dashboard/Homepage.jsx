@@ -20,6 +20,7 @@ import { Logo } from "../../components/Logo";
 
 export const Homepage = () => {
   const dispatch = useDispatch();
+  const { query } = useSelector((state) => state.search);
 
   const { allUsers } = useSelector((state) => state.profile);
   const { loginData } = useSelector((state) => state.auth);
@@ -87,6 +88,47 @@ export const Homepage = () => {
     <></>
   );
 
+  // This function will filter users based on their name or userName
+  const filterUsers = (usersList, query) => {
+    const regex = new RegExp(query, "i"); // "i" for case-insensitive match
+
+    return usersList.filter(
+      (user) => regex.test(user.name) || regex.test(user.userName)
+    );
+  };
+
+  const [filteredFriends, setfilteredFriends] = useState(null);
+  useEffect(() => {
+    const trimedString = query ? query.trim() : "";
+    if (trimedString === "") {
+      setfilteredFriends(null);
+    } else {
+      setfilteredFriends(filterUsers(User.friends, query));
+    }
+
+    console.log("filtered friends in homepage is ", filteredFriends);
+  }, [query]);
+
+  const displayFilteredFriends = filteredFriends ? (
+    filteredFriends.length > 0 ? (
+      filteredFriends.map(
+        (item) =>
+          item && (
+            <UserContacts
+              key={item.email}
+              name={item.name}
+              cardType={"friends"}
+              userName={item.userName}
+            />
+          )
+      )
+    ) : (
+      <></>
+    )
+  ) : (
+    <></>
+  );
+
   return (
     <Card
       width={"100%"}
@@ -129,7 +171,8 @@ export const Homepage = () => {
               }}
             >
               <Text>Friends</Text>
-              {displayFriends}
+              {!filteredFriends && displayFriends}
+              {filteredFriends && displayFilteredFriends}
               <Text>Invites</Text>
               {displayInvites}
               <Text>Requests</Text>

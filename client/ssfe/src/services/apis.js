@@ -48,3 +48,7 @@ export const mediaEndpoints = {
   UPLOAD_PHOTOS_AND_VIDEOS: BASE_URL + "/media/fileUpload",
   GET_ALL_MEDIA: BASE_URL + "/media/getMedia",
 };
+
+export const searchEndpoints = {
+  SEARCH_USER_API: BASE_URL + "/search/searchquery",
+};
