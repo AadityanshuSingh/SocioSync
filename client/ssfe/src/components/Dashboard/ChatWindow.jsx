@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ChatBubble } from "../Dashboard/ChatBubble";
 import { useSelector } from "react-redux";
 import { Socket, io } from "socket.io-client";
+import bg from "../../assets/chatbg.jpg";
 
 export const ChatWindow = () => {
   const { history } = useSelector((state) => state.chat);
@@ -126,6 +127,7 @@ export const ChatWindow = () => {
           width: "10px",
         },
       }}
+      bgImg={bg}
     >
       {renderHistory}
       {renderMessages}

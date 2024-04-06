@@ -19,6 +19,17 @@ import {
   VStack,
   Card,
   Icon,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+  TabIndicator,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  ModalBody,
 } from "@chakra-ui/react";
 
 import { BsFiletypePdf } from "react-icons/bs";
@@ -28,6 +39,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export const MediaDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const btnRef = React.useRef();
   const { loginData } = useSelector((state) => state.auth);
   const { allMedia } = useSelector((state) => state.chat);
@@ -43,18 +55,41 @@ export const MediaDrawer = () => {
     ? allMedia[0].filter(
         (file) =>
           file.mediaType === "Photos" &&
-          (file.sender === receiver || file.receiver === receiver)
+          ((file.sender === sender && file.receiver === receiver) ||
+            (file.receiver === sender && file.sender === receiver))
       )
     : null;
   const videos = allMedia[0]
     ? allMedia[0].filter(
         (file) =>
           file.mediaType === "Videos" &&
-          (file.sender === receiver || file.receiver === receiver)
+          ((file.sender === sender && file.receiver === receiver) ||
+            (file.receiver === sender && file.sender === receiver))
       )
     : null;
-  const [showAllPics, setShowAllPics] = useState(false);
+  const audio = allMedia[0]
+    ? allMedia[0].filter(
+        (file) =>
+          file.mediaType === "Audio" &&
+          ((file.sender === sender && file.receiver === receiver) ||
+            (file.receiver === sender && file.sender === receiver))
+      )
+    : null;
+  const [showAllPics, setShowAllPics] = useState(true);
   const [showAllVids, setShowAllVids] = useState(false);
+  const [showAllAudio, setShowAllAudio] = useState(false);
+  const [preview, setPreview] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleModalPreview = (e) => {
+    setPreview(e.target.key);
+    setOpenModal(true);
+  };
+
+  const handleModalClose = () => {
+    setOpenModal(false);
+    setPreview(null);
+  };
 
   var limitedPicsSize = 3;
   if (imgs.length <= 3) {
@@ -66,49 +101,106 @@ export const MediaDrawer = () => {
     limitedVidSize = videos.length;
   }
 
+  var limitedAudSize = 1;
+  if (audio.length <= 1) {
+    limitedAudSize = audio.length;
+  }
+
   const limitedPics = imgs.slice(0, limitedPicsSize);
   const limitedVid = videos.slice(0, limitedVidSize);
+  const limitedAud = audio.slice(0, limitedAudSize);
 
   const displayPics =
-    showAllPics === false
-      ? limitedPics.map((item) => (
-          <GridItem key={item.created_at} gap={5} w={"100%"}>
-            <Image src={item.FileUrl} h={"100px"} borderRadius={"xl"} p={1} />
-          </GridItem>
-        ))
-      : imgs.map((item) => (
-          <GridItem key={item.created_at} gap={5} w={"100%"}>
-            <Image src={item.FileUrl} h={"100px"} borderRadius={"xl"} p={1} />
-          </GridItem>
-        ));
+    // showAllPics === false
+    //   ? limitedPics.map((item) => (
+    //       <GridItem key={item.FileUrl} gap={5} w={"100%"}>
+    //         <Image src={item.FileUrl} h={"100px"} borderRadius={"xl"} p={1} />
+    //       </GridItem>
+    //     ))
+    //   :
+    imgs.map((item) => (
+      <GridItem
+        key={item.FileUrl}
+        gap={5}
+        w={"100%"}
+        _hover={{ cursor: "pointer" }}
+        onClick={() => {
+          setPreview(item.FileUrl);
+          setOpenModal(true);
+        }}
+      >
+        <Image src={item.FileUrl} h={"100px"} borderRadius={"xl"} p={1} />
+      </GridItem>
+    ));
 
   const displayVideos =
-    showAllPics === false
-      ? limitedVid.map((item) => (
-          <GridItem key={item.created_at} gap={5} w={"100%"} padding={2}>
-            <video src={item.FileUrl} height={"150px"} controls />
-          </GridItem>
-        ))
-      : videos.map((item) => (
-          <GridItem key={item.created_at} gap={5} w={"100%"}>
-            <video src={item.FileUrl} height={"150px"} controls />
-          </GridItem>
-        ));
+    // showAllVids === false
+    //   ? limitedVid.map((item) => (
+    //       <GridItem key={item.FileUrl} gap={5} w={"100%"} padding={2}>
+    //         <video src={item.FileUrl} height={"150px"} controls />
+    //       </GridItem>
+    //     ))
+    //   :
+    videos.map((item) => (
+      <GridItem key={item.FileUrl} gap={5} w={"100%"}>
+        <video src={item.FileUrl} height={"150px"} controls />
+      </GridItem>
+    ));
 
-  var picTxt = showAllPics === false ? "see all" : "hide";
-  var visTxt = showAllVids === false ? "see all" : "hide";
+  const displayAudio =
+    // showAllAudio === false
+    //   ? limitedAud.map((item) => (
+    //       <GridItem w={"fit-content"} key={item.FileUrl}>
+    //         <audio src={item.FileUrl} controls style={{ maxWidth: "100%" }} />
+    //       </GridItem>
+    //     ))
+    //   :
+    audio.map((item) => (
+      <GridItem key={item.FileUrl}>
+        <audio src={item.FileUrl} controls style={{ maxWidth: "100%" }} />
+      </GridItem>
+    ));
+
+  // const picTxt = showAllPics === false ? "see all" : "hide";
+  // const visTxt = showAllVids === false ? "see all" : "hide";
+  // const audTxt = showAllAudio === false ? "see all" : "hide";
   const handlePicClick = () => {
-    setShowAllPics(!showAllPics);
+    setShowAllAudio(false);
+    setShowAllVids(false);
+    setShowAllPics(true);
   };
 
   const handleVidClick = () => {
-    setShowAllVids(!showAllVids);
+    setShowAllAudio(false);
+    setShowAllVids(true);
+    setShowAllPics(false);
+  };
+
+  const handleAudioClick = () => {
+    setShowAllAudio(true);
+    setShowAllVids(false);
+    setShowAllPics(false);
   };
 
   // Handling Logic for Sahred Files (Basically png files)
-
   return (
     <>
+      <Modal isOpen={openModal} onClose={handleModalClose}>
+        <ModalOverlay />
+        <ModalContent bg={"gray.700"} color={"gray.300"}>
+          <ModalCloseButton />
+          <ModalBody>
+            <Box w={"400px"} borderRadius={"md"}>
+              <Image
+                src={preview}
+                h={"inherit"}
+                w={"auto"}
+                borderRadius={"medium"}
+              />
+            </Box>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
       <IconButton
         icon={<HamburgerIcon />}
         ref={btnRef}
@@ -140,8 +232,22 @@ export const MediaDrawer = () => {
               },
             }}
           >
-            <Box mb={4}>
-              <HStack justify={"space-between"}>
+            <Tabs position="relative" variant="unstyled" mb={4}>
+              <TabList>
+                <Tab onClick={handlePicClick}>Photos</Tab>
+                <Tab onClick={handleVidClick}>Videos</Tab>
+                <Tab onClick={handleAudioClick}>Audio</Tab>
+              </TabList>
+              <TabIndicator
+                mt="-1.5px"
+                height="2px"
+                bg="blue.500"
+                borderRadius="1px"
+              />
+            </Tabs>
+            {showAllPics && (
+              <Box mb={4}>
+                {/* <HStack justify={"space-between"}>
                 <HStack>
                   <Text fontSize={"md"}>Photos</Text>
                   <Text fontSize={"sm"} color={"gray.400"}>
@@ -158,19 +264,21 @@ export const MediaDrawer = () => {
                     {picTxt}
                   </Text>
                 )}
-              </HStack>
-              <Grid templateColumns="repeat(3, 1fr)">{displayPics}</Grid>
-            </Box>
-            <Divider />
-            <Box>
-              <HStack justify={"space-between"}>
+              </HStack> */}
+                <Grid templateColumns="repeat(3, 1fr)">{displayPics}</Grid>
+              </Box>
+            )}
+            {/* <Divider /> */}
+            {showAllVids && (
+              <Box mb={4}>
+                {/* <HStack justify={"space-between"} mb={3}>
                 <HStack>
                   <Text fontSize={"md"}>Videos</Text>
                   <Text fontSize={"sm"} color={"gray.400"}>
                     {videos.length}
                   </Text>
                 </HStack>
-                {videos.length > 3 && (
+                {videos.length > 1 && (
                   <Text
                     fontSize={"sm"}
                     color={"gray.400"}
@@ -180,30 +288,38 @@ export const MediaDrawer = () => {
                     {visTxt}
                   </Text>
                 )}
-              </HStack>
-              <Grid templateColumns="repeat(1, 1fr)" mt={2}>
-                {displayVideos}
-              </Grid>
-            </Box>
-            <Box>
-              <VStack alignItems={"left"} mt={4}>
-                <Card
-                  bg={"inherit"}
-                  shadow={"xl"}
-                  p={4}
-                  _hover={{ bg: "gray.600", cursor: "pointer" }}
-                >
-                  <HStack>
-                    <Icon
-                      as={BsFiletypePdf}
-                      bg={"inherit"}
-                      color={"gray.200"}
-                    />
-                    <Text color={"gray.300"}>Abracadabra!!...</Text>
-                  </HStack>
-                </Card>
-              </VStack>
-            </Box>
+              </HStack> */}
+                <Grid templateColumns="repeat(1, 1fr)" mt={2}>
+                  {displayVideos}
+                </Grid>
+              </Box>
+            )}
+            {/* <Divider /> */}
+            {showAllAudio && (
+              <Box mb={4}>
+                {/* <HStack justify={"space-between"} mb={3}>
+                <HStack>
+                  <Text fontSize={"md"}>Audio</Text>
+                  <Text fontSize={"sm"} color={"gray.400"}>
+                    {videos.length}
+                  </Text>
+                </HStack>
+                {audio.length > 1 && (
+                  <Text
+                    fontSize={"sm"}
+                    color={"gray.400"}
+                    _hover={{ cursor: "pointer" }}
+                    onClick={handleAudioClick}
+                  >
+                    {audTxt}
+                  </Text>
+                )}
+              </HStack> */}
+                <Grid templateColumns="repeat(1, 1fr)" mt={2} gap={3}>
+                  {displayAudio}
+                </Grid>
+              </Box>
+            )}
           </DrawerBody>
         </DrawerContent>
       </Drawer>

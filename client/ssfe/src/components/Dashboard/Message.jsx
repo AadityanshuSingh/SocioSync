@@ -7,6 +7,7 @@ import {
   FormControl,
   FormLabel,
   HStack,
+  Icon,
   IconButton,
   Image,
   Input,
@@ -27,10 +28,13 @@ import {
   ScaleFade,
   Show,
   Spinner,
+  Text,
+  VStack,
   background,
   useDisclosure,
 } from "@chakra-ui/react";
 import { AttachmentIcon } from "@chakra-ui/icons";
+import { FaFileAudio, FaFilePdf } from "react-icons/fa6";
 import { IoMdSend } from "react-icons/io";
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -54,6 +58,14 @@ export const Message = () => {
 
   const [txt, setTxt] = useState("");
   const dispatch = useDispatch();
+
+  const handleFocus = () => {
+    socket.emit("user_is_typing", roomName);
+  };
+
+  const handleBlur = () => {
+    socket.emit("user_is_not_typing", roomName);
+  };
   const handleChange = (e) => {
     setTxt(e.target.value);
   };
@@ -91,7 +103,12 @@ export const Message = () => {
     const file = event.target.files[0];
     setselectedFile({
       file: file,
-      mediaType: event.target.id === "image-input" ? "Photos" : "Videos",
+      mediaType:
+        event.target.id === "image-input"
+          ? "Photos"
+          : event.target.id === "video-input"
+          ? "Videos"
+          : "Audio",
     });
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -107,6 +124,7 @@ export const Message = () => {
     setisOpen(false);
     document.getElementById("image-input").value = null;
     document.getElementById("video-input").value = null;
+    document.getElementById("audio-input").value = null;
   };
 
   const handleSendMedia = async () => {
@@ -156,6 +174,14 @@ export const Message = () => {
               {selectedFile && selectedFile.mediaType === "Videos" && (
                 <Box h={"350px"}>
                   <video src={preview} height={"inherit"} />
+                </Box>
+              )}
+              {selectedFile && selectedFile.mediaType === "Audio" && (
+                <Box>
+                  <VStack>
+                    <Icon as={FaFileAudio} w={"250px"} h={"250px"} />
+                    <Text>{selectedFile.file.name}</Text>
+                  </VStack>
                 </Box>
               )}
             </Center>
@@ -208,15 +234,15 @@ export const Message = () => {
                     _hover={{ cursor: "pointer" }}
                   >
                     Photos
+                    <Input
+                      id="image-input"
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/jpeg, image/jpg, image/png, image/gif"
+                      style={{ display: "none", cursor: "pointer" }}
+                      onChange={handleMediaInputChange}
+                    />
                   </FormLabel>
-                  <Input
-                    id="image-input"
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/jpeg, image/jpg, image/png, image/gif"
-                    style={{ display: "none", cursor: "pointer" }}
-                    onChange={handleMediaInputChange}
-                  />
                 </MenuItem>
                 <MenuItem bg={"gray.700"} _hover={{ background: "gray.500" }}>
                   <FormLabel
@@ -235,10 +261,20 @@ export const Message = () => {
                   />
                 </MenuItem>
                 <MenuItem bg={"gray.700"} _hover={{ background: "gray.500" }}>
-                  Document
-                </MenuItem>
-                <MenuItem bg={"gray.700"} _hover={{ background: "gray.500" }}>
-                  Audio
+                  <FormLabel
+                    htmlFor="pdf-input"
+                    color={"gray.300"}
+                    _hover={{ cursor: "pointer" }}
+                  >
+                    Audio
+                  </FormLabel>
+                  <Input
+                    id="pdf-input"
+                    type="file"
+                    accept=".mp3"
+                    style={{ display: "none", cursor: "pointer" }}
+                    onChange={handleMediaInputChange}
+                  />
                 </MenuItem>
               </FormControl>
             </MenuList>
@@ -254,6 +290,8 @@ export const Message = () => {
           borderWidth={0}
           value={txt}
           placeholder="Your Message"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           onChange={handleChange}
         />
         <InputRightElement

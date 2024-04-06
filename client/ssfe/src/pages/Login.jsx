@@ -12,7 +12,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import pic from "../assets/People1.png";
-import Logo from "../components/Logo.jsx";
+import { Logo } from "../components/Logo.jsx";
 import React, { useEffect, useState } from "react";
 import InputField from "../components/InputField.jsx";
 import { NavLink, useNavigate } from "react-router-dom";

@@ -1,4 +1,13 @@
-import { Card, Divider, HStack, VStack, Box, Text } from "@chakra-ui/react";
+import {
+  Card,
+  CardBody,
+  Divider,
+  HStack,
+  VStack,
+  Box,
+  Text,
+  Image,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Nav } from "../Dashboard/Nav";
 import { Message } from "../Dashboard/Message";
@@ -7,6 +16,7 @@ import { Search } from "../Dashboard/Search";
 import { UserContacts } from "../Dashboard/UserContacts";
 import { Explore } from "../Explore";
 import { useDispatch, useSelector } from "react-redux";
+import { Logo } from "../../components/Logo";
 
 export const Homepage = () => {
   const dispatch = useDispatch();
@@ -146,7 +156,27 @@ export const Homepage = () => {
                   <Message />
                 </>
               )}
-              {!currentRoom && <Explore />}
+              {!currentRoom && (
+                <Card
+                  direction={"row"}
+                  mt={"auto"}
+                  mb={"auto"}
+                  align={"center"}
+                  width={"60%"}
+                  mx={"auto"}
+                  variant={"filled"}
+                  borderRadius={"0px"}
+                  bg={"transparent"}
+                  shadow={"none"}
+                  p={4}
+                >
+                  <CardBody bg={"transparent"} borderRadius={"xl"}>
+                    <Box>
+                      <Logo ht={130} wt={470} />
+                    </Box>
+                  </CardBody>
+                </Card>
+              )}
             </VStack>
           </Card>
         </HStack>

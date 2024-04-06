@@ -12,7 +12,7 @@ const handleSocketConnections = (io) => {
       socket.join(roomName);
       const numSocketsInRoom =
         io.sockets.adapter.rooms.get(roomName)?.size || 0;
-      console.log(`Number of sockets in room ${roomName}: ${numSocketsInRoom}`);
+      // console.log(`Number of sockets in room ${roomName}: ${numSocketsInRoom}`);
     });
 
     // Private Messsage controller
@@ -26,10 +26,10 @@ const handleSocketConnections = (io) => {
       if (numSocketsInRoom == 1) {
         messageObj.owner = roomName;
         io.in(roomName).emit("user_is_alone", messageObj);
-        console.log("only one user is online ", messageObj);
+        // console.log("only one user is online ", messageObj);
       } else {
         io.in(roomName).emit("receive_private_message", messageObj);
-        console.log("both users are online and message obj is", messageObj);
+        // console.log("both users are online and message obj is", messageObj);
       }
     });
 
@@ -48,7 +48,14 @@ const handleSocketConnections = (io) => {
       }
     });
 
-    // TODO:-DB CALL ON USER DICONNECTION
+    // logic for handling the case when a user is typing...
+    socket.on("user_is_typing", (data) => {
+      socket.to(data).emit("user_is_typing");
+    });
+
+    socket.on("user_is_not_typing", (data) => {
+      socket.to(data).emit("user_is_not_typing");
+    });
 
     socket.on("handle_disconnect", ({ roomNames }) => {
       for (i in roomNames) {

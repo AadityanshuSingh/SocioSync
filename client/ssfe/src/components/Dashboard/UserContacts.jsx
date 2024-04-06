@@ -32,7 +32,7 @@ export const UserContacts = (props) => {
 
   const handleCardClick = () => {
     if (currentRoom === null || currentRoom.userName !== userName) {
-      dispatch(setRoom({ userName: userName, name: name }));
+      dispatch(setRoom({ userName: userName, name: name, isTyping: false }));
     }
   };
 

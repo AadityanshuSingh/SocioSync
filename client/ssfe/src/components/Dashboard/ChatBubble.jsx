@@ -7,9 +7,12 @@ import {
   Box,
   Image,
   Center,
+  Icon,
 } from "@chakra-ui/react";
 import React from "react";
 import { useSelector } from "react-redux";
+// import PDFReader from "../PDFReader";
+import { FaFilePdf } from "react-icons/fa6";
 
 export const ChatBubble = (props) => {
   const {
@@ -23,11 +26,26 @@ export const ChatBubble = (props) => {
 
   const getTimeString = (time) => {
     const date = new Date(time);
-    return date.toLocaleString("en-US", {
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    });
+    const currentTime = new Date();
+    const timeDiff = currentTime - date;
+    const diffInHours = timeDiff / (1000 * 60 * 60);
+
+    if (diffInHours < 24) {
+      return date.toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      });
+    } else {
+      return date.toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      });
+    }
   };
   const formatDate = getTimeString(time);
 
@@ -38,7 +56,7 @@ export const ChatBubble = (props) => {
           <Image src={file} p={2} h={"auto"} w={"100%"} mr={0} ml={0} />
         </Center>
       </Box>
-    ) : (
+    ) : mediaType === "Videos" ? (
       <>
         <Box p={2} mr={0} ml={0}>
           <Center>
@@ -46,6 +64,10 @@ export const ChatBubble = (props) => {
           </Center>
         </Box>
       </>
+    ) : (
+      <Box p={2} bg={"transparent"} w={"fit-content"}>
+        <audio src={file} controls style={{ maxWidth: "100%" }} />
+      </Box>
     )
   ) : (
     <></>
@@ -55,18 +77,22 @@ export const ChatBubble = (props) => {
   return (
     <Card
       key={time}
+      bg={mediaType === "Audio" ? "gray.600" : ""}
       bgGradient={
-        sender !== user
+        mediaType === "Audio"
+          ? ""
+          : sender !== user
           ? "linear(to-br, #ff965d , #fe4057 )"
           : "linear(to-br, #fe9c5d , #8725c5 )"
       }
       mt={"2px"}
       mb={"4px"}
-      w={file ? "fit-content" : "50%"}
+      w={"fit-content"}
+      minW={"140px"}
       h={"auto"}
       maxW={"50%"}
-      ml={file ? (sender !== user ? "0px" : "auto") : "25%"}
-      left={!file ? (sender === user ? "25%" : "-25%") : ""}
+      ml={sender === user ? "auto" : "25%"}
+      left={sender === user ? "" : sender === user ? "25%" : "-25%"}
     >
       <VStack align={"flex-start"} gap={0}>
         <Text
@@ -79,7 +105,7 @@ export const ChatBubble = (props) => {
           {sender === user ? "You" : sender}
         </Text>
         {renderData}
-        <Text color={"gray.200"} pl={1} pr={2}>
+        <Text color={"gray.200"} pl={1} pr={2} w={"fit-content"}>
           {message}
         </Text>
         <Text
