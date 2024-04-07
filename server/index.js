@@ -18,7 +18,7 @@ const dotenv = require("dotenv");
 const { handleSocketConnections } = require("./controllers/SocketController");
 
 // importing http
-
+app.use(cors());
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 
