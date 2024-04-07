@@ -15,7 +15,8 @@ import {
 
 export default function ChangeProfilePicture() {
   const { token } = useSelector((state) => state.auth);
-  const { user } = useSelector((state) => state.profile);
+  const { loginData } = useSelector((state) => state.auth);
+  const user = loginData;
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
@@ -51,10 +52,10 @@ export default function ChangeProfilePicture() {
       const formData = new FormData();
       console.log(imageFile);
       // formData.displayPicture = imageFile;
-      formData.append("displayPicture", imageFile)
-    //   setUpdatedFormData(formData);
-      console.log("formdata", formData)
-      dispatch(updateDisplayPicture(token, formData)).then(() => {
+      formData.append("displayPicture", imageFile);
+      //   setUpdatedFormData(formData);
+      console.log("formdata", formData);
+      dispatch(updateDisplayPicture(token, imageFile)).then(() => {
         setLoading(false);
         // console.log("opns me sahi gya");
       });
@@ -86,7 +87,7 @@ export default function ChangeProfilePicture() {
       >
         <Flex align="center" gap={4}>
           <Image
-            src={previewSource || user?.image}
+            src={previewSource || user?.profilePic}
             alt={`profile-${user?.firstName}`}
             className="aspect-square"
             w="78px"
@@ -95,39 +96,38 @@ export default function ChangeProfilePicture() {
             objectFit="cover"
           />
           <Box>
-            <VStack
-            gap={3}>
-            <Text fontSize="lg">Change Profile Picture</Text>
-            <Flex gap={3}>
-              <Input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleFileChange}
-                display="none"
-                accept="image/png, image/gif, image/jpeg"
-              />
-              <Button
-                onClick={handleClick}
-                disabled={loading}
-                rounded="md"
-                bg="yellow.400"
-                py={2}
-                px={4}
-                fontWeight="semibold"
-                color="black"
-                cursor="pointer"
-                _hover={"white"}
-              >
-                Select
-              </Button>
-              <IconBtn
-                text={loading ? "Uploading..." : "Upload"}
-                onClick={handleFileUpload}
-              >
-                {!loading && <FiUpload fontSize="lg" color="richblack.900" />}
-              </IconBtn>
-            </Flex>
-          </VStack>
+            <VStack gap={3}>
+              <Text fontSize="lg">Change Profile Picture</Text>
+              <Flex gap={3}>
+                <Input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  display="none"
+                  accept="image/png, image/gif, image/jpeg"
+                />
+                <Button
+                  onClick={handleClick}
+                  disabled={loading}
+                  rounded="md"
+                  bg="yellow.400"
+                  py={2}
+                  px={4}
+                  fontWeight="semibold"
+                  color="black"
+                  cursor="pointer"
+                  _hover={"white"}
+                >
+                  Select
+                </Button>
+                <IconBtn
+                  text={loading ? "Uploading..." : "Upload"}
+                  onClick={handleFileUpload}
+                >
+                  {!loading && <FiUpload fontSize="lg" color="richblack.900" />}
+                </IconBtn>
+              </Flex>
+            </VStack>
           </Box>
         </Flex>
       </Flex>

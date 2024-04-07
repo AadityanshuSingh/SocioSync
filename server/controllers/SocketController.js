@@ -15,6 +15,12 @@ const handleSocketConnections = (io) => {
       // console.log(`Number of sockets in room ${roomName}: ${numSocketsInRoom}`);
     });
 
+    // when a new friend is added
+    socket.on("new_friend_added", () => {
+      io.emit("add_new_friend");
+      console.log("emmitted for adding friend");
+    });
+
     // Private Messsage controller
     socket.on("private_message", ({ roomName, messageObj }) => {
       // writing the logic for personal chat

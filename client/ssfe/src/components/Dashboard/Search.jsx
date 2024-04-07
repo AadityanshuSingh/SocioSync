@@ -5,15 +5,18 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { Search2Icon, CloseIcon } from "@chakra-ui/icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { setSearch } from "../../redux/Slices/searchSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export const Search = () => {
-  const [value, setvalue] = useState(null);
+  const [value, setvalue] = useState("");
   const dispatch = useDispatch();
   const { query } = useSelector((state) => state.search);
 
+  useEffect(() => {
+    setSearch("");
+  });
   const handleChange = (e) => {
     setvalue(e.target.value);
   };

@@ -8,6 +8,9 @@ import { socket } from "../../App";
 export const Nav = () => {
   const { currentRoom } = useSelector((state) => state.online);
   const dispatch = useDispatch();
+  const img = currentRoom.imgurl
+    ? currentRoom.imgurl
+    : `https://api.dicebear.com/5.x/initials/svg?seed=${currentRoom.name}`;
 
   // handling the logic when a user is typing...
   useEffect(() => {
@@ -17,6 +20,7 @@ export const Nav = () => {
           userName: currentRoom.userName,
           name: currentRoom.name,
           isTyping: true,
+          imgurl: currentRoom.imgurl,
         })
       );
     };
@@ -27,6 +31,7 @@ export const Nav = () => {
           userName: currentRoom.userName,
           name: currentRoom.name,
           isTyping: false,
+          imgurl: currentRoom.imgurl,
         })
       );
     };
@@ -54,10 +59,7 @@ export const Nav = () => {
     >
       <Card bg={"inherit"} color={"#b7b8bc"} shadow={0} h={"100%"}>
         <HStack ml={2}>
-          <Avatar
-            size={"md"}
-            src={`https://api.dicebear.com/5.x/initials/svg?seed=${currentRoom.name}`}
-          />
+          <Avatar size={"md"} src={img} />
           <VStack align={"left"} ml={2} gap={0}>
             <Text>{currentRoom.name}</Text>
             {!currentRoom.isTyping && (

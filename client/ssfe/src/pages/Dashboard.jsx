@@ -12,14 +12,24 @@ import {
 } from "../redux/Slices/chatSlice";
 import { getHistory, updateChat } from "../services/operations/chatAPI";
 import { getMedia } from "../services/operations/mediaAPI";
+import { setLoginData } from "../redux/Slices/authSlice";
+import {
+  setExplore,
+  setFriends,
+  setInvites,
+  setRequests,
+} from "../redux/Slices/profileSlice";
+import { getAllUsers } from "../services/operations/profileAPI";
 
 export const Dashboard = () => {
   const { loginData } = useSelector((state) => state.auth);
+  const { allUsers } = useSelector((state) => state.profile);
   const { allMessages } = useSelector((state) => state.chat);
   const { messagesToBeUpdated } = useSelector((state) => state.chat);
 
   const dispatch = useDispatch();
 
+  // dispatch(setExplore(explore));
   // handling the logic when tab closes
   useEffect(() => {
     const roomNames = [];
@@ -72,16 +82,25 @@ export const Dashboard = () => {
       );
     };
 
+    const reloadUsers = () => {
+      console.log("signal received in frontend");
+      dispatch(getAllUsers());
+    };
+
     // Listen for incoming messages when both the users are online
     socket.on("receive_private_message", handleReceivedMessages);
 
     // Listen for the event when only one user is online
     socket.on("user_is_alone", handleSingleConnecton);
 
+    // listen for the event whenever a user is added as friend
+    socket.on("add_new_friend", reloadUsers);
+
     return () => {
       //  when component unmounts
       socket.off("receive_private_message", handleReceivedMessages);
       socket.off("user_is_alone", handleSingleConnecton);
+      socket.off("add_new_friend", reloadUsers);
     };
   }, [dispatch]);
 
@@ -110,7 +129,17 @@ export const Dashboard = () => {
       <HStack bg={"inherit"} h={"100%"} w={"100%"} p={0}>
         {/* sidebar */}
         <Sidebar />
-        <Box w="100%" h={"100%"} borderRadius="lg">
+        <Box
+          w="100%"
+          h={"100%"}
+          borderRadius="lg"
+          overflow={"auto"}
+          css={{
+            "&::-webkit-scrollbar": {
+              width: "0px",
+            },
+          }}
+        >
           <Outlet />
         </Box>
         {/* </HStack> */}

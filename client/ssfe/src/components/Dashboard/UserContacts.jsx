@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { socket } from "../../App";
 export const UserContacts = (props) => {
   const num = 0;
-  const { name, cardType, userName } = props;
+  const { name, cardType, userName, imgurl = "" } = props;
   // console.log("userName is ...", userName)
 
   const dispatch = useDispatch();
@@ -30,9 +30,20 @@ export const UserContacts = (props) => {
   const { currentRoom } = useSelector((state) => state.online);
   const { loginData } = useSelector((state) => state.auth);
 
+  const img =
+    imgurl === "" || imgurl === null
+      ? `https://api.dicebear.com/5.x/initials/svg?seed=${name}`
+      : imgurl;
   const handleCardClick = () => {
     if (currentRoom === null || currentRoom.userName !== userName) {
-      dispatch(setRoom({ userName: userName, name: name, isTyping: false }));
+      dispatch(
+        setRoom({
+          userName: userName,
+          name: name,
+          isTyping: false,
+          imgurl: imgurl,
+        })
+      );
     }
   };
 
@@ -117,10 +128,7 @@ export const UserContacts = (props) => {
       onClick={cardType === "friends" && handleCardClick}
     >
       <HStack w={"100%"} pt={2} pb={2} gap={5}>
-        <Avatar
-          src={`https://api.dicebear.com/5.x/initials/svg?seed=${name}`}
-          size={"sm"}
-        >
+        <Avatar src={img} size={"sm"}>
           {num > 0 && (
             <AvatarBadge bg={"green.400"} border={0} boxSize={"1em"}>
               {num}

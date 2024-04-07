@@ -28,65 +28,31 @@ export const Homepage = () => {
 
   const User = allUsers.find((item) => item.userName === loginData.userName);
 
-  const displayFriends = User ? (
-    User.friends.length > 0 ? (
-      User.friends.map(
-        (item) =>
-          item && (
-            <UserContacts
-              key={item.email}
-              name={item.name}
-              cardType={"friends"}
-              userName={item.userName}
-            />
+  const [displayFriends, setDisplayFriends] = useState(<></>);
+  useEffect(() => {
+    setDisplayFriends(
+      User ? (
+        User.friends.length > 0 ? (
+          User.friends.map(
+            (item) =>
+              item && (
+                <UserContacts
+                  key={item.email}
+                  name={item.name}
+                  cardType={"friends"}
+                  userName={item.userName}
+                  imgurl={item.profilePic}
+                />
+              )
           )
+        ) : (
+          <></>
+        )
+      ) : (
+        <></>
       )
-    ) : (
-      <></>
-    )
-  ) : (
-    <></>
-  );
-
-  const displayInvites = User ? (
-    User.invites.length > 0 ? (
-      User.invites.map(
-        (item) =>
-          item && (
-            <UserContacts
-              key={item.email}
-              name={item.name}
-              cardType={"invites"}
-              userName={item.userName}
-            />
-          )
-      )
-    ) : (
-      <></>
-    )
-  ) : (
-    <></>
-  );
-
-  const displayRequests = User ? (
-    User.requests.length > 0 ? (
-      User.requests.map(
-        (item) =>
-          item && (
-            <UserContacts
-              key={item.email}
-              name={item.name}
-              cardType={"requests"}
-              userName={item.userName}
-            />
-          )
-      )
-    ) : (
-      <></>
-    )
-  ) : (
-    <></>
-  );
+    );
+  }, [allUsers]);
 
   // This function will filter users based on their name or userName
   const filterUsers = (usersList, query) => {
@@ -119,6 +85,7 @@ export const Homepage = () => {
               name={item.name}
               cardType={"friends"}
               userName={item.userName}
+              imgurl={item.profilePic}
             />
           )
       )
@@ -132,7 +99,7 @@ export const Homepage = () => {
   return (
     <Card
       width={"100%"}
-      height={"100vh"}
+      height={"100%"}
       bg={"#131313"}
       borderRadius={"0"}
       overflow={"hidden"}
@@ -170,13 +137,8 @@ export const Homepage = () => {
                 },
               }}
             >
-              <Text>Friends</Text>
               {!filteredFriends && displayFriends}
               {filteredFriends && displayFilteredFriends}
-              <Text>Invites</Text>
-              {displayInvites}
-              <Text>Requests</Text>
-              {displayRequests}
             </VStack>
           </Card>
 
