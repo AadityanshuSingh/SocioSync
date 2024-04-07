@@ -72,18 +72,20 @@ export const ChatBubble = (props) => {
   ) : (
     <></>
   );
+  // "linear(to-br, #ff965d , #fe4057 )"
+  //         : "linear(to-br, #fe9c5d , #8725c5 )"
 
   const user = loginData.userName;
   return (
     <Card
       key={time}
-      bg={mediaType === "Audio" ? "gray.600" : ""}
+      bg={mediaType === "Audio" ? "gray.600" : "purple.500"}
       bgGradient={
         mediaType === "Audio"
           ? ""
           : sender !== user
-          ? "linear(to-br, #ff965d , #fe4057 )"
-          : "linear(to-br, #fe9c5d , #8725c5 )"
+          ? "purple.400"
+          : "purple.600"
       }
       mt={"2px"}
       mb={"4px"}
