@@ -18,14 +18,13 @@ const dotenv = require("dotenv");
 const { handleSocketConnections } = require("./controllers/SocketController");
 
 // importing http
-app.use(cors());
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "",
+    origin: "https://socio-sync.vercel.app/",
     credentials: true,
   },
 });
@@ -56,7 +55,7 @@ cloudinary.cloudinaryConnect();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://socio-sync.vercel.app/",
     credentials: true,
   })
 );
