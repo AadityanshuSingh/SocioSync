@@ -1,7 +1,7 @@
 const { Socket } = require("socket.io");
 const mongoose = require("mongoose");
 const User = require("../models/User");
-const { updateChat, updateChatDirectly } = require("../controllers/Chat");
+const { updateChat, updateChatDirectly } = require("../controllers/chat");
 
 const handleSocketConnections = (io) => {
   io.on("connection", (socket) => {
