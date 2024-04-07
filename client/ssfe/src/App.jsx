@@ -13,10 +13,10 @@ import { Homepage } from "./components/Dashboard/Homepage";
 import ProfileSettings from "./components/Dashboard/ProfileSettings";
 import MyProfile from "./components/Dashboard/MyProfile";
 // import Friends from './components/Dashboard/Friends';
-import io from "socket.io-client";
+import socket from "./socket";
 import { Explore } from "./components/Explore";
 
-const socket = io(process.env.REACT_APP_BASE_URL);
+const io = socket;
 
 function App() {
   return (
