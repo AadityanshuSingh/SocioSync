@@ -16,7 +16,7 @@ import MyProfile from "./components/Dashboard/MyProfile";
 import io from "socket.io-client";
 import { Explore } from "./components/Explore";
 
-const socket = io("http://localhost:4000");
+const socket = io(process.env.REACT_APP_BASE_URL);
 
 function App() {
   return (
