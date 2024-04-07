@@ -25,7 +25,7 @@ const { Server } = require("socket.io");
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "https://socio-sync-frontend.vercel.app/",
+    origin: "",
     credentials: true,
   },
 });
