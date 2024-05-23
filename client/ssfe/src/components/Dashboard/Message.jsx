@@ -337,8 +337,8 @@ export const Message = () => {
             borderWidth={0}
             value={txt}
             placeholder="Your Message"
-            onFocus={handleFocus}
-            onBlur={handleBlur}
+            // onFocus={handleFocus}
+            // onBlur={handleBlur}
             onChange={handleChange}
           />
           <InputRightElement
