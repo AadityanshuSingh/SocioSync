@@ -31,7 +31,8 @@ export const Nav = () => {
       );
     };
 
-    const handleNotTypingState = () => {
+    const handleNotTypingState = (data) => {
+      if (data !== roomName) return;
       dispatch(
         setRoom({
           userName: currentRoom.userName,
