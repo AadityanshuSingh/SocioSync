@@ -56,11 +56,11 @@ const handleSocketConnections = (io) => {
 
     // logic for handling the case when a user is typing...
     socket.on("user_is_typing", (data) => {
-      socket.to(data).emit("user_is_typing");
+      socket.to(data).emit("user_is_typing", data);
     });
 
     socket.on("user_is_not_typing", (data) => {
-      socket.to(data).emit("user_is_not_typing");
+      socket.to(data).emit("user_is_not_typing", data);
     });
 
     socket.on("handle_disconnect", ({ roomNames }) => {

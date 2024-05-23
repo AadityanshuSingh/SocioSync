@@ -7,6 +7,7 @@ import { setRoom } from "../../redux/Slices/onlineSlice";
 import { socket } from "../../App";
 export const Nav = () => {
   const { currentRoom } = useSelector((state) => state.online);
+  const { loginData } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const img = currentRoom.imgurl
     ? currentRoom.imgurl
@@ -14,7 +15,12 @@ export const Nav = () => {
 
   // handling the logic when a user is typing...
   useEffect(() => {
-    const handleTypingState = () => {
+    const sender = loginData.userName;
+    const receiver = currentRoom.userName;
+    const roomName = sender < receiver ? sender + receiver : receiver + sender;
+
+    const handleTypingState = (data) => {
+      if (data !== roomName) return;
       dispatch(
         setRoom({
           userName: currentRoom.userName,
