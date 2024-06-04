@@ -18,21 +18,33 @@ import {
 } from "@chakra-ui/react";
 
 const genders = ["Male", "Female", "Other"];
-
+function formatDate(date) {
+  if (!date || isNaN(new Date(date))) {
+    return "Invalid Date";
+  }
+  const year = new Date(date).getFullYear();
+  const month = String(new Date(date).getMonth() + 1).padStart(2, "0");
+  const day = String(new Date(date).getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
 export default function EditProfile() {
-  const { user } = useSelector((state) => state.profile);
+  const { loginData } = useSelector((state) => state.auth);
   const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const logindataString = localStorage.getItem("logindata");
+  const logindata = JSON.parse(logindataString);
+  const dobString = logindata?.profile?.dateOfBirth || "";
+  const dob = new Date(dobString);
+  const finaldob = formatDate(dob);
   const [formData, setFormData] = useState({
-    name: user?.name || "",
-    dateOfBirth: user?.profile?.dateOfBirth || "",
-    gender: user?.profile?.gender || "",
-    contactNumber: user?.profile?.contactNumber || "",
-    about: user?.profile?.about || "",
+    name: logindata?.name || "",
+    dateOfBirth: finaldob,
+    gender: logindata?.profile?.gender || "",
+    contactNumber: logindata?.profile?.contactNumber || "",
+    about: logindata?.profile?.about || "",
   });
-
+  // console.log("dob is",formData.dateOfBirth);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -49,6 +61,7 @@ export default function EditProfile() {
   };
 
   const submitProfileForm = async (e) => {
+    // const dispatch = useDispatch();
     e.preventDefault();
     try {
         console.log("the data from frontend is ",formData);
@@ -58,6 +71,7 @@ export default function EditProfile() {
       console.log("ERROR MESSAGE - ", error.message);
     }
   };
+
 
   return (
         <Box
@@ -92,7 +106,6 @@ export default function EditProfile() {
             placeholder="Enter name"
             value={formData.name}
             onChange={handleChange}
-            // onChange={handleInputChange}
             name="name"
           />
           {!formData.name && (
@@ -210,7 +223,7 @@ export default function EditProfile() {
         <div>
           <Button
             onClick={() => {
-              navigate("/dashboard/my-profile");
+              navigate("/dashboard/myprofile");
             }}
             variant="outline"
             rounded="md"

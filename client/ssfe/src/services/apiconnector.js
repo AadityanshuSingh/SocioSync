@@ -14,8 +14,7 @@ export const apiConnector = (method, url, bodyData, file, headers, params) => {
       }
     }
   }
-
-  console.log("api me", bodyData);
+  console.log("api me", bodyData)
   return axiosInstance({
     method: method,
     url: url,

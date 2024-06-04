@@ -1,83 +1,59 @@
-import {
-  Card,
-  CardBody,
-  Divider,
-  HStack,
-  VStack,
-  Box,
-  Text,
-  Image,
-} from "@chakra-ui/react";
+import { Card, CardBody, Divider, HStack, VStack, Box, Skeleton, 
+  SkeletonCircle, SkeletonText, Flex } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Nav } from "../Dashboard/Nav";
 import { Message } from "../Dashboard/Message";
 import { ChatWindow } from "../Dashboard/ChatWindow";
 import { Search } from "../Dashboard/Search";
 import { UserContacts } from "../Dashboard/UserContacts";
-import { Explore } from "../Explore";
 import { useDispatch, useSelector } from "react-redux";
 import { Logo } from "../../components/Logo";
+
+const ContactCardSkeleton = () => (
+  <Flex p="4" borderWidth="0px" borderRadius="lg" overflow="hidden"
+      w = "100%" bgColor={"#2e333d"} mt={3}>
+    <Box>
+      <SkeletonCircle size="5" mr="4"/>
+    </Box>
+    <Flex flexDir="column" justifyContent="center" w={"100%"}>
+      <Skeleton h={"14px"} mb="2" noOfLines={1} spacing="2" 
+        startColor='#7f8187' endColor='#30333e'
+        // isLoaded = {true}
+        // fadeDuration={1}
+        />
+    </Flex>
+  </Flex>
+);
+
+const ContactCardSkeletons = () => {
+  const skeletons = Array.from({ length: 8 }, (_, index) => (
+    <ContactCardSkeleton key={index} />
+  ));
+
+  return <>{skeletons}</>;
+};
 
 export const Homepage = () => {
   const dispatch = useDispatch();
   const { query } = useSelector((state) => state.search);
-
   const { allUsers } = useSelector((state) => state.profile);
   const { loginData } = useSelector((state) => state.auth);
   const { currentRoom } = useSelector((state) => state.online);
 
   const User = allUsers.find((item) => item.userName === loginData.userName);
+  const [loading, setLoading] = useState(true);
 
-  const [displayFriends, setDisplayFriends] = useState(<></>);
-  useEffect(() => {
-    setDisplayFriends(
-      User ? (
-        User.friends.length > 0 ? (
-          User.friends.map(
-            (item) =>
-              item && (
-                <UserContacts
-                  key={item.email}
-                  name={item.name}
-                  cardType={"friends"}
-                  userName={item.userName}
-                  imgurl={item.profilePic}
-                />
-              )
-          )
-        ) : (
-          <></>
-        )
-      ) : (
-        <></>
-      )
-    );
-  }, [allUsers]);
-
-  // This function will filter users based on their name or userName
   const filterUsers = (usersList, query) => {
-    const regex = new RegExp(query, "i"); // "i" for case-insensitive match
-
+    const regex = new RegExp(query, "i");
     return usersList.filter(
       (user) => regex.test(user.name) || regex.test(user.userName)
     );
   };
 
-  const [filteredFriends, setfilteredFriends] = useState(null);
+  const [displayFriends, setDisplayFriends] = useState([]);
   useEffect(() => {
-    const trimedString = query ? query.trim() : "";
-    if (trimedString === "") {
-      setfilteredFriends(null);
-    } else {
-      setfilteredFriends(filterUsers(User.friends, query));
-    }
-
-    console.log("filtered friends in homepage is ", filteredFriends);
-  }, [query]);
-
-  const displayFilteredFriends = filteredFriends ? (
-    filteredFriends.length > 0 ? (
-      filteredFriends.map(
+    if (User) {
+      const friends = User.friends.map(
         (item) =>
           item && (
             <UserContacts
@@ -88,13 +64,22 @@ export const Homepage = () => {
               imgurl={item.profilePic}
             />
           )
-      )
-    ) : (
-      <></>
-    )
-  ) : (
-    <></>
-  );
+      );
+      setDisplayFriends(friends);
+      setLoading(false);
+    }
+  }, [allUsers]);
+
+  const [filteredFriends, setfilteredFriends] = useState([]);
+  useEffect(() => {
+    const trimedString = query ? query.trim() : "";
+    if (trimedString === "") {
+      setfilteredFriends([]);
+    } else {
+      setfilteredFriends(filterUsers(User.friends, query));
+    }
+    setLoading(false);
+  }, [query]);
 
   return (
     <Card
@@ -103,8 +88,8 @@ export const Homepage = () => {
       bg={"#131313"}
       borderRadius={"0"}
       overflow={"hidden"}
-      pt={"20px"}
-      pb={"20px"}
+      pt={"5px"}
+      pb={"5px"}
       css={{
         "&::-webkit-scrollbar": {
           width: "10px",
@@ -114,7 +99,6 @@ export const Homepage = () => {
     >
       <Card h={"100%"} bg={"inherit"} ml={0}>
         <HStack bg={"#202329"} h={"100%"} borderRadius={"2xl"}>
-          {/* Friends */}
           <Card
             bg={"inherit"}
             color={"#b7b8bc"}
@@ -124,7 +108,6 @@ export const Homepage = () => {
             p={0}
           >
             <Search />
-
             <VStack
               p={1}
               ml={1}
@@ -137,14 +120,18 @@ export const Homepage = () => {
                 },
               }}
             >
-              {!filteredFriends && displayFriends}
-              {filteredFriends && displayFilteredFriends}
+              {/* Render skeletons if loading */}
+              {loading && <ContactCardSkeletons />}
+              {/* Render user contacts when not loading */}
+              {!loading &&
+                (query
+                  ? filteredFriends.map((friend) => friend)
+                  : displayFriends.map((friend) => friend))}
             </VStack>
           </Card>
 
           <Divider orientation="vertical" />
 
-          {/* Chatting Area */}
           <Card
             bg={"inherit"}
             color={"#b7b8bc"}
@@ -189,3 +176,5 @@ export const Homepage = () => {
     </Card>
   );
 };
+
+export default Homepage;

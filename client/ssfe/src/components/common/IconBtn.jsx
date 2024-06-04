@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { Button, Flex, Text } from "@chakra-ui/react";
-
 const IconBtn = ({
   text,
   onClick,

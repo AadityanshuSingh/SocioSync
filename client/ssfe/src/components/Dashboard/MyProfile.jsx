@@ -6,6 +6,7 @@ import IconBtn from "../common/IconBtn";
 import { formattedDate } from "../../utils/dateFormatter";
 export default function MyProfile() {
   const { loginData } = useSelector((state) => state.auth);
+  const {token} = useSelector((state) => state.auth)
   const navigate = useNavigate();
   const user = loginData;
 
@@ -32,12 +33,12 @@ export default function MyProfile() {
         mx={"auto"}
         bg="gray.800"
         p={8}
-        px={12}
-        width={"80%"}
+        px={8}
+        width={"70%"}
       >
         <HStack spacing={4}>
           <Image
-            src={loginData.image ? loginData.image : `https://api.dicebear.com/5.x/initials/svg?seed=${loginData.name}`}
+            src={user.profilePic ? user.profilePic : `https://api.dicebear.com/5.x/initials/svg?seed=${loginData.name}`}
             alt={`profile-${loginData?.name}`}
             boxSize="78px"
             rounded="full"
@@ -55,51 +56,19 @@ export default function MyProfile() {
         <IconBtn
           text="Edit"
           onClick={() => {
+            console.log("token is", token);
             navigate("/dashboard/profilesettings");
           }}
         >
           <RiEditBoxLine />
         </IconBtn>
       </Flex>
-      {/* <Box my={10}>
-        
-        <Flex
-          alignItems="center"
-          justifyContent="space-between"
-          rounded="md"
-          borderWidth="1px"
-          borderColor="white"
-          bg="gray.800"
-          p={8}
-          px={12}
-        >
-          <Text fontSize="lg" fontWeight="semibold" color="white">
-            About
-          </Text>
-          <IconBtn
-            text="Edit"
-            onClick={() => {
-              navigate("/dashboard/profilesettings");
-            }}
-          >
-            <RiEditBoxLine />
-          </IconBtn>
-        </Flex>
-        <Text
-          mt={4}
-          color={user?.profile?.about ? "white" : "gray.400"}
-          fontSize="sm"
-          fontWeight="medium"
-        >
-          {user?.profile?.about || "Write Something About Yourself"}
-        </Text>
-      </Box> */}
       <Box my={10}
         bg="gray.800"
         rounded="md"
         borderWidth="1px"
         borderColor="white"
-        width={"80%"}
+        width={"70%"}
         mx={"auto"}
         >
       <VStack>
@@ -107,9 +76,7 @@ export default function MyProfile() {
           alignItems="center"
           justifyContent="space-between"
           bg="gray.800"
-          p={8}
-          px={4}
-          mx={"auto"}
+          py={8}
           width={"80%"}
         >
           <Text fontSize="lg" fontWeight="semibold" color="white">
@@ -123,71 +90,71 @@ export default function MyProfile() {
           >
             <RiEditBoxLine />
           </IconBtn>
-          </Flex>
+        </Flex>
 
             <Flex
-            // mt={2}
+            mt={2}
             justify="space-between"
             p={2}
-            px={4}
-            mx={"auto"}
+            // px={4}
+            // mx={"auto"}
             width={"80%"}
             >
-            <VStack spacing={5}>
-                <Box>
-                <Text mb={2} fontSize="sm" color="gray.600">
+            <VStack align="flex-start">
+                {/* <Box> */}
+                <Text fontSize="sm" color="gray.600">
                     Name
                 </Text>
-                <Text fontSize="sm" fontWeight="medium" color="white">
+                <Text fontSize="sm" fontWeight="medium" color="white" mb={5}>
                     {user?.name}
                 </Text>
-                </Box>
-                <Box>
-                <Text mb={2} fontSize="sm" color="gray.600">
+                {/* </Box> */}
+                {/* <Box> */}
+                <Text fontSize="sm" color="gray.600">
                     Email
                 </Text>
-                <Text fontSize="sm" fontWeight="medium" color="white">
-                    {user?.email}
+                <Text fontSize="sm" fontWeight="medium" color="white" mb={5}>
+                  {user?.email ? user.email : "N/A"}
                 </Text>
-                </Box>
-                <Box>
-                <Text mb={2} fontSize="sm" color="gray.600">
+                {/* </Box> */}
+                {/* <Box> */}
+                <Text fontSize="sm" color="gray.600">
                     Gender
                 </Text>
-                <Text fontSize="sm" fontWeight="medium" color="white">
-                    {user?.profile?.gender}
+                <Text fontSize="sm" fontWeight="medium" color="white" mb={5}>
+                {user?.profile?.gender ? user.profile.gender : "N/A"}
                 </Text>
-                </Box>
+                {/* </Box> */}
             </VStack>
-            <VStack align="start" spacing={5}>
-                <Box>
-                <Text mb={2} fontSize="sm" color="gray.600">
+            <VStack align="flex-start">
+                {/* <Box> */}
+                <Text fontSize="sm" color="gray.600">
                     Username
                 </Text>
-                <Text fontSize="sm" fontWeight="medium" color="white">
-                    {user?.username}
+                <Text fontSize="sm" fontWeight="medium" color="white" mb ={5}>
+                {user?.userName ? user.userName : "N/A"}
                 </Text>
-                </Box>
-                <Box>
-                <Text mb={2} fontSize="sm" color="gray.600">
+                {/* </Box> */}
+                {/* <Box> */}
+                <Text fontSize="sm" color="gray.600">
                     Phone Number
                 </Text>
-                <Text fontSize="sm" fontWeight="medium" color="white">
-                    {user?.profile?.contactNumber}
+                <Text fontSize="sm" fontWeight="medium" color="white" mb ={5}>
+                {user?.profile?.contactNumber ? user.profile.contactNumber : "N/A"}
                 </Text>
-                </Box>
-                <Box>
-                <Text mb={2} fontSize="sm" color="gray.600">
-                    Date Of Birth
+                {/* </Box> */}
+                {/* <Box> */}
+                <Text fontSize="sm" color="gray.600">
+                    Date of Birth
                 </Text>
-                <Text fontSize="sm" fontWeight="medium" color="white">
+                <Text fontSize="sm" fontWeight="medium" color="white" mb ={5}>
                     {formattedDate(user?.profile?.dateOfBirth) ||
                     "Add Date Of Birth"}
                 </Text>
-                </Box>
+                {/* </Box> */}
             </VStack>
             </Flex>
-            </VStack>
+      </VStack>
       </Box>
       </Box>
       

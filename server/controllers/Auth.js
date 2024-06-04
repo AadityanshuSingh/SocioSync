@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const mailSender = require("../utils/mailSender");
 // const { passwordUpdate, passwordUpdated } = require("../mail/passwordUpdate");
 const Profile = require("../models/Profile");
+const { use } = require("../routes/User");
 require("dotenv").config();
 
 // send OTP
@@ -64,7 +65,8 @@ exports.signup = async (req, res) => {
             confirmPassword,
             name,
             userName,
-            otp
+            otp,
+            action
         } = req.body.ultraNewSignupData;
         console.log("backend data", req.body.ultraNewSignupData);
         // validate
@@ -183,7 +185,7 @@ exports.login = async (req, res) =>{
             });
         };
         // check user exists or not
-        const user = await User.findOne({email:email}) || await User.findOne({userName:userName});
+        const user = await User.findOne({ email: email }).populate("profile") || await User.findOne({ userName: userName }).populate("profile");
         if(!user) {
             return res.status(401).json({
                 success:false,
@@ -209,6 +211,7 @@ exports.login = async (req, res) =>{
                 expires: new Date(Date.now() + 3*24*60*60*1000),
                 httpOnly:true,
             }
+            console.log("sending data is",user);
             res.cookie("token", token, options).status(200).json({
                 success:true,
                 token,
@@ -281,8 +284,8 @@ exports.changePassword = async (req, res) => {
             const emailResponse = await mailSender(
                 updatedUserDetails.email,
                 // passwordUpdated(updatedUserDetails.email, `Password was updated successfully for ${updatedUserDetails.name}`),
-                "HO gya change, ab gand marao",
-                `<h1>AB kya muh me loge ??</h1>`,
+                "Your password was updated successfully",
+                `<h1> Thank You for using our Service </h1>`,
             );
             console.log("Email sent successfully: ", emailResponse.response);
         }
@@ -312,15 +315,16 @@ exports.changePassword = async (req, res) => {
 
 // forgot password
 exports.forgotPassword = async (req, res) => {
+    console.log("jai shri ram",req.body);
     try{
         const {
             email,
-            newPassword,
-            confirmNewPassword,
+            password,
+            confirmPassword,
             otp
-        } = req.body;
+        } = req.body.ultraNewSignupData;
         // validate
-        if(!newPassword || !confirmNewPassword || !otp){
+        if(!password || !confirmPassword || !otp){
             return res.status(403).json({
                 success:false,
                 message:"All fields are required",
@@ -340,7 +344,7 @@ exports.forgotPassword = async (req, res) => {
         }
 
         // 2 password ko match karlo(password & confirm password)
-        if(newPassword !== confirmNewPassword)
+        if(password !== confirmPassword)
         {
             return res.status(400).json({
                 success:false,
@@ -368,20 +372,22 @@ exports.forgotPassword = async (req, res) => {
         }
         
         // Hash password
+        console.log("hash pwd tak pahuch gya")
         const hashedPassword = await bcrypt.hash(password, 10);
         const updatedUserDetails = await User.findByIdAndUpdate(
-            req.user.id,
+            checkUserPresent._id,
             {password: hashedPassword},
             {new:true},
         );
-
+        console.log("pwd updated scsfly");
         // send mail - Password update
         try{
             const emailResponse = await mailSender(
                 updatedUserDetails.email,
-                passwordUpdated(updatedUserDetails.email, `Password was updated successfully for ${updatedUserDetails.name}`)
+               "Your password was updated successfully",
+               `<h1> Thank you for using our service </h1>`,
             );
-            console.log("Email sent successfully: ", emailResponse.response);
+            console.log("Email for resetpassword sent successfully: ", emailResponse.response);
         }
         catch(error){
             console.error("Error occurred while sending email", error);

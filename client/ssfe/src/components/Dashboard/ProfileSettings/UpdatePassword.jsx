@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { changePassword } from "../../../services/operations/ProfileSettingsAPI";
 import IconBtn from "../../common/IconBtn";
+import useCustomToast from "../../../utils/useCustomToast";
+
 import {
   Box,
   Button,
@@ -27,12 +29,14 @@ export default function UpdatePassword() {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm();
 
   const submitPasswordForm = async (data) => {
     console.log("og data", data);
     try {
       await changePassword(token, data);
+      reset();
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message);
     }
@@ -51,17 +55,11 @@ export default function UpdatePassword() {
     >
       <form onSubmit={handleSubmit(submitPasswordForm)}>
         <Box
-        //   mt={10}
-        //   p={8}
-        //   px={12}
           bg="gray.800"
-        //   rounded="md"
-        //   color="white"
-        //   border="1px"
           borderColor="gray.700"
         >
           <Heading as="h2" fontSize="lg" fontWeight="semibold" mb={6}>
-            Password
+           Update Password
           </Heading>
           <Flex gap={5}>
             <FormControl
@@ -127,7 +125,7 @@ export default function UpdatePassword() {
             <Button
               mr={2}
               onClick={() => {
-                navigate("/dashboard/my-profile");
+                navigate("/dashboard/myprofile");
               }}
               colorScheme="gray"
             >

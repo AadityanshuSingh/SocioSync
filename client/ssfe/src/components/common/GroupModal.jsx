@@ -1,7 +1,8 @@
 import { Box, Button, Text } from '@chakra-ui/react';
 import IconBtn from "./IconBtn";
 
-export default function ConfirmationModal({modalData}) {
+export default function groupModal({modalData}) {
+    // accepts an array of friends
     console.log("modal data is",modalData)
   return (
     <Box
@@ -12,7 +13,7 @@ export default function ConfirmationModal({modalData}) {
       display="grid"
       placeItems="center"
       overflow="auto"
-      bgColor="rgba(255, 255, 255, 0.134)"
+      bgColor="rgba(255, 255, 255, 0.1)"
       backdropFilter="blur(4px)"
     >
       <Box
@@ -35,11 +36,11 @@ export default function ConfirmationModal({modalData}) {
           <Button
             cursor="pointer"
             rounded="md"
-            bgColor="gray.400"
+            bgColor="richblack.200"
             py="8px"
             px="20px"
             fontWeight="semibold"
-            color="black"
+            color="richblack.900"
             onClick={modalData?.btn2Handler}
           >
             {modalData?.btn2Text}

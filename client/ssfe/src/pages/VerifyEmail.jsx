@@ -1,11 +1,13 @@
 import { Card, CardBody, Text, Box, HStack, PinInput, PinInputField, Button, Center, Link } from "@chakra-ui/react"
 import { RepeatClockIcon, ArrowBackIcon } from '@chakra-ui/icons'
 import { signUp } from "../services/operations/authAPI"
+import { forgotPassword} from "../services/operations/authAPI"
 import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 export const VerifyEmail = () => {
-
+  const location = useLocation();
+  const msg = location.state.message;
   const {signupData} = useSelector(state => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -18,24 +20,24 @@ export const VerifyEmail = () => {
     setOtpValue(newOtpValue);
   }
   const handleClick = (e) => {
+    e.preventDefault()
     const otp = otpValue.join('');
     console.log(signupData)
-    const {
-      email,
-      name,
-      userName,
-      password,
-      confirmPassword,
-    } = signupData;
     const ultraNewSignUpData = {
       ...signupData,
-      otp: otp
+      otp: otp,
+      action:msg,
     }
-    console.log("email 1", email)
-    console.log("the otp is", otp)
-    console.log("verify email mein", ultraNewSignUpData);
-    dispatch(signUp(ultraNewSignUpData, navigate)
-    );
+    if(msg === "forgotpassword"){
+      console.log("forgot pwd. ke liye jaa rha h", ultraNewSignUpData);
+      dispatch(forgotPassword(ultraNewSignUpData, navigate));
+    }
+    // console.log("email 1", email)
+    // console.log("the otp is", otp)
+    // console.log("verify email mein", ultraNewSignUpData);
+    else{
+      dispatch(signUp(ultraNewSignUpData, navigate));
+    }
   }
 
   return (
