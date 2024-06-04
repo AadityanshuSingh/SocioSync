@@ -68,13 +68,13 @@ export const Message = () => {
   const [txt, setTxt] = useState("");
   const dispatch = useDispatch();
 
-  const handleFocus = () => {
-    socket.emit("user_is_typing", roomName);
-  };
+  // const handleFocus = () => {
+  //   socket.emit("user_is_typing", roomName);
+  // };
 
-  const handleBlur = () => {
-    socket.emit("user_is_not_typing", roomName);
-  };
+  // const handleBlur = () => {
+  //   socket.emit("user_is_not_typing", roomName);
+  // };
   const handleChange = (e) => {
     setTxt(e.target.value);
   };
@@ -343,8 +343,8 @@ export const Message = () => {
             borderWidth={0}
             value={txt}
             placeholder="Your Message"
-            onFocus={handleFocus}
-            onBlur={handleBlur}
+            // onFocus={handleFocus}
+            // onBlur={handleBlur}
             onChange={handleChange}
           />
           <InputRightElement

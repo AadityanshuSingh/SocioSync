@@ -7,44 +7,51 @@ import { setRoom } from "../../redux/Slices/onlineSlice";
 import { socket } from "../../App";
 export const Nav = () => {
   const { currentRoom } = useSelector((state) => state.online);
+  const { loginData } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const img = currentRoom.imgurl
     ? currentRoom.imgurl
     : `https://api.dicebear.com/5.x/initials/svg?seed=${currentRoom.name}`;
 
   // handling the logic when a user is typing...
-  useEffect(() => {
-    const handleTypingState = () => {
-      dispatch(
-        setRoom({
-          userName: currentRoom.userName,
-          name: currentRoom.name,
-          isTyping: true,
-          imgurl: currentRoom.imgurl,
-        })
-      );
-    };
+  // useEffect(() => {
+  //   const sender = loginData.userName;
+  //   const receiver = currentRoom.userName;
+  //   const roomName = sender < receiver ? sender + receiver : receiver + sender;
 
-    const handleNotTypingState = () => {
-      dispatch(
-        setRoom({
-          userName: currentRoom.userName,
-          name: currentRoom.name,
-          isTyping: false,
-          imgurl: currentRoom.imgurl,
-        })
-      );
-    };
+  //   const handleTypingState = (data) => {
+  //     if (data !== roomName) return;
+  //     dispatch(
+  //       setRoom({
+  //         userName: currentRoom.userName,
+  //         name: currentRoom.name,
+  //         isTyping: true,
+  //         imgurl: currentRoom.imgurl,
+  //       })
+  //     );
+  //   };
 
-    socket.on("user_is_typing", handleTypingState);
-    socket.on("user_is_not_typing", handleNotTypingState);
+  //   const handleNotTypingState = (data) => {
+  //     if (data !== roomName) return;
+  //     dispatch(
+  //       setRoom({
+  //         userName: currentRoom.userName,
+  //         name: currentRoom.name,
+  //         isTyping: false,
+  //         imgurl: currentRoom.imgurl,
+  //       })
+  //     );
+  //   };
 
-    return () => {
-      //  when component unmounts
-      socket.off("user_is_typing", handleTypingState);
-      socket.off("user_is_typing", handleNotTypingState);
-    };
-  }, [dispatch]);
+  //   socket.on("user_is_typing", handleTypingState);
+  //   socket.on("user_is_not_typing", handleNotTypingState);
+
+  //   return () => {
+  //     //  when component unmounts
+  //     socket.off("user_is_typing", handleTypingState);
+  //     socket.off("user_is_typing", handleNotTypingState);
+  //   };
+  // }, [dispatch]);
 
   return (
     <Card
