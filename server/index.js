@@ -22,10 +22,9 @@ const { handleSocketConnections } = require("./controllers/SocketController");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 
-const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: ["https://socio-sync.vercel.app", "http://localhost:3000"],
+    origin: "https://socio-sync.vercel.app",
     credentials: true,
   },
 });
@@ -54,12 +53,12 @@ const cloudinary = require("./config/cloudinary");
 cloudinary.cloudinaryConnect();
 
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: ["https://socio-sync.vercel.app/", "http://localhost:3000"],
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: ["https://socio-sync.vercel.app", "http://localhost:3000"],
+//     credentials: true,
+//   })
+// );
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "https://socio-sync.vercel.app");
