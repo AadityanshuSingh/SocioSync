@@ -37,7 +37,7 @@ const chatSchema = new mongoose.Schema({
   },
   MediaType: {
     type: String,
-    enum: ["Text", "Photos", "Videos", "Audio", "Files"],
+    enum: ["Text", "Photos", "Videos", "Audio", "Post"],
     default: "Text",
   },
   message: {

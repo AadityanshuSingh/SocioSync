@@ -10,6 +10,8 @@ import { Dashboard } from "./pages/Dashboard";
 import { SignUp } from "./pages/SignUp";
 import PrivateRoute from "./components/Auth/PrivateRoute";
 import { Homepage } from "./components/Dashboard/Homepage";
+import { CreatePost } from "./pages/createPost";
+import { Feed } from "./pages/Feed";
 import ProfileSettings from "./components/Dashboard/ProfileSettings";
 import MyProfile from "./components/Dashboard/MyProfile";
 // import Friends from './components/Dashboard/Friends';
@@ -45,6 +47,8 @@ function App() {
               <Route path="myprofile" element={<MyProfile />} />
               <Route path="profilesettings" element={<ProfileSettings />} />
               <Route path="friends" element={<Explore />} />
+              <Route path="posts" element={<Feed />} />
+              <Route path="createPost" element={<CreatePost />} />
               {/* <Route path="saved" element={<Saved/>} /> */}
               {/* <Route path="friends" element={<Friends/>} /> */}
               {/* <Route path="settings" element={<Settings/>} /> */}

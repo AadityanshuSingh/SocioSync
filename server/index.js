@@ -7,6 +7,7 @@ const friendsRoutes = require("./routes/Friend");
 const chatRoutes = require("./routes/Chat");
 const mediaRoutes = require("./routes/Media");
 const searchRoute = require("./routes/Search");
+const storyRoute = require("./routes/Story");
 
 const database = require("./config/database");
 const cookieParser = require("cookie-parser");
@@ -24,7 +25,7 @@ const { Server } = require("socket.io");
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "https://socio-sync.vercel.app",
+    origin: ["https://socio-sync.vercel.app", "http://localhost:3000"],
     credentials: true,
   },
 });
@@ -53,20 +54,20 @@ const cloudinary = require("./config/cloudinary");
 cloudinary.cloudinaryConnect();
 
 app.use(cookieParser());
-// app.use(
-//   cors({
-//     origin: "https://socio-sync.vercel.app/",
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: ["https://socio-sync.vercel.app/", "http://localhost:3000"],
+    credentials: true,
+  })
+);
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://socio-sync.vercel.app");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.header("Access-Control-Allow-Credentials", true);
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "https://socio-sync.vercel.app");
+//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   res.header("Access-Control-Allow-Credentials", true);
+//   next();
+// });
 
 // Mounting Of Routes
 app.use("/api/v1/auth", userRoutes);
@@ -75,6 +76,7 @@ app.use("/api/v1/friends", friendsRoutes);
 app.use("/api/v1/chats", chatRoutes);
 app.use("/api/v1/media", mediaRoutes);
 app.use("/api/v1/search", searchRoute);
+app.use("/api/v1/story", storyRoute);
 
 app.get("/", (req, res) => {
   return res.json({

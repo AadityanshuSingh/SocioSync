@@ -13,8 +13,16 @@ import {
   HStack,
   Grid,
   GridItem,
+  Text,
+  Menu,
+  MenuButton,
+  Button,
+  Icon,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { IoFilter } from "react-icons/io5";
 import {
   setFriends,
   setRequests,
@@ -176,7 +184,7 @@ export const Explore = () => {
 
   const { query } = useSelector((state) => state.search);
   const filterUsers = (usersList, query) => {
-    const regex = new RegExp(query, "i"); // "i" for case-insensitive match
+    const regex = new RegExp(query, "i");
 
     return usersList.filter(
       (user) => regex.test(user.name) || regex.test(user.userName)
@@ -228,9 +236,61 @@ export const Explore = () => {
         ml={4}
         mr={4}
         h={"auto"}
-        w={"95%"}
+        w={["90%", "80%", "80%", "70%", "70%"]}
+        mx={"auto"}
       >
-        <Tabs
+        <Text ml={1} fontSize={"x-large"} fontWeight={700}>
+          Search People
+        </Text>
+        <Search />
+        <HStack justify={"space-between"}>
+          <Text ml={1} fontSize={"larger"} fontWeight={600}>
+            Explore
+          </Text>
+          <Menu>
+            <MenuButton
+              as={Button}
+              ml={1}
+              pl={3}
+              pr={3}
+              pt={1}
+              pb={1}
+              mb={0}
+              boxSize={"fit-content"}
+              bg={"gray.700"}
+              _hover={{ bg: "gray.600" }}
+              _active={{ bg: "gray.600" }}
+              color={"gray.300"}
+              rightIcon={<IoFilter />}
+            >
+              Filter
+            </MenuButton>
+            <MenuList bg={"gray.700"} border={0}>
+              <MenuItem
+                bg={"inherit"}
+                _hover={{ bg: "gray.600" }}
+                onClick={handleExploreClick}
+              >
+                All
+              </MenuItem>
+              <MenuItem
+                bg={"inherit"}
+                _hover={{ bg: "gray.600" }}
+                onClick={handleInviteClick}
+              >
+                Invites
+              </MenuItem>
+              <MenuItem
+                bg={"inherit"}
+                _hover={{ bg: "gray.600" }}
+                onClick={handleRequestClick}
+              >
+                Requests
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </HStack>
+        {/* <Tabs
           position="relative"
           variant="unstyled"
           borderColor={"gray.600"}
@@ -279,15 +339,22 @@ export const Explore = () => {
             >
               Requests
             </Tab>
-            <Search />
           </TabList>
-        </Tabs>
-        <Divider />
+        </Tabs> */}
+        {/* <Divider /> */}
         <CardBody>
-          <Box h={"auto"} w={"90%"} ml={0} mr={0} p={0} overflow={"auto"}>
+          <Box h={"auto"} w={"90%"} ml={0} mr={0} p={0}>
             {explore && query === null && (
               <Grid
-                templateColumns={"repeat(3, 1fr)"}
+                templateColumns={[
+                  { base: "repeat(3, 1fr)" },
+                  { sm: "repeat(1, 1fr)" },
+                  { md: "repeat(3, 1fr)" },
+                  { lg: "repeat(3, 1fr)" },
+                  { xl: "repeat(3, 1fr)" },
+                ]}
+                p={0}
+                m={0}
                 gap={3}
                 overflowX={"auto"}
                 overflowY={"auto"}
@@ -315,7 +382,7 @@ export const Explore = () => {
                 {displayInvites}
               </Grid>
             )}
-            {request && query === null && (
+            {request && query === null && explore !== true && (
               <Grid
                 templateColumns={"repeat(3, 1fr)"}
                 gap={3}

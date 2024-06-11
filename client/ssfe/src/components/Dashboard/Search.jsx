@@ -9,14 +9,14 @@ import React, { useEffect, useState } from "react";
 import { setSearch } from "../../redux/Slices/searchSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-export const Search = () => {
+export const Search = (type) => {
   const [value, setvalue] = useState("");
   const dispatch = useDispatch();
   const { query } = useSelector((state) => state.search);
 
   useEffect(() => {
-    setSearch("");
-  });
+    dispatch(setSearch(null));
+  }, []);
   const handleChange = (e) => {
     setvalue(e.target.value);
   };

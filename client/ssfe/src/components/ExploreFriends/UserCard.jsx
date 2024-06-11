@@ -22,6 +22,8 @@ import {
   VStack,
   useDisclosure,
   Spinner,
+  Flex,
+  Box,
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 import { IoPerson } from "react-icons/io5";
@@ -65,8 +67,8 @@ export const UserCard = (props) => {
     useSelector((state) => state.auth) || localStorage.authToken;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const truncateName = truncateString(name, 10);
-  const truncateUserName = truncateString(userName, 15);
+  const truncateName = truncateString(name, 20);
+  const truncateUserName = truncateString(userName, 20);
   const truncateDescription = truncateString(description, 75);
 
   const { loginData } = useSelector((state) => state.auth);
@@ -144,12 +146,61 @@ export const UserCard = (props) => {
     );
 
   return (
+    // <Card
+    //   bg={"gray.900"}
+    //   m={2}
+    //   w={"300px"}
+    //   borderWidth={"5px"}
+    //   borderTopColor={"purple.300"}
+    //   borderBottom={"none"}
+    //   borderRight={"none"}
+    //   borderLeft={"none"}
+    //   _hover={{
+    //     transition: "transform 0.3s ease-in-out",
+    //     transform: "scale(1.01)",
+    //     boxShadow: "0 0 10px #53157d",
+    //   }}
+    //   transition="transform 0.2s ease-in-out"
+    //   transform="scale(1)"
+    // >
+    //   <CardHeader textColor={"gray.200"} borderTopRadius={0}>
+    //     <HStack>
+    //       <Avatar src={photo} />
+    //       <VStack align={"left"}>
+    //         <Text>{truncateName}</Text>
+    //         <Text fontSize={"sm"} color={"gray.400"}>
+    //           {truncateUserName}
+    //         </Text>
+    //       </VStack>
+    //     </HStack>
+    //   </CardHeader>
+    //   <CardBody>
+    //     <Text color={"gray.400"} fontSize={"sm"}>
+    //       {truncateDescription || (
+    //         <Text> Hey There!! I am using SocioSync.</Text>
+    //       )}
+    //     </Text>
+    //   </CardBody>
+    //   <CardFooter>
+    //     <HStack w={"100%"} justify={"space-between"}>
+    //       <HStack color={"gray.500"}>
+    //         <IoPerson />
+    //         <Text fontSize={"sm"}>{friends}</Text>
+    //       </HStack>
+
+    //       {!loading && butns}
+    //       {loading && <Spinner />}
+    //     </HStack>
+    //   </CardFooter>
+    // </Card>
+
     <Card
-      bg={"gray.900"}
+      bg={"gray.300"}
       m={2}
-      w={"300px"}
-      borderWidth={"5px"}
-      borderTopColor={"purple.300"}
+      w={"auto"}
+      h={"320px"}
+      borderRadius={25}
+      borderWidth={"0px"}
       borderBottom={"none"}
       borderRight={"none"}
       borderLeft={"none"}
@@ -161,31 +212,41 @@ export const UserCard = (props) => {
       transition="transform 0.2s ease-in-out"
       transform="scale(1)"
     >
-      <CardHeader textColor={"gray.200"} borderTopRadius={0}>
-        <HStack>
-          <Avatar src={photo} />
-          <VStack align={"left"}>
-            <Text>{truncateName}</Text>
-            <Text fontSize={"sm"} color={"gray.400"}>
-              {truncateUserName}
-            </Text>
-          </VStack>
-        </HStack>
-      </CardHeader>
-      <CardBody>
-        <Text color={"gray.400"} fontSize={"sm"}>
+      <Card
+        bgGradient={"linear(to-t, purple.700, purple.500)"}
+        borderRadius={25}
+        minH={"30%"}
+      />
+      <Avatar
+        src={photo}
+        mx={"auto"}
+        position={"absolute"}
+        size={"lg"}
+        top={"30%"}
+        left={"50%"}
+        transform={"translate(-50%, -50%)"}
+        border={"2px solid #cbd5e0"}
+      />
+      <CardBody mt={4}>
+        <Text color={"gray.800"} fontSize={"lg"} textAlign={"center"}>
+          {truncateName}
+        </Text>
+        <Text color={"gray.900"} fontSize={"sm"} textAlign={"center"}>
+          {truncateUserName}
+        </Text>
+        <Box h={"2px"} bg={"purple.600"} mt={3} />
+        <Text color={"gray.900"} fontSize={"sm"} textAlign={"center"} mt={2}>
           {truncateDescription || (
             <Text> Hey There!! I am using SocioSync.</Text>
           )}
         </Text>
       </CardBody>
-      <CardFooter>
+      <CardFooter mb={3}>
         <HStack w={"100%"} justify={"space-between"}>
           <HStack color={"gray.500"}>
             <IoPerson />
             <Text fontSize={"sm"}>{friends}</Text>
           </HStack>
-
           {!loading && butns}
           {loading && <Spinner />}
         </HStack>

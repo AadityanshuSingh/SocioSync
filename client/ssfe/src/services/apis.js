@@ -1,4 +1,5 @@
-const BASE_URL = "https://sociosync-backend.onrender.com/api/v1";
+// const BASE_URL = "https://sociosync-backend.onrender.com/api/v1";
+const BASE_URL = "http://localhost:4000/api/v1";
 
 // AUTH ENDPOINTS
 export const endpoints = {
@@ -51,4 +52,12 @@ export const mediaEndpoints = {
 
 export const searchEndpoints = {
   SEARCH_USER_API: BASE_URL + "/search/searchquery",
+};
+
+export const storyEndpoints = {
+  CREATE_STORY_API: BASE_URL + "/story/create",
+  GET_ALL_STORIES_API: BASE_URL + "/story/all",
+  GET_STORY_BY_USER_API: BASE_URL + "/story/user",
+  LIKE_STORY_API: BASE_URL + "/story/like",
+  VIEW_STORY_API: BASE_URL + "/story/view",
 };

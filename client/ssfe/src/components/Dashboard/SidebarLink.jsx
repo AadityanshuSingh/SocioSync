@@ -11,6 +11,8 @@ import { NavLink, redirect, useLocation } from "react-router-dom";
 import { BiSolidMessageRoundedDetail } from "react-icons/bi";
 import { MdAccountCircle } from "react-icons/md";
 import { FaUserFriends } from "react-icons/fa";
+import { BiPhotoAlbum } from "react-icons/bi";
+import { IoMdCreate } from "react-icons/io";
 
 export default function SidebarLink({ link, iconName }) {
   const dispatch = useDispatch();
@@ -28,6 +30,10 @@ export default function SidebarLink({ link, iconName }) {
       ? MdAccountCircle
       : iconName === "FaUserFriends"
       ? FaUserFriends
+      : iconName === "BiPhotoAlbum"
+      ? BiPhotoAlbum
+      : iconName === "IoMdCreate"
+      ? IoMdCreate
       : null;
   //   console.log("the name is", iconName)
   return (
