@@ -45,10 +45,6 @@ const userSchema = new mongoose.Schema({
       ref: "Chat",
     },
   ],
-  // profilePic:{
-  //     type:String,
-  //     trim:true,
-  // },
   undeliveredMessages: [
     {
       type: mongoose.Schema.Types.ObjectId,

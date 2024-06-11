@@ -17,6 +17,7 @@ import MyProfile from "./components/Dashboard/MyProfile";
 // import Friends from './components/Dashboard/Friends';
 import socket from "./socket";
 import { Explore } from "./components/Explore";
+import { ForgotPassword } from "./pages/forgotPassword";
 
 const io = socket;
 
@@ -30,7 +31,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
-            <Route path="/forgotpassword" element={<forgotPassword />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/changepassword" element={<changePassword />} />
             <Route path="/resetcomplete" element={<ResetComplete />} />
 

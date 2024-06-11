@@ -159,7 +159,7 @@ export const Login = () => {
         shadow={"md"}
         p={4}
       >
-        <CardBody shadow={"xl"} bg={"#2d3250"} borderRadius={"lg"}>
+        <CardBody shadow={"xl"} bg={"#2d3250"} borderRadius={"xl"}>
           <Box>
             <Logo ht={130} wt={470} />
             <Text fontSize={"20px"} color={"gray.200"}>
@@ -173,6 +173,9 @@ export const Login = () => {
             </HStack>
           </Box>
           {renderData}
+          <NavLink to={"/forgotpassword"}>
+            <Text fontSize="xs" color={"yellow.500"}>Forgot Password ?</Text>
+          </NavLink>
           <Button
             bgColor={"#cbb06a"}
             w={"50%"}
@@ -183,6 +186,7 @@ export const Login = () => {
             {btnData}
           </Button>
         </CardBody>
+        <Box mx={2} /> {/* Adjust the margin as needed */}
         <Hide below="lg">
           <CardBody height={"100%"} padding={0}>
             <Image
@@ -190,6 +194,7 @@ export const Login = () => {
               height={"100%"}
               borderTopRightRadius={"lg"}
               borderBottomRightRadius={"lg"}
+              borderRadius={"xl"}
               p={0}
             />
           </CardBody>

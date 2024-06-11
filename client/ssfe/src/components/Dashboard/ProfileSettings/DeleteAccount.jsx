@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { Box, Button, Flex, Text } from "@chakra-ui/react"
 
-// import { deleteProfile } from "../../../../services/operations/SettingsAPI"
 
 export default function DeleteAccount() {
   const { token } = useSelector((state) => state.auth)
@@ -12,7 +11,7 @@ export default function DeleteAccount() {
 
   async function handleDeleteAccount() {
     try {
-    //   dispatch(deleteProfile(token, navigate))
+      dispatch(deleteProfile(token, navigate))
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message)
     }
@@ -32,11 +31,14 @@ export default function DeleteAccount() {
           Delete Account
         </Text>
         <Box w="3/5" color="pink.25">
-          <Text>Would you like to delete account?</Text>
+          <view>
+          <Text>Would you like to delete account? {'\n\n'}</Text>
           <Text>
-            This account may contain Paid Courses. Deleting your account is
-            permanent and will remove all the content associated with it.
+            All the details associated with this including
+            profile, friends, photos, videos and other media will
+            be deleted permanently and will be non-recoverable.
           </Text>
+          </view>
         </Box>
         <Button
           type="button"

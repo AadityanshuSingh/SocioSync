@@ -5,12 +5,12 @@ import { ArrowBackIcon } from '@chakra-ui/icons'
 export const ResetComplete = () => {
   return (
     <Card
-    width={"100%"} 
-    height={"100vh"} 
-    bg={"#1a202f"} 
-    borderRadius={"0"} 
-    overflow={"auto"} 
-    pt={"20px"} 
+    width={"100%"}
+    height={"100vh"}
+    bg={"#1a202f"}
+    borderRadius={"0"}
+    overflow={"auto"}
+    pt={"20px"}
     pb={"20px"}
     css={{
       '&::-webkit-scrollbar': {

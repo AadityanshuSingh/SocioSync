@@ -3,6 +3,7 @@ import { FiUpload } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { updateDisplayPicture } from "../../../services/operations/ProfileSettingsAPI";
 import IconBtn from "../../common/IconBtn";
+import useCustomToast from "../../../utils/useCustomToast";
 import {
   Box,
   Flex,
@@ -16,8 +17,11 @@ import {
 export default function ChangeProfilePicture() {
   const { token } = useSelector((state) => state.auth);
   const { loginData } = useSelector((state) => state.auth);
+  console.log("loginreducerdata is:", loginData)
   const user = loginData;
   const dispatch = useDispatch();
+  const { showToast, updateToast } = useCustomToast();
+
 
   const [loading, setLoading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
@@ -52,10 +56,10 @@ export default function ChangeProfilePicture() {
       const formData = new FormData();
       console.log(imageFile);
       // formData.displayPicture = imageFile;
-      formData.append("displayPicture", imageFile);
+      // formData.append("displayPicture", imageFile);
       //   setUpdatedFormData(formData);
-      console.log("formdata", formData);
-      dispatch(updateDisplayPicture(token, imageFile)).then(() => {
+      // console.log("formdata", formData);
+      dispatch(updateDisplayPicture(token, imageFile, showToast, updateToast)).then(() => {
         setLoading(false);
         // console.log("opns me sahi gya");
       });

@@ -74,7 +74,6 @@ export const ChatBubble = (props) => {
   );
   // "linear(to-br, #ff965d , #fe4057 )"
   //         : "linear(to-br, #fe9c5d , #8725c5 )"
-
   const user = loginData.userName;
   return (
     <Card

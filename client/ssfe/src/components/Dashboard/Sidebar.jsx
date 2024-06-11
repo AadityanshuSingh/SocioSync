@@ -102,7 +102,7 @@ export const Sidebar = () => {
                 btn2Handler: () => setConfirmationModal(null),
               })
             }
-            background={"gray.500"}
+            background={"gray.700"}
             fontWeight={"medium"}
             color={"gray.400"}
             mb={2}

@@ -6,6 +6,7 @@ const {
 } = require("../utils/fileUploader");
 // Method for updating a profile
 exports.updateProfile = async (req, res) => {
+  // console.log("hello bcknd")
   try {
     console.log("ic data", req.body);
     const {
@@ -17,7 +18,7 @@ exports.updateProfile = async (req, res) => {
     } = req.body;
     const id = req.user.id;
     // Find the profile by id
-    const userDetails = await User.findById(id);
+    const userDetails = await User.findById(id).populate('profile');
     const profile = await Profile.findById(userDetails.profile);
     // Update the profile fields
     profile.name = name;
@@ -28,7 +29,9 @@ exports.updateProfile = async (req, res) => {
 
     // Save the updated profile
     // let updatedUserDetails;
-    const updatedUserDetails = await profile.save();
+    await profile.save();
+    userDetails.profile = profile;
+    const updatedUserDetails = userDetails;
     return res.json({
       success: true,
       message: "Profile updated successfully",
@@ -102,11 +105,9 @@ exports.updateDisplayPicture = async (req, res) => {
     // userProfile.profile.profileImage = image.secure_url;
     const updatedProfile = await User.findOneAndUpdate(
       { userName: userProfile.userName },
-      {
-        profilePic: image.secure_url,
-      },
+      { profilePic: image.secure_url },
       { new: true }
-    );
+    ).populate('profile');
     // await userProfile.profile.save();
     // console.log("users info is", userProfile.profile);
     res.send({

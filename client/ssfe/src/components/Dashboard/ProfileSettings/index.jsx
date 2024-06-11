@@ -25,7 +25,6 @@ export default function ProfileSettings() {
         </Heading>
         <ChangeProfilePicture />
         <EditProfile />
-        Password
         <UpdatePassword />
         <DeleteAccount />
       </VStack>

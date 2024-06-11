@@ -10,6 +10,7 @@ import {
   Link,
   HStack,
   useToast,
+  Flex
 } from "@chakra-ui/react";
 import pic from "../assets/People1.png";
 import { Logo } from "../components/Logo.jsx";
@@ -21,6 +22,7 @@ import { setSignupData } from "../redux/Slices/authSlice.js";
 import { sendOtp } from "../services/operations/authAPI.js";
 
 export const SignUp = () => {
+  const action = "signup";
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const selector = useSelector((state) => state.signupData);
@@ -42,7 +44,13 @@ export const SignUp = () => {
       p: false,
       v: formData.email,
     },
-    { id: "name", l: "Name", f: "Enter Your Name", p: false, v: formData.name },
+    { 
+        id: "name", 
+        l: "Name", 
+        f: "Enter Your Name", 
+        p: false, 
+        v: formData.name
+    },
     {
       id: "userName",
       l: "UserName (This should be unique)",
@@ -100,9 +108,9 @@ export const SignUp = () => {
       });
       return;
     }
-
+    
     dispatch(setSignupData(formData));
-    dispatch(sendOtp(formData.email, navigate));
+    dispatch(sendOtp(action,formData.email, navigate));
 
     setFormData({
       email: "",
@@ -133,45 +141,68 @@ export const SignUp = () => {
         mt={"auto"}
         mb={"auto"}
         align={"center"}
-        width={"60%"}
+        width={"65%"}
+        // height={"70%"}
         mx={"auto"}
         variant={"filled"}
-        borderRadius={"lg"}
+        borderRadius={"xl"}
         bg={"black"}
         shadow={"md"}
         p={4}
       >
-        <CardBody shadow={"xl"} bg={"#2d3250"} borderRadius={"lg"}>
+        <CardBody 
+          shadow={"xl"}
+          bg={"#2d3250"}
+          borderRadius={"lg"}
+          h = 'full'>
           <Box>
             <Logo ht={130} wt={470} />
-            <Text fontSize={"20px"} color={"gray.200"}>
+            <Text fontSize="20px" color="gray.200">
               {btnData}
             </Text>
             <HStack>
-              <Text color={"gray.500"}>{topData}</Text>
+              <Text color="gray.500">{topData}</Text>
               <NavLink to={"/login"}>
-                <Text color={"yellow.500"}>{LinkData}?</Text>
+                <Text color="yellow.500">{LinkData}?</Text>
               </NavLink>
             </HStack>
           </Box>
-          {renderData}
+          <Flex justifyContent="space-between">
+            {/* First row */}
+            {renderData.slice(0, 2).map((item, index) => (
+              <div key={index} style={{ width: "48%" }}> {/* Adjust width as needed */}
+                {item}
+              </div>
+            ))}
+          </Flex>
+          <Flex justifyContent="space-between">
+            {/* Second row */}
+            {renderData.slice(2, 4).map((item, index) => (
+              <div key={index} style={{ width: "48%" }}> {/* Adjust width as needed */}
+                {item}
+              </div>
+            ))}
+          </Flex>
+          <Box>
+            {renderData[4]}
+          </Box>
           <Button
-            bgColor={"#cbb06a"}
-            w={"50%"}
-            mt={"20px"}
+            bgColor="#cbb06a"
+            w="50%"
+            mt="20px"
             _hover={{ bg: "yellow.500" }}
             onClick={handleSubmit}
           >
             {btnData}
           </Button>
         </CardBody>
+        <Box mx={2} />
         <Hide below="lg">
           <CardBody height={"100%"} padding={0}>
             <Image
               src={pic}
               height={"100%"}
-              borderTopRightRadius={"lg"}
-              borderBottomRightRadius={"lg"}
+              borderRadius={"xl"}
               p={0}
             />
           </CardBody>

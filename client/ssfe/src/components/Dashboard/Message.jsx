@@ -177,7 +177,13 @@ export const Message = () => {
 
   return (
     <>
-      <HStack w={"100%"} h={"auto"} m={0} p={0}>
+      <HStack 
+        w={"100%"} 
+        h={"auto"} 
+        m={0} 
+        p={0}
+        borderRadius={"lg"}
+        >
         <Popover isOpen={emoji} closeOnBlur>
           <PopoverTrigger>
             <IconButton
@@ -185,7 +191,7 @@ export const Message = () => {
               bg={"inherit"}
               _hover={{ bg: "gray.600", cursor: "pointer" }}
               icon={<HiOutlineFaceSmile />}
-              mb={2}
+              mb={1}
               onClick={handleEmojiClick}
             />
           </PopoverTrigger>
