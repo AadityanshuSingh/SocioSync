@@ -23,6 +23,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { IoFilter } from "react-icons/io5";
+import useCustomToast from "../utils/useCustomToast";
 import {
   setFriends,
   setRequests,
@@ -39,7 +40,7 @@ export const Explore = () => {
   const [request, setRequest] = useState(false);
 
   const [exploredata, setexploredata] = useState([]);
-
+  const {showToast, updateToast} = useCustomToast();
   const { allUsers } = useSelector((state) => state.profile);
   const { loginData } = useSelector((state) => state.auth);
   // const { friends, requests, invites } = useSelector((state) => state.profile);

@@ -43,6 +43,12 @@ export const chatSlice = createSlice({
     populateMedia: (state, action) => {
       state.allMedia.push(action.payload);
     },
+    clearChatSlices: (state) => {
+      state.allMessages = [];
+      state.history = [];
+      state.messagesToBeUpdated = [];
+      state.allMedia = [];
+    },
   },
 });
 
@@ -54,5 +60,6 @@ export const {
   populateHistory,
   addMessagesToBeUpdated,
   populateMedia,
+  clearChatSlices
 } = chatSlice.actions;
 export default chatSlice.reducer;

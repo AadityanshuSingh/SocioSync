@@ -5,12 +5,14 @@ import { forgotPassword} from "../services/operations/authAPI"
 import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
+import useCustomToast from "../utils/useCustomToast"
 export const VerifyEmail = () => {
   const location = useLocation();
   const msg = location.state.message;
   const {signupData} = useSelector(state => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {showToast, updateToast} = useCustomToast();
   const [otpValue, setOtpValue] = useState(['', '', '', '', '', '']);
   // const [otp, setOtp] = useState('');
 
@@ -30,13 +32,13 @@ export const VerifyEmail = () => {
     }
     if(msg === "forgotpassword"){
       console.log("forgot pwd. ke liye jaa rha h", ultraNewSignUpData);
-      dispatch(forgotPassword(ultraNewSignUpData, navigate));
+      dispatch(forgotPassword(ultraNewSignUpData, navigate, showToast, updateToast));
     }
     // console.log("email 1", email)
     // console.log("the otp is", otp)
     // console.log("verify email mein", ultraNewSignUpData);
     else{
-      dispatch(signUp(ultraNewSignUpData, navigate));
+      dispatch(signUp(ultraNewSignUpData, navigate, showToast, updateToast));
     }
   }
 

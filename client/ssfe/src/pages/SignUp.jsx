@@ -20,14 +20,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setSignupData } from "../redux/Slices/authSlice.js";
 import { sendOtp } from "../services/operations/authAPI.js";
-
+import useCustomToast from "../utils/useCustomToast.jsx";
 export const SignUp = () => {
   const action = "signup";
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const selector = useSelector((state) => state.signupData);
   const toast = useToast();
-
+  const {showToast, updateToast} = useCustomToast();
   const [formData, setFormData] = useState({
     email: "",
     name: "",
@@ -110,7 +110,7 @@ export const SignUp = () => {
     }
     
     dispatch(setSignupData(formData));
-    dispatch(sendOtp(action,formData.email, navigate));
+    dispatch(sendOtp(action,formData.email, navigate, showToast, updateToast));
 
     setFormData({
       email: "",

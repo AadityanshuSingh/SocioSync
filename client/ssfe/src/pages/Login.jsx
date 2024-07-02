@@ -26,8 +26,10 @@ import {
 } from "../redux/Slices/authSlice.js";
 import { setRoom } from "../redux/Slices/onlineSlice.js";
 import { getMedia } from "../services/operations/mediaAPI.js";
+import useCustomToast from "../utils/useCustomToast.jsx";
 
 export const Login = () => {
+  const { showToast, updateToast } = useCustomToast();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loginData } = useSelector((state) => state.auth);
@@ -82,7 +84,7 @@ export const Login = () => {
 
     try {
       // Dispatch login action
-      await dispatch(login(formData, navigate));
+      await dispatch(login(formData, navigate, showToast, updateToast));
 
       // Check if loginData is null (indicating login failure)
       // if (loginData === null || token === null ) {

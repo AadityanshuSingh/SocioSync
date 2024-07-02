@@ -8,6 +8,7 @@ import { socket } from "../App";
 import {
   addMessage,
   addMessagesToBeUpdated,
+  clearChatSlices,
   populateHistory,
 } from "../redux/Slices/chatSlice";
 import { getHistory, updateChat } from "../services/operations/chatAPI";
@@ -22,6 +23,8 @@ import {
 import { getAllUsers } from "../services/operations/profileAPI";
 
 export const Dashboard = () => {
+  // deals with unload of data, updation of chat before exit
+  // storing the messages in their respective slices on receiving them
   const { loginData } = useSelector((state) => state.auth);
   const { allUsers } = useSelector((state) => state.profile);
   const { allMessages } = useSelector((state) => state.chat);
@@ -50,6 +53,7 @@ export const Dashboard = () => {
           dispatch(updateChat(messagesToBeUpdated));
           console.log("api called for db call");
         }
+        dispatch(clearChatSlices());
       } catch (error) {
         console.error("Error during cleanup:", error);
       }
@@ -58,6 +62,7 @@ export const Dashboard = () => {
     window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
+      // dispatch(clearChatSlices());
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   });
@@ -65,6 +70,7 @@ export const Dashboard = () => {
   // handling received messages
   useEffect(() => {
     const handleReceivedMessages = (messageObj) => {
+      console.log("checking for incoming msgs in online-online case");
       messageObj.owner = loginData.userName;
       dispatch(addMessage(messageObj));
       dispatch(addMessagesToBeUpdated(messageObj));
@@ -73,7 +79,9 @@ export const Dashboard = () => {
 
     // handling single connection messages
     const handleSingleConnecton = (messageObj) => {
+      console.log("checking for incoming msgs in online-offline case");
       dispatch(addMessage(messageObj));
+      // adds message to allmessages
       const query = [];
       query.push(messageObj);
       dispatch(updateChat(query));

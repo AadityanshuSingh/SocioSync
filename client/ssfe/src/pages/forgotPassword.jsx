@@ -5,11 +5,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOtp } from "../services/operations/authAPI.js";
 import { setSignupData } from '../redux/Slices/authSlice.js';
+import useCustomToast from '../utils/useCustomToast.jsx';
 
 export const ForgotPassword = () => {
   const {signupData} = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {showToast, updateToast} = useCustomToast();
   const action = "forgotpassword";
   const [formData, setFormData] = useState({
     email: "",
@@ -26,7 +28,7 @@ export const ForgotPassword = () => {
       confirmPassword: formData.confirmPassword,
     }
     dispatch(setSignupData(newSignupData));
-    dispatch(sendOtp(action, formData.email, navigate));
+    dispatch(sendOtp(action, formData.email, navigate, showToast, updateToast));
   };
 
   const handleChange = (event) => {

@@ -39,7 +39,7 @@ import { useEffect, useState } from "react";
 import { setLoading } from "../../redux/Slices/authSlice";
 import { getAllUsers } from "../../services/operations/profileAPI";
 import { socket } from "../../App";
-
+import useCustomToast from "../../utils/useCustomToast";
 function truncateString(str, maxLength) {
   if (str === "") {
     return str;
@@ -70,13 +70,14 @@ export const UserCard = (props) => {
   const truncateName = truncateString(name, 20);
   const truncateUserName = truncateString(userName, 20);
   const truncateDescription = truncateString(description, 75);
+  const {showToast, updateToast} = useCustomToast();
 
   const { loginData } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
 
   const handleAcceptRequest = () => {
     setLoading(true);
-    dispatch(acceptrequest(token, userName, navigate));
+    dispatch(acceptrequest(token, userName, navigate, showToast, updateToast));
     dispatch(getAllUsers());
     socket.emit("new_friend_added");
     setLoading(false);
@@ -84,21 +85,21 @@ export const UserCard = (props) => {
 
   const handleRejectRequest = () => {
     setLoading(true);
-    dispatch(rejectrequest(token, userName, navigate));
+    dispatch(rejectrequest(token, userName, navigate, showToast, updateToast));
     setLoading(false);
     socket.emit("new_friend_added");
   };
 
   const handleDeleteRequest = () => {
     setLoading(true);
-    dispatch(deleterequest(token, userName, navigate));
+    dispatch(deleterequest(token, userName, navigate, showToast, updateToast));
     setLoading(false);
     socket.emit("new_friend_added");
   };
 
   const handleSendRequest = () => {
     setLoading(true);
-    dispatch(sendrequest(token, userName, navigate));
+    dispatch(sendrequest(token, userName, navigate, showToast, updateToast));
     setLoading(false);
     socket.emit("new_friend_added");
   };

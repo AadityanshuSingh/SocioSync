@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "../../../services/operations/ProfileSettingsAPI";
 import IconBtn from "../../common/IconBtn";
+import useCustomToast from "../../../utils/useCustomToast";
 import {
   FormControl,
   FormLabel,
@@ -16,7 +17,6 @@ import {
   RadioGroup,
   Stack
 } from "@chakra-ui/react";
-
 const genders = ["Male", "Female", "Other"];
 function formatDate(date) {
   if (!date || isNaN(new Date(date))) {
@@ -30,6 +30,7 @@ function formatDate(date) {
 export default function EditProfile() {
   const { loginData } = useSelector((state) => state.auth);
   const { token } = useSelector((state) => state.auth);
+  const { showToast, updateToast } = useCustomToast();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const logindataString = localStorage.getItem("logindata");
@@ -65,7 +66,7 @@ export default function EditProfile() {
     e.preventDefault();
     try {
         console.log("the data from frontend is ",formData);
-        dispatch(updateProfile(token, formData));
+        dispatch(updateProfile(token, formData, showToast, updateToast));
         console.log("ho gya bro")
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message);

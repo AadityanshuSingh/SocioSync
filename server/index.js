@@ -25,7 +25,8 @@ const { Server } = require("socket.io");
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "https://socio-sync.vercel.app",
+    // origin: "https://socio-sync.vercel.app",
+    origin: "http://localhost:3000",
     credentials: true,
   },
 });
@@ -62,7 +63,9 @@ app.use(cookieParser());
 // );
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://socio-sync.vercel.app");
+  // "http://localhost:3000"
+  // res.header("Access-Control-Allow-Origin", "https://socio-sync.vercel.app");
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.header("Access-Control-Allow-Credentials", true);

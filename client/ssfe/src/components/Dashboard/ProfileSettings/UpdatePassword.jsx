@@ -24,7 +24,7 @@ export default function UpdatePassword() {
 
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
-
+  const{showToast, updateToast} = useCustomToast();
   const {
     register,
     handleSubmit,
@@ -35,7 +35,7 @@ export default function UpdatePassword() {
   const submitPasswordForm = async (data) => {
     console.log("og data", data);
     try {
-      await changePassword(token, data);
+      await changePassword(token, data, showToast, updateToast);
       reset();
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message);
