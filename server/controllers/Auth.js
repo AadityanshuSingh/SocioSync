@@ -14,6 +14,7 @@ exports.sendotp = async (req, res) => {
     try{
         // fetch email from req body
         const {email} = req.body;
+        const {action} = req.body;
         console.log(email);
         var otp = otpGenerator.generate(6, {
             upperCaseAlphabets:false,
@@ -34,7 +35,7 @@ exports.sendotp = async (req, res) => {
             result = await OTP.findOne({otp: otp});
         }
 
-        const otpPayload = {email, otp};
+        const otpPayload = {email, otp, action};
         // create an entry for OTP
         const otpBody = await OTP.create(otpPayload);
         console.log(otpBody);
@@ -330,6 +331,12 @@ exports.forgotPassword = async (req, res) => {
                 message:"All fields are required",
             })
         }
+        if(confirmPassword !== password){
+            return res.status(401).json({
+                success:false,
+                message:"Password and confirmPassword must be same",
+            })
+        }
 
         // check if user already exists
         const checkUserPresent = await User.findOne({email: email});
@@ -337,6 +344,7 @@ exports.forgotPassword = async (req, res) => {
 
         // if user already exists, then return a response
         if(!checkUserPresent) {
+            console.log("the user is not present")
             return res.status(401).json({
                 success: false,
                 message: 'User does not exists',

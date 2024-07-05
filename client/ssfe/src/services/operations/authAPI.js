@@ -25,7 +25,7 @@ export function sendOtp(action, email, navigate, showToast, updateToast) {
     });
     try {
       const response = await apiConnector("POST", SENDOTP_API, {
-        email,
+        email, action
       });
 
       console.log("SENDOTP API RESPONSE............", response);
