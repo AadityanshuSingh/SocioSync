@@ -268,7 +268,7 @@ export const MediaDrawer = () => {
                 <Grid templateColumns="repeat(3, 1fr)">{displayPics}</Grid>
               </Box>
             )}
-            {/* <Divider /> */}
+            <Divider />
             {showAllVids && (
               <Box mb={4}>
                 {/* <HStack justify={"space-between"} mb={3}>
@@ -294,7 +294,7 @@ export const MediaDrawer = () => {
                 </Grid>
               </Box>
             )}
-            {/* <Divider /> */}
+            <Divider />
             {showAllAudio && (
               <Box mb={4}>
                 {/* <HStack justify={"space-between"} mb={3}>

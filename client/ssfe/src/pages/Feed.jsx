@@ -1,3 +1,4 @@
+import React from "react";
 import { Card, Grid, GridItem, Text } from "@chakra-ui/react";
 import { Post } from "../components/Posts/Post";
 import { Search } from "../components/Dashboard/Search";

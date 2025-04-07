@@ -1,8 +1,9 @@
-import { Box, Button, Text } from '@chakra-ui/react';
+import React from "react";
+import { Box, Button, Text } from "@chakra-ui/react";
 import IconBtn from "./IconBtn";
 
-export default function ConfirmationModal({modalData}) {
-    console.log("modal data is",modalData)
+export default function ConfirmationModal({ modalData }) {
+  console.log("modal data is", modalData);
   return (
     <Box
       pos="fixed"
@@ -31,7 +32,10 @@ export default function ConfirmationModal({modalData}) {
           {modalData?.text2}
         </Text>
         <Box display="flex" alignItems="center" gap={4}>
-          <IconBtn onClick={modalData?.btn1Handler} text={modalData?.btn1Text} />
+          <IconBtn
+            onClick={modalData?.btn1Handler}
+            text={modalData?.btn1Text}
+          />
           <Button
             cursor="pointer"
             rounded="md"

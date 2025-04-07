@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import React from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../services/operations/profileAPI";
 import { UserCard } from "./ExploreFriends/UserCard";
@@ -40,7 +42,7 @@ export const Explore = () => {
   const [request, setRequest] = useState(false);
 
   const [exploredata, setexploredata] = useState([]);
-  const {showToast, updateToast} = useCustomToast();
+  const { showToast, updateToast } = useCustomToast();
   const { allUsers } = useSelector((state) => state.profile);
   const { loginData } = useSelector((state) => state.auth);
   // const { friends, requests, invites } = useSelector((state) => state.profile);

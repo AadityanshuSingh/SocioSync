@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import React from "react";
+
 import {
   Avatar,
   Button,
@@ -70,7 +72,7 @@ export const UserCard = (props) => {
   const truncateName = truncateString(name, 20);
   const truncateUserName = truncateString(userName, 20);
   const truncateDescription = truncateString(description, 75);
-  const {showToast, updateToast} = useCustomToast();
+  const { showToast, updateToast } = useCustomToast();
 
   const { loginData } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);

@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Avatar,
   Box,
@@ -20,8 +21,9 @@ import {
   Spacer,
   Text,
   VStack,
-  keyframes,
+  // keyframes,
 } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 import { FaHeart } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
 import { FaPlay } from "react-icons/fa";
