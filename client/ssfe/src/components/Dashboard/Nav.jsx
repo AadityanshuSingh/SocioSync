@@ -106,7 +106,12 @@ export const Nav = () => {
                   onOpen();
                   setTimeout(() => {
                     if (localRef.current && remoteRef.current) {
-                      initCall(roomName, localRef.current, remoteRef.current);
+                      initCall(
+                        roomName,
+                        localRef.current,
+                        remoteRef.current,
+                        false
+                      );
                     }
                   }, 300);
                 }}
@@ -133,7 +138,7 @@ export const Nav = () => {
       onOpen();
       setTimeout(() => {
         if (localRef.current && remoteRef.current) {
-          initCall(roomName, localRef.current, remoteRef.current);
+          initCall(roomName, localRef.current, remoteRef.current, true);
         }
       }, 300);
     });
